@@ -51,7 +51,6 @@ class Verify_Woo_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->define_constants();
 	}
 
 	/**
@@ -98,13 +97,9 @@ class Verify_Woo_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/verify-woo-public.js', array( 'jquery' ), $this->version, false );
 	}
 
-	/**
-	 * Define Constants.
-	 *
-	 * @since   1.0.0
-	 */
-	private function define_constants() {
-		define( 'PLUGIN_DIR', untrailingslashit( plugin_dir_path( __DIR__ ) ) );
-		define( 'PLUGIN_URL', untrailingslashit( plugin_dir_url( __DIR__ ) ) );
+	public function register_authentication_form() {
+		ob_start();
+		require_once PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php';
+		echo ob_get_clean();
 	}
 }

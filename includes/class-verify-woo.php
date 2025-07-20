@@ -73,7 +73,7 @@ class Verify_Woo {
 			$this->version = '1.0.0';
 		}
 		$this->plugin_name = 'verify-woo';
-
+		$this->define_constants();
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
@@ -102,26 +102,41 @@ class Verify_Woo {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-verify-woo-loader.php';
+		require_once PLUGIN_DIR . '/includes/class-verify-woo-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'includes/class-verify-woo-i18n.php';
+		require_once PLUGIN_DIR . '/includes/class-verify-woo-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-verify-woo-admin.php';
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-verify-woo-public.php';
+		require_once PLUGIN_DIR . '/public/class-verify-woo-public.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the authentication
+		 */
+		require_once PLUGIN_DIR . '/includes/class-verify-woo-authentication.php';
 
 		$this->loader = new Verify_Woo_Loader();
+	}
+
+	/**
+	 * Define Constants.
+	 *
+	 * @since   1.0.0
+	 */
+	private function define_constants() {
+		define( 'PLUGIN_DIR', untrailingslashit( plugin_dir_path( __DIR__ ) ) );
+		define( 'PLUGIN_URL', untrailingslashit( plugin_dir_url( __DIR__ ) ) );
 	}
 
 	/**
@@ -165,10 +180,13 @@ class Verify_Woo {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public         = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_authentication = new Verify_Woo_Authentication( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_authentication, 'myplugin_disable_wc_login_form_template', 100, 3 );
+		$this->loader->add_action( 'woocommerce_login_form', $plugin_public, 'register_authentication_form' );
 	}
 
 	/**
