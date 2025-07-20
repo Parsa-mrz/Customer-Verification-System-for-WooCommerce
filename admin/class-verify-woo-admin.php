@@ -44,14 +44,13 @@ class Verify_Woo_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
 
 	/**
@@ -73,8 +72,7 @@ class Verify_Woo_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/verify-woo-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'css/verify-woo-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -96,8 +94,94 @@ class Verify_Woo_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/verify-woo-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'js/verify-woo-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
+	/**
+	 * Adds the plugin's administration menu to the WordPress dashboard.
+	 *
+	 * This function uses `add_menu_page` to create a top-level menu item
+	 * for VerifyWoo settings.
+	 *
+	 * @since    1.0.0
+	 * @return   void
+	 */
+	public function add_admin_menu() {
+		add_menu_page(
+			'VerifyWoo Settings',
+			'VerifyWoo',
+			'manage_options',
+			'verifywoo-settings',
+			array( $this, 'render_settings' ),
+			'dashicons-shield',
+			47
+		);
+	}
+
+	/**
+	 * Renders the settings page for the VerifyWoo plugin in the admin area.
+	 *
+	 * This function retrieves available tabs, handles the current tab selection,
+	 * and includes the content file for the selected tab. It also generates
+	 * the navigation tabs.
+	 *
+	 * @since    1.0.0
+	 * @return   void
+	 */
+	public function render_settings() {
+		$tabs = $this->get_tabs();
+
+		$current_tab = isset( $_GET['tab'] ) ? wp_unslash( sanitize_key( $_GET['tab'] ) ) : '';
+		if ( ! array_key_exists( $current_tab, $tabs ) ) {
+			$current_tab = array_key_first( $tabs );
+		}
+
+		echo '<div class="wrap">';
+		echo '<h1>VerifyWoo Settings</h1>';
+		echo '<nav class="nav-tab-wrapper">';
+
+		foreach ( $tabs as $tab_slug => $tab_name ) {
+			$active = $current_tab === $tab_slug ? ' nav-tab-active' : '';
+			echo '<a href="?page=verifywoo-settings&tab=' . esc_attr( $tab_slug ) . '" class="nav-tab' . esc_attr( $active ) . '">' . esc_html( $tab_name ) . '</a>';
+		}
+
+		echo '</nav>';
+
+		$content_path = PLUGIN_DIR . '/admin/partials/tabs/' . $current_tab . '/content.php';
+
+		if ( file_exists( $content_path ) ) {
+			echo '<div class="tab-content">';
+			include $content_path;
+			echo '</div>';
+		} else {
+			echo '<p>Content not found for tab: ' . esc_html( $current_tab ) . '</p>';
+		}
+
+		echo '</div>';
+	}
+
+	/**
+	 * Retrieves an associative array of available settings tabs.
+	 *
+	 * This function scans the `admin/partials/tabs/` directory for subdirectories,
+	 * treating each subdirectory name as a tab slug and generating a user-friendly
+	 * tab name.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @return   string[] An associative array where keys are tab slugs and values are tab names.
+	 */
+	private function get_tabs(): array {
+		$tabs          = array();
+		$partials_path = PLUGIN_DIR . '/admin/partials/tabs/';
+		$folders       = glob( $partials_path . '*', GLOB_ONLYDIR );
+
+		foreach ( $folders as $folder ) {
+			$slug          = basename( $folder );
+			$name          = ucwords( str_replace( array( '-', '_' ), ' ', $slug ) );
+			$tabs[ $slug ] = $name;
+		}
+
+		return $tabs;
+	}
 }

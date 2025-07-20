@@ -44,14 +44,14 @@ class Verify_Woo_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
+		$this->define_constants();
 	}
 
 	/**
@@ -74,7 +74,6 @@ class Verify_Woo_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/verify-woo-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -97,7 +96,15 @@ class Verify_Woo_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/verify-woo-public.js', array( 'jquery' ), $this->version, false );
-
 	}
 
+	/**
+	 * Define Constants.
+	 *
+	 * @since   1.0.0
+	 */
+	private function define_constants() {
+		define( 'PLUGIN_DIR', untrailingslashit( plugin_dir_path( __DIR__ ) ) );
+		define( 'PLUGIN_URL', untrailingslashit( plugin_dir_url( __DIR__ ) ) );
+	}
 }

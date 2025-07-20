@@ -77,6 +77,5 @@ function run_verify_woo() {
 
 	$plugin = new Verify_Woo();
 	$plugin->run();
-
 }
 run_verify_woo();
