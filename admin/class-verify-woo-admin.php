@@ -40,7 +40,7 @@ class Verify_Woo_Admin {
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 * Initialize the class and set its properties.∂
 	 *
 	 * @since    1.0.0
 	 * @param      string $plugin_name       The name of this plugin.
@@ -182,5 +182,27 @@ class Verify_Woo_Admin {
 		}
 
 		return $tabs;
+	}
+
+	/**
+	 * Adds a custom link (e.g., Sponsor) to the plugin row meta section
+	 * on the Plugins admin screen.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string[] $links           An array of the plugin's metadata links.
+	 * @param string   $plugin_file_name Path to the plugin file relative to the plugins directory.
+	 * @param array    $plugin_data     An array of plugin data. See get_plugin_data().
+	 * @param string   $status          Status of the plugin (e.g., 'all', 'active', 'inactive').
+	 *
+	 * @return string[] Modified array of plugin meta links.
+	 */
+	public function add_plugin_row_meta( $links, $plugin_file_name, $plugin_data, $status ) {
+		if ( 'verify-woo/verify-woo.php' === $plugin_file_name ) {
+			$custom_link = '<a href="https://github.com/Parsa-mrz/" target="_blank">⭐️Sponsor</a>';
+			$links[]     = $custom_link;
+		}
+
+		return $links;
 	}
 }

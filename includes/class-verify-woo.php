@@ -57,6 +57,7 @@ class Verify_Woo {
 	 */
 	protected $version;
 
+
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -169,6 +170,7 @@ class Verify_Woo {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
+		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
 	}
 
 	/**
