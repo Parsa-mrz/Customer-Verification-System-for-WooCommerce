@@ -1,4 +1,4 @@
-=== Verify Woo ===
+=== VerifyWoo ===
 Contributors: parsamrz
 Donate link: https://parsamirzaie.com
 Tags: woocommerce, verification, email, trust
