@@ -97,9 +97,18 @@ class Verify_Woo_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/verify-woo-public.js', array( 'jquery' ), $this->version, false );
 	}
 
+	/**
+	 * Output the custom authentication form.
+	 *
+	 * This method includes and displays the authentication form template.
+	 * The output is buffered and escaped to ensure safe rendering.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function register_authentication_form() {
 		ob_start();
 		require_once PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php';
-		echo ob_get_clean();
+		echo wp_kses_post( ob_get_clean() );
 	}
 }
