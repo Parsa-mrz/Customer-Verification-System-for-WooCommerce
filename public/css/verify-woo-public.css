@@ -87,6 +87,11 @@
     margin-bottom: 12px;
 }
 
+.alert p {
+    margin-block-start: 0 !important;
+    margin-block-end: 0 !important;
+}
+
 .alert-success {
     background-color: green;
 }
@@ -95,10 +100,6 @@
     background-color: red;
 }
 
-#otp-pass {
+.verify-otp-form {
     display: none;
-}
-
-.otp-sent {
-    display: block !important;
 }

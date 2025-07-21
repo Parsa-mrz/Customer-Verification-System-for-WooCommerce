@@ -15,18 +15,23 @@
 <form action="">
 	<div class="login-wrap">
 		<div class="login-html">
-			<div class="alert"></div>
-			<div class="login-form">
+			<div class="login-form send-otp-form">
 					<div class="group">
-						<input id="phone-user" name="phone" pattern="" placeholder="<?php echo esc_html__( 'Enter Your Phone Number', 'verify-woo' ); ?>" type="text" class="input">
-					</div>
-					<div class="group">
-						<input id="otp-pass" placeholder="<?php echo esc_html__( 'Enter OTP', 'verify-woo' ); ?>" name="otp" type="number" class="input">
+						<input id="user_phone" autocomplete="Phone" name="phone" pattern="" placeholder="<?php echo esc_html__( 'Enter Your Phone Number', 'verify-woo' ); ?>" type="text" class="input">
 					</div>
 					<div class="group">
 						<input type="submit" name="signIn" class="button signIn" value="<?php echo esc_html__( 'Sign In / Sign Up', 'verify-woo' ); ?>">
 					</div>
 			</div>
+			<div class="login-form verify-otp-form">
+					<div class="group">
+						<input id="otp-pass" placeholder="<?php echo esc_html__( 'Enter OTP', 'verify-woo' ); ?>" name="otp" type="number" class="input">
+					</div>
+					<div class="group">
+						<input type="submit" name="verify" class="button verify" value="<?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?>">
+					</div>
+			</div>
+			<div class="alert"></div>
 		</div>
 	</div>
 </form>

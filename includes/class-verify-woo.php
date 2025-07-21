@@ -165,12 +165,17 @@ class Verify_Woo {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin          = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_authentication = new Verify_Woo_Authentication( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
+		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_send_otp', $plugin_authentication, 'wp_ajax_send_otp' );
+		$this->loader->add_action( 'wp_ajax_verify_woo_send_otp', $plugin_authentication, 'wp_ajax_send_otp' );
+		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_check_otp', $plugin_authentication, 'wp_ajax_check_otp' );
+		$this->loader->add_action( 'wp_ajax_verify_woo_check_otp', $plugin_authentication, 'wp_ajax_check_otp' );
 	}
 
 	/**
