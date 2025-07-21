@@ -23,7 +23,6 @@
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
 class Verify_Woo_Authentication {
-
 	/**
 	 * The ID of this plugin.
 	 *

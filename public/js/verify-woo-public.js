@@ -4,6 +4,19 @@
 	$(document).ready(function () {
 		const notify = $('.alert');
 
+		const urlParams = new URLSearchParams(window.location.search);
+		const messageKey = urlParams.get('verifywoo_msg');
+
+		if (messageKey) {
+			let message = '';
+			switch (messageKey) {
+				case 'login_checkout_required':
+					message = 'You must log in before checking out.';
+					showAlert('warning', message);
+					break;
+			}
+		}
+
 		const verifyOtpFormWrapper = $('.login-form.verify-otp-form');
 		if (verifyOtpFormWrapper.length) {
 			const otpInputs = document.querySelectorAll('.otp-input-group .otp-input');

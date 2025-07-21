@@ -127,6 +127,11 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/includes/class-verify-woo-authentication.php';
 
+				/**
+		 * The class responsible for defining all actions that occur in the auth redirect
+		 */
+		require_once PLUGIN_DIR . '/includes/class-verify-woo-auth-redirect.php';
+
 		$this->loader = new Verify_Woo_Loader();
 	}
 
@@ -189,11 +194,13 @@ class Verify_Woo {
 
 		$plugin_public         = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
 		$plugin_authentication = new Verify_Woo_Authentication( $this->get_plugin_name(), $this->get_version() );
+		$plugin_auth_redirect  = new Verify_Woo_Auth_Redirect( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_authentication, 'myplugin_disable_wc_login_form_template', 100, 3 );
 		$this->loader->add_action( 'woocommerce_login_form', $plugin_public, 'register_authentication_form' );
+		$this->loader->add_action( 'template_redirect', $plugin_auth_redirect, 'maybe_redirect_to_login' );
 	}
 
 	/**

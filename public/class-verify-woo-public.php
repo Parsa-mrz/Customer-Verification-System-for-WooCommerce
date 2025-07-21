@@ -112,11 +112,25 @@ class Verify_Woo_Public {
 	 * The output is buffered and escaped to ensure safe rendering.
 	 *
 	 * @since 1.0.0
-	 * @return void
+	 * @return string The path to the custom authentication form template.
 	 */
 	public function register_authentication_form() {
 		ob_start();
-		require_once PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php';
+		/**
+		 * Filter the path to the custom login form template.
+		 *
+		 * Allows developers to override the path to the login form template
+		 * used to replace WooCommerce's default login form.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $custom_template_path Full path to the custom login form.
+		 */
+		$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
+
+		if ( file_exists( $custom_template ) ) {
+			return $custom_template;
+		}
 		echo wp_kses_post( ob_get_clean() );
 	}
 }
