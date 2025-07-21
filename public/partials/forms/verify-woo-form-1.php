@@ -24,8 +24,13 @@
 					</div>
 			</div>
 			<div class="login-form verify-otp-form">
-					<div class="group">
-						<input id="otp-pass" placeholder="<?php echo esc_html__( 'Enter OTP', 'verify-woo' ); ?>" name="otp" type="number" class="input">
+					<div class="group otp-input-group">
+						<label for="otp-input-1" class="screen-reader-text"><?php echo esc_html__( 'Enter OTP', 'verify-woo' ); ?></label>
+						<input id="otp-input-1" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="0">
+						<input id="otp-input-2" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="1">
+						<input id="otp-input-3" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="2">
+						<input id="otp-input-4" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="3">
+						<input type="hidden" name="otp" id="combined_otp">
 					</div>
 					<div class="group">
 						<input type="submit" name="verify" class="button verify" value="<?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?>">
