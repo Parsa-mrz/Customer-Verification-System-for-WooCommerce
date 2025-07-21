@@ -6,6 +6,7 @@
 
 		const urlParams = new URLSearchParams(window.location.search);
 		const messageKey = urlParams.get('verifywoo_msg');
+		const redirectUrl = urlParams.get('verifywoo_redirect_url');
 
 		if (messageKey) {
 			let message = '';
@@ -149,7 +150,7 @@
 					if (response.success) {
 						showAlert('success', response.data.message);
 						setTimeout(function () {
-							window.location.href = response.data.redirect;
+							window.location.href = redirectUrl ?? response.data.redirect;
 						}, 400);
 						$('.verify-otp-form').fadeOut();
 					} else {
