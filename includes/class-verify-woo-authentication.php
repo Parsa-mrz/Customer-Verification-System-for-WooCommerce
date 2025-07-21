@@ -1,9 +1,26 @@
 <?php
 /**
- * Handles authentication customization for Woocommerce.
+ * Handles custom authentication logic for WooCommerce via OTP.
  *
- * @package VerifyWoo
- * @since   1.0.0
+ * This file defines the core functionality for managing OTP-based login,
+ * including rate limiting, verification, and WooCommerce form overrides.
+ *
+ * @link       https://parsamirzaie.com
+ * @since      1.0.0
+ * @package    Verify_Woo
+ * @subpackage Verify_Woo/includes
+ */
+
+/**
+ * Authentication handler class for Verify Woo.
+ *
+ * This class handles OTP generation and validation via AJAX for WooCommerce login flow.
+ * It also replaces the default WooCommerce login template with a custom one.
+ *
+ * @since      1.0.0
+ * @package    Verify_Woo
+ * @subpackage Verify_Woo/includes
+ * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
 class Verify_Woo_Authentication {
 
@@ -153,7 +170,7 @@ class Verify_Woo_Authentication {
 
 		set_transient( $key, $data, 5 * MINUTE_IN_SECONDS );
 
-		// todo: send by sms
+		// todo: send by sms.
 		error_log( 'OTP for ' . $phone . ': ' . $otp_code );
 
 		return $otp_code;
