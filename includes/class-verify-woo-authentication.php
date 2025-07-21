@@ -56,18 +56,19 @@ class Verify_Woo_Authentication {
 	}
 
 	/**
-	 * AJAX handler to send OTP to the user phone number.
+	 * AJAX callback: Sends an OTP code to the specified phone number.
 	 *
-	 * Validates nonce and phone input, enforces rate limit (2 minutes),
-	 * generates OTP, stores it with attempt counter and timestamp.
+	 * Validates nonce and input, enforces rate limiting,
+	 * generates and stores OTP, triggers OTP sending hook.
+	 *
+	 * Sends JSON success or error response.
 	 *
 	 * @since 1.0.0
-	 * @return void Sends JSON response success or error.
+	 *
+	 * @return void Outputs JSON and terminates script execution.
 	 */
 	public function wp_ajax_send_otp() {
-		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_nonce'] ) ), 'verify_woo_otp_nonce' ) ) {
-			wp_send_json_error( __( 'Invalid request (nonce failed).', 'verify-woo' ) );
-		}
+		check_ajax_referer( 'verify_woo_otp_nonce', '_nonce', true );
 
 		if ( ! isset( $_POST['user_phone'] ) ) {
 			wp_send_json_error( __( 'Phone number is required.', 'verify-woo' ) );
@@ -91,18 +92,18 @@ class Verify_Woo_Authentication {
 	}
 
 	/**
-	 * AJAX handler to verify submitted OTP against stored one.
+	 * AJAX callback: Validates submitted OTP and logs in the user.
 	 *
-	 * Validates nonce, inputs, checks OTP correctness, attempt count (max 3),
-	 * expires OTP after max attempts or on success.
+	 * Checks nonce and input, verifies OTP correctness and attempts,
+	 * logs in existing user or auto-registers if allowed,
+	 * and returns JSON success with redirect URL or error.
 	 *
 	 * @since 1.0.0
-	 * @return void Sends JSON response success or error.
+	 *
+	 * @return void Outputs JSON and terminates script execution.
 	 */
 	public function wp_ajax_check_otp() {
-		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_nonce'] ) ), 'verify_woo_otp_nonce' ) ) {
-			wp_send_json_error( __( 'Invalid request (nonce failed).', 'verify-woo' ) );
-		}
+		check_ajax_referer( 'verify_woo_otp_nonce', '_nonce', true );
 
 		$otp        = isset( $_POST['otp'] ) ? sanitize_text_field( wp_unslash( $_POST['otp'] ) ?? '' ) : '';
 		$user_phone = isset( $_POST['user_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['user_phone'] ) ?? '' ) : '';
@@ -116,20 +117,44 @@ class Verify_Woo_Authentication {
 			wp_send_json_error( $check_otp['message'] );
 		}
 
-		wp_send_json_success( __( 'OTP verified successfully.', 'verify-woo' ) );
+		$login_success = $this->check_user( $user_phone );
+
+		if ( ! $login_success ) {
+			wp_send_json_error( __( 'Something went wrong. Please try again later.', 'verify-woo' ) );
+		}
+
+		/**
+		 * Filter: 'verify_woo_login_redirect_url'
+		 *
+		 * Modify the URL where users are redirected after successful OTP login.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $redirect_url Default WooCommerce My Account page URL.
+		 *
+		 * @return string New redirect URL.
+		 */
+		$redirect_url = apply_filters( 'verify_woo_login_redirect_url', wc_get_page_permalink( 'myaccount' ) );
+
+		wp_send_json_success(
+			array(
+				'message'  => __( 'OTP verified and user logged in.', 'verify-woo' ),
+				'redirect' => $redirect_url,
+			)
+		);
 	}
 
 	/**
-	 * Checks if user can request a new OTP (rate limiting).
+	 * Determines if a new OTP can be requested for the given phone number.
 	 *
-	 * Allows new OTP request only if 2 minutes have passed since last OTP.
+	 * Enforces a cooldown period (default 120 seconds) between OTP requests.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $phone User phone number.
+	 * @param string $phone Phone number to check.
 	 * @return array{
-	 *     allowed: bool,   Whether new OTP request is allowed.
-	 *     wait?:  int      Seconds remaining before next allowed request.
+	 *     allowed: bool,  True if allowed to request new OTP.
+	 *     wait?: int      Seconds remaining before next allowed request.
 	 * }
 	 */
 	private function verify_woo_can_request_otp( $phone ) {
@@ -139,10 +164,35 @@ class Verify_Woo_Authentication {
 		if ( $data && isset( $data['time'] ) ) {
 			$elapsed = time() - $data['time'];
 
-			if ( $elapsed < 120 ) {
+			/**
+			 * Filter Hook: 'verify_woo_otp_rate_limit_seconds'
+			 *
+			 * Filters the cooldown time in seconds between OTP requests.
+			 *
+			 * Allows adjusting rate limit duration dynamically.
+			 *
+			 * Parameters passed to callback:
+			 *
+			 * @param int $seconds The default cooldown time in seconds (default 120).
+			 *
+			 * Returns:
+			 * Modified cooldown time in seconds.
+			 *
+			 * Usage example:
+			 * ```php
+			 * add_filter( 'verify_woo_otp_rate_limit_seconds', function( $seconds ) {
+			 *     return 60; // 1 minute instead of 2
+			 * });
+			 * ```
+			 *
+			 * @since 1.0.0
+			 */
+			$rate_limit = apply_filters( 'verify_woo_otp_rate_limit_seconds', 120 );
+
+			if ( $elapsed < $rate_limit ) {
 				return array(
 					'allowed' => false,
-					'wait'    => 120 - $elapsed,
+					'wait'    => $rate_limit - $elapsed,
 				);
 			}
 		}
@@ -151,11 +201,14 @@ class Verify_Woo_Authentication {
 	}
 
 	/**
-	 * Generates a new OTP, stores it in a transient with attempt counter and timestamp.
+	 * Generates and stores a new OTP for the given phone number.
+	 *
+	 * Stores OTP with timestamp and zero attempts, triggers sending via hook,
+	 * and logs OTP for debugging (remove in production).
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $phone User phone number.
+	 * @param string $phone Phone number to send OTP to.
 	 * @return int Generated OTP code.
 	 */
 	private function verify_woo_generate_otp( $phone ) {
@@ -168,23 +221,60 @@ class Verify_Woo_Authentication {
 			'time'     => time(),
 		);
 
-		set_transient( $key, $data, 5 * MINUTE_IN_SECONDS );
+		/**
+		 * Filter: 'verify_woo_otp_expiration'
+		 *
+		 * Change how long OTP codes are valid (expiration time).
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param int $expiration Default is 5 minutes in seconds.
+		 *
+		 * @return int New OTP expiration time in seconds.
+		 */
+		$expiration = apply_filters( 'verify_woo_otp_expiration', 5 * MINUTE_IN_SECONDS );
 
-		// todo: send by sms.
+		set_transient( $key, $data, $expiration );
+
+		/**
+		 * Action Hook: 'verify_woo_send_otp_sms'
+		 *
+		 * Fires when an OTP code has been generated and is ready to be sent via SMS.
+		 *
+		 * Allows hooking into the process to send the OTP using a custom SMS gateway.
+		 *
+		 * Parameters passed to callback:
+				 *
+		 * @param string $phone    The phone number to which OTP should be sent.
+		 * @param int    $otp_code The generated OTP code.
+		 *
+		 * Usage example:
+		 * ```php
+		 * add_action( 'verify_woo_send_otp_sms', 'send_sms_via_gateway', 10, 2 );
+		 * function send_sms_via_gateway( $phone, $otp_code ) {
+		 *     // Your SMS sending logic here
+		 * }
+		 * ```
+		 *
+		 * @since 1.0.0
+		 */
+		do_action( 'verify_woo_send_otp_sms', $phone, $otp_code );
+
 		error_log( 'OTP for ' . $phone . ': ' . $otp_code );
 
 		return $otp_code;
 	}
 
 	/**
-	 * Checks submitted OTP against stored OTP.
+	 * Validates the user-submitted OTP against the stored OTP.
 	 *
-	 * Increments attempts on failure and expires OTP after 3 failed attempts.
+	 * Increments attempt count on failure, expires OTP after max attempts (default 3),
+	 * returns success or error messages accordingly.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $phone      User phone number.
-	 * @param string $input_code OTP entered by the user.
+	 * @param string $phone      Phone number associated with OTP.
+	 * @param string $input_code OTP code submitted by user.
 	 * @return array{
 	 *     success: bool,
 	 *     message?: string
@@ -201,7 +291,20 @@ class Verify_Woo_Authentication {
 			);
 		}
 
-		if ( $data['attempts'] >= 3 ) {
+		/**
+		 * Filter: 'verify_woo_max_otp_attempts'
+		 *
+		 * Set the maximum number of attempts allowed for OTP verification.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param int $max_attempts Default is 3.
+		 *
+		 * @return int The new max attempt limit.
+		 */
+		$max_attempts = apply_filters( 'verify_woo_max_otp_attempts', 3 );
+
+		if ( $data['attempts'] >= $max_attempts ) {
 			delete_transient( $key );
 			return array(
 				'success' => false,
@@ -232,6 +335,157 @@ class Verify_Woo_Authentication {
 	}
 
 	/**
+	 * Checks if a user exists by phone number, logs them in,
+	 * or auto-registers a new user if enabled.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $phone Phone number to check or register.
+	 * @return bool True on successful login or registration, false otherwise.
+	 */
+	private function check_user( $phone ) {
+		$clean_phone = preg_replace( '/[^0-9]/', '', $phone );
+
+		/**
+		 * Filter: 'verify_woo_username_prefix'
+		 *
+		 * Allows modifying the prefix used when creating a new username from a phone number.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $prefix      The default prefix, e.g., 'customer_'.
+		 * @param string $clean_phone The sanitized phone number.
+		 *
+		 * @return string Modified prefix.
+		 */
+		$prefix = apply_filters( 'verify_woo_username_prefix', 'customer_', $clean_phone );
+
+		$username = sanitize_user( "$prefix$clean_phone", true );
+
+		$user = get_user_by( 'login', $username );
+
+		if ( $user ) {
+			/**
+			 * Action Hook: 'verify_woo_before_login_existing_user'
+			 *
+			 * Fires right before an existing user is logged in via OTP.
+			 *
+			 * Allows adding custom logic before login (e.g., logging, extra validation).
+			 *
+			 * Parameters passed to callback:
+						 *
+			 * @param WP_User $user The user object being logged in.
+			 *
+			 * Usage example:
+			 * ```php
+			 * add_action( 'verify_woo_before_login_existing_user', 'custom_before_login', 10, 1 );
+			 * function custom_before_login( $user ) {
+			 *     // Custom pre-login actions
+			 * }
+			 * ```
+			 *
+			 * @since 1.0.0
+			 */
+			do_action( 'verify_woo_before_login_existing_user', $user );
+
+			wp_set_current_user( $user->ID );
+			wp_set_auth_cookie( $user->ID );
+			return true;
+		}
+
+		/**
+		 * Filter: 'verify_woo_auto_register_enabled'
+		 *
+		 * Control whether new users can be auto-registered via OTP.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param bool   $enabled True to allow auto-registration.
+		 * @param string $phone   Phone number attempting login.
+		 *
+		 * @return bool Modified flag to allow or deny auto-registration.
+		 */
+		if ( ! apply_filters( 'verify_woo_auto_register_enabled', true, $phone ) ) {
+			return false;
+		}
+
+		/**
+		 * Filter: 'verify_woo_new_user_role'
+		 *
+		 * Modify the role assigned to newly registered users.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $role  Default role is 'customer'.
+		 * @param string $phone The phone number used for registration.
+		 *
+		 * @return string The user role.
+		 */
+		$roles = apply_filters( 'verify_woo_new_user_role', 'customer', $phone );
+
+		$user_data = array(
+			'user_login' => $username,
+			'user_pass'  => wp_generate_password(),
+			'role'       => $roles,
+		);
+
+		/**
+		 * Filter: 'verify_woo_new_user_data'
+		 *
+		 * Change the data array used to register new users.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array  $user_data {
+		 *     @type string $user_login The generated username.
+		 *     @type string $user_pass  Random password.
+		 *     @type string $role       Role of the new user.
+		 * }
+		 * @param string $phone The phone number used to register.
+		 *
+		 * @return array Modified user data array.
+		 */
+		$user_data = apply_filters( 'verify_woo_new_user_data', $user_data, $phone );
+
+		$user_id = wp_insert_user( $user_data );
+
+		if ( is_wp_error( $user_id ) ) {
+			return false;
+		}
+
+		update_user_meta( $user_id, 'verify_woo_phone_number', $phone );
+
+		/**
+		 * Action Hook: 'verify_woo_after_register_user'
+		 *
+		 * Fires immediately after a new user is registered via OTP auto-registration.
+		 *
+		 * Useful for adding additional user meta or triggering welcome emails.
+		 *
+		 * Parameters passed to callback:
+		 *
+		 * @param int    $user_id The ID of the newly registered user.
+		 * @param string $phone   The phone number used for registration.
+		 *
+		 * Usage example:
+		 * ```php
+		 * add_action( 'verify_woo_after_register_user', 'send_welcome_email', 10, 2 );
+		 * function send_welcome_email( $user_id, $phone ) {
+		 *     // Send welcome email or other post-registration logic
+		 * }
+		 * ```
+		 *
+		 * @since 1.0.0
+		 */
+		do_action( 'verify_woo_after_register_user', $user_id, $phone );
+
+		wp_set_current_user( $user_id );
+		wp_set_auth_cookie( $user_id );
+
+		return true;
+	}
+
+	/**
 	 * Override the default WooCommerce login form template with a custom template.
 	 *
 	 * Hooked into `woocommerce_locate_template`.
@@ -246,7 +500,21 @@ class Verify_Woo_Authentication {
 	 */
 	public function myplugin_disable_wc_login_form_template( $template, $template_name, $template_path ) {
 		if ( 'myaccount/form-login.php' === $template_name ) {
-			return PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php';
+			/**
+			 * Filter the path to the custom login form template.
+			 *
+			 * Allows developers to override the path to the login form template
+			 * used to replace WooCommerce's default login form.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param string $custom_template_path Full path to the custom login form.
+			 */
+			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
+
+			if ( file_exists( $custom_template ) ) {
+				return $custom_template;
+			}
 		}
 		return $template;
 	}

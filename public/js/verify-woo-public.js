@@ -54,7 +54,10 @@
 				},
 				success: function (response) {
 					if (response.success) {
-						showAlert('success', response.data);
+						showAlert('success', response.data.message);
+						setTimeout(function () {
+							window.location.href = response.data.redirect;
+						}, 400);
 						$('.verify-otp-form').fadeOut();
 					} else {
 						showAlert('error', response.data);
