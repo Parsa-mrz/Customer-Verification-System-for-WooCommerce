@@ -42,10 +42,6 @@ Yes! The plugin supports internationalization and includes a `.pot` file for tra
 
 == Screenshots ==
 
-1. Plugin settings in WooCommerce
-2. Verification prompt on checkout
-3. Success message after verification
-
 == Changelog ==
 
 = 1.0.0 =
@@ -55,10 +51,6 @@ Yes! The plugin supports internationalization and includes a `.pot` file for tra
 
 = 1.0.0 =
 First stable release of Verify Woo
-
-== Arbitrary section ==
-
-You can use this section to include any custom instructions or notes to users.
 
 == License ==
 
