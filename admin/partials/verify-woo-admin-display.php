@@ -19,9 +19,20 @@
 			<div class="tab-links">
 				<div class="plugin-info">
 					<div class="plugin-details">
-						<h2><?php esc_html_e( 'Verify Woo', 'verify-woo' ); ?></h2>
+						<h2><?php esc_html_e( 'VerifyWoo', 'verify-woo' ); ?></h2>
 					</div>
-					<div class="plugin-version"><?php esc_html_e( 'Version 1.0.0', 'verify-woo' ); ?></div>
+					<div class="plugin-version">
+						
+						<?php
+						esc_html(
+							printf(
+								/* translators: %s: plugin version */
+								esc_html__( 'Version %s', 'verify-woo' ),
+								esc_html( $this->version )
+							)
+						);
+						?>
+					</div>
 				</div>
 
 				<?php $first = true; ?>
@@ -31,7 +42,11 @@
 						$slug   = esc_attr( $tab_item['slug'] );
 						$name   = esc_html( $tab_item['name'] );
 					?>
-					<button class="tab-link <?php echo esc_attr( $active ); ?>" data-tab="<?php echo esc_attr( $slug ); ?>"><?php echo $name; ?></button>
+					<button class="tab-link <?php echo esc_attr( $active ); ?>" data-tab="<?php echo esc_attr( $slug ); ?>">
+						<?php
+						echo esc_html( $name );
+						?>
+					</button>
 					<?php $first = false; ?>
 				<?php endforeach; ?>
 			</div>
