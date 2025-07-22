@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -123,19 +122,24 @@ class Verify_Woo {
 		require_once PLUGIN_DIR . '/public/class-verify-woo-public.php';
 
 		/**
-		 * The class responsible for defining all actions that occur in the authentication
-		 */
-		require_once PLUGIN_DIR . '/includes/class-verify-woo-authentication.php';
-
-		/**
 		 * The class responsible for defining all actions that occur in the auth redirect
 		 */
-		require_once PLUGIN_DIR . '/includes/class-verify-woo-auth-redirect.php';
+		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-redirect.php';
 
 		/**
 		 * The class responsible for defining all enums that occur in plugin
 		 */
 		require_once PLUGIN_DIR . '/enums/verify-woo-otp-enum.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the send otp
+		 */
+		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-send-otp.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the validate otp
+		 */
+		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-validate-otp.php';
 
 		$this->loader = new Verify_Woo_Loader();
 	}
@@ -175,17 +179,12 @@ class Verify_Woo {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin          = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
-		$plugin_authentication = new Verify_Woo_Authentication( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
-		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_send_otp', $plugin_authentication, 'wp_ajax_send_otp' );
-		$this->loader->add_action( 'wp_ajax_verify_woo_send_otp', $plugin_authentication, 'wp_ajax_send_otp' );
-		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_check_otp', $plugin_authentication, 'wp_ajax_check_otp' );
-		$this->loader->add_action( 'wp_ajax_verify_woo_check_otp', $plugin_authentication, 'wp_ajax_check_otp' );
 	}
 
 	/**
@@ -197,15 +196,21 @@ class Verify_Woo {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public         = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
-		$plugin_authentication = new Verify_Woo_Authentication( $this->get_plugin_name(), $this->get_version() );
-		$plugin_auth_redirect  = new Verify_Woo_Auth_Redirect( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public       = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_redirect     = new Verify_Woo_Redirect();
+		$plugin_send_otp     = new Verify_Woo_Send_OTP();
+		$plugin_validate_otp = new Verify_Woo_Validate_OTP();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_filter( 'woocommerce_locate_template', $plugin_authentication, 'myplugin_disable_wc_login_form_template', 100, 3 );
+		$this->loader->add_filter( 'woocommerce_locate_template', $this, 'myplugin_disable_wc_login_form_template', 100, 3 );
+		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_send_otp', $plugin_send_otp, 'wp_ajax_send_otp' );
+		$this->loader->add_action( 'wp_ajax_verify_woo_send_otp', $plugin_send_otp, 'wp_ajax_send_otp' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_verify_woo_check_otp', $plugin_validate_otp, 'wp_ajax_check_otp' );
+		$this->loader->add_action( 'wp_ajax_verify_woo_check_otp', $plugin_validate_otp, 'wp_ajax_check_otp' );
 		$this->loader->add_action( 'woocommerce_login_form', $plugin_public, 'register_authentication_form' );
-		$this->loader->add_action( 'template_redirect', $plugin_auth_redirect, 'maybe_redirect_to_login' );
+		$this->loader->add_action( 'template_redirect', $plugin_redirect, 'maybe_redirect_to_login' );
 	}
 
 	/**
@@ -246,5 +251,39 @@ class Verify_Woo {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Override the default WooCommerce login form template with a custom template.
+	 *
+	 * Hooked into `woocommerce_locate_template`.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $template       Path to the template found.
+	 * @param string $template_name  Name of the template file.
+	 * @param string $template_path  Path to the templates directory.
+	 *
+	 * @return string Path to the custom template if it matches; otherwise, original template.
+	 */
+	public function myplugin_disable_wc_login_form_template( $template, $template_name, $template_path ) {
+		if ( 'myaccount/form-login.php' === $template_name ) {
+			/**
+			 * Filter the path to the custom login form template.
+			 *
+			 * Allows developers to override the path to the login form template
+			 * used to replace WooCommerce's default login form.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param string $custom_template_path Full path to the custom login form.
+			 */
+			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
+
+			if ( file_exists( $custom_template ) ) {
+				return $custom_template;
+			}
+		}
+		return $template;
 	}
 }

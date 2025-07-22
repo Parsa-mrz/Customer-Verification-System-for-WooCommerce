@@ -1,9 +1,13 @@
 <?php
 /**
- * Handles custom authentication logic for WooCommerce via OTP.
+ * Class for validating and handling OTP-based login via AJAX in WooCommerce.
  *
- * This file defines the core functionality for managing OTP-based login,
- * including rate limiting, verification, and WooCommerce form overrides.
+ * This file defines the core functionality of the Verify Woo plugin that handles:
+ * - OTP validation and verification
+ * - Automatic user login or registration
+ * - Security checks using nonces and sanitized input
+ * - Integration with WordPress and WooCommerce login system
+ * - Hookable filters and actions for full extensibility
  *
  * @link       https://parsamirzaie.com
  * @since      1.0.0
@@ -12,85 +16,21 @@
  */
 
 /**
- * Authentication handler class for Verify Woo.
+ * Handles OTP validation and user login/registration via AJAX.
  *
- * This class handles OTP generation and validation via AJAX for WooCommerce login flow.
- * It also replaces the default WooCommerce login template with a custom one.
+ * This class contains methods to:
+ * - Verify the OTP using a transient-based system
+ * - Automatically log in existing users
+ * - Register new users if allowed
+ * - Return appropriate JSON responses
  *
- * @since      1.0.0
- * @package    Verify_Woo
- * @subpackage Verify_Woo/includes
- * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
+ * Provides several hooks to customize behavior such as max OTP attempts,
+ * redirect URLs, user role assignment, and more.
+ *
+ * @since 1.0.0
+ * @package Verify_Woo
  */
-class Verify_Woo_Authentication {
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string $plugin_name       The name of the plugin.
-	 * @param      string $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-	}
-
-	/**
-	 * AJAX callback: Sends an OTP code to the specified phone number.
-	 *
-	 * Validates nonce and input, enforces rate limiting,
-	 * generates and stores OTP, triggers OTP sending hook.
-	 *
-	 * Sends JSON success or error response.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void Outputs JSON and terminates script execution.
-	 */
-	public function wp_ajax_send_otp() {
-		check_ajax_referer( 'verify_woo_otp_nonce', '_nonce', true );
-
-		if ( ! isset( $_POST['user_phone'] ) ) {
-			wp_send_json_error( __( 'Phone number is required.', 'verify-woo' ) );
-		}
-
-		$user_phone = sanitize_text_field( wp_unslash( $_POST['user_phone'] ) );
-
-		if ( empty( $user_phone ) ) {
-			wp_send_json_error( __( 'Phone number is empty.', 'verify-woo' ) );
-		}
-
-		$rate = $this->verify_woo_can_request_otp( $user_phone );
-		if ( ! $rate['allowed'] ) {
-			// Translators: %d is the number of seconds the user must wait before retrying.
-			wp_send_json_error( sprintf( __( 'Please wait %d seconds before trying again.', 'verify-woo' ), $rate['wait'] ) );
-		}
-
-		$this->verify_woo_generate_otp( $user_phone );
-
-		// Translators: %d is the user phone number.
-		wp_send_json_success( sprintf( __( 'OTP Sent to %d Successfully!', 'verify-woo' ), $user_phone ) );
-	}
-
+class Verify_Woo_Validate_OTP {
 	/**
 	 * AJAX callback: Validates submitted OTP and logs in the user.
 	 *
@@ -143,128 +83,6 @@ class Verify_Woo_Authentication {
 			)
 		);
 	}
-
-	/**
-	 * Determines if a new OTP can be requested for the given phone number.
-	 *
-	 * Enforces a cooldown period (default 120 seconds) between OTP requests.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $phone Phone number to check.
-	 * @return array{
-	 *     allowed: bool,  True if allowed to request new OTP.
-	 *     wait?: int      Seconds remaining before next allowed request.
-	 * }
-	 */
-	private function verify_woo_can_request_otp( $phone ) {
-		$key  = 'verify_woo_otp_' . md5( $phone );
-		$data = get_transient( $key );
-
-		if ( $data && isset( $data['time'] ) ) {
-			$elapsed = time() - $data['time'];
-
-			/**
-			 * Filter Hook: 'verify_woo_otp_rate_limit_seconds'
-			 *
-			 * Filters the cooldown time in seconds between OTP requests.
-			 *
-			 * Allows adjusting rate limit duration dynamically.
-			 *
-			 * Parameters passed to callback:
-			 *
-			 * @param int $seconds The default cooldown time in seconds (default 120).
-			 *
-			 * Returns:
-			 * Modified cooldown time in seconds.
-			 *
-			 * Usage example:
-			 * ```php
-			 * add_filter( 'verify_woo_otp_rate_limit_seconds', function( $seconds ) {
-			 *     return 60; // 1 minute instead of 2
-			 * });
-			 * ```
-			 *
-			 * @since 1.0.0
-			 */
-			$rate_limit = apply_filters( 'verify_woo_otp_rate_limit_seconds', OTP::EXPIRE_TIME->value );
-
-			if ( $elapsed < $rate_limit ) {
-				return array(
-					'allowed' => false,
-					'wait'    => $rate_limit - $elapsed,
-				);
-			}
-		}
-
-		return array( 'allowed' => true );
-	}
-
-	/**
-	 * Generates and stores a new OTP for the given phone number.
-	 *
-	 * Stores OTP with timestamp and zero attempts, triggers sending via hook,
-	 * and logs OTP for debugging (remove in production).
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $phone Phone number to send OTP to.
-	 * @return int Generated OTP code.
-	 */
-	private function verify_woo_generate_otp( $phone ) {
-		$otp_code = wp_rand( 1000, 9999 );
-		$key      = 'verify_woo_otp_' . md5( $phone );
-
-		$data = array(
-			'otp'      => $otp_code,
-			'attempts' => 0,
-			'time'     => time(),
-		);
-
-		/**
-		 * Filter: 'verify_woo_otp_expiration'
-		 *
-		 * Change how long OTP codes are valid (expiration time).
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param int $expiration Default is 2 minutes in seconds.
-		 *
-		 * @return int New OTP expiration time in seconds.
-		 */
-		$expiration = apply_filters( 'verify_woo_otp_expiration', OTP::EXPIRE_TIME->value );
-
-		set_transient( $key, $data, $expiration );
-
-		/**
-		 * Action Hook: 'verify_woo_send_otp_sms'
-		 *
-		 * Fires when an OTP code has been generated and is ready to be sent via SMS.
-		 *
-		 * Allows hooking into the process to send the OTP using a custom SMS gateway.
-		 *
-		 * Parameters passed to callback:
-				 *
-		 * @param string $phone    The phone number to which OTP should be sent.
-		 * @param int    $otp_code The generated OTP code.
-		 *
-		 * Usage example:
-		 * ```php
-		 * add_action( 'verify_woo_send_otp_sms', 'send_sms_via_gateway', 10, 2 );
-		 * function send_sms_via_gateway( $phone, $otp_code ) {
-		 *     // Your SMS sending logic here
-		 * }
-		 * ```
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'verify_woo_send_otp_sms', $phone, $otp_code );
-
-		error_log( 'OTP for ' . $phone . ': ' . $otp_code );
-
-		return $otp_code;
-	}
-
 	/**
 	 * Validates the user-submitted OTP against the stored OTP.
 	 *
@@ -332,7 +150,6 @@ class Verify_Woo_Authentication {
 		delete_transient( $key );
 		return array( 'success' => true );
 	}
-
 	/**
 	 * Checks if a user exists by phone number, logs them in,
 	 * or auto-registers a new user if enabled.
@@ -482,39 +299,5 @@ class Verify_Woo_Authentication {
 		wp_set_auth_cookie( $user_id );
 
 		return true;
-	}
-
-	/**
-	 * Override the default WooCommerce login form template with a custom template.
-	 *
-	 * Hooked into `woocommerce_locate_template`.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $template       Path to the template found.
-	 * @param string $template_name  Name of the template file.
-	 * @param string $template_path  Path to the templates directory.
-	 *
-	 * @return string Path to the custom template if it matches; otherwise, original template.
-	 */
-	public function myplugin_disable_wc_login_form_template( $template, $template_name, $template_path ) {
-		if ( 'myaccount/form-login.php' === $template_name ) {
-			/**
-			 * Filter the path to the custom login form template.
-			 *
-			 * Allows developers to override the path to the login form template
-			 * used to replace WooCommerce's default login form.
-			 *
-			 * @since 1.0.0
-			 *
-			 * @param string $custom_template_path Full path to the custom login form.
-			 */
-			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
-
-			if ( file_exists( $custom_template ) ) {
-				return $custom_template;
-			}
-		}
-		return $template;
 	}
 }
