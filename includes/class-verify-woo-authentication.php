@@ -287,7 +287,7 @@ class Verify_Woo_Authentication {
 		if ( ! $data ) {
 			return array(
 				'success' => false,
-				'message' => 'OTP expired. Please request a new one.',
+				'message' => __( 'OTP expired. Please request a new one.', 'verify-woo' ),
 			);
 		}
 
@@ -308,7 +308,7 @@ class Verify_Woo_Authentication {
 			delete_transient( $key );
 			return array(
 				'success' => false,
-				'message' => 'Too many attempts. Try again later.',
+				'message' => __( 'Too many attempts. Try again later.', 'verify-woo' ),
 			);
 		}
 
@@ -319,13 +319,13 @@ class Verify_Woo_Authentication {
 				delete_transient( $key );
 				return array(
 					'success' => false,
-					'message' => 'Incorrect OTP. Maximum attempts reached.',
+					'message' => __( 'Incorrect OTP. Maximum attempts reached.', 'verify-woo' ),
 				);
 			}
 
 			return array(
 				'success' => false,
-				'message' => 'Incorrect OTP. Try again.',
+				'message' => __( 'Incorrect OTP. Try again.', 'verify-woo' ),
 			);
 		}
 
@@ -415,7 +415,7 @@ class Verify_Woo_Authentication {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $role  Default role is 'customer'.
+		 * @param string|array $roles  Default role is 'customer'.
 		 * @param string $phone The phone number used for registration.
 		 *
 		 * @return string The user role.

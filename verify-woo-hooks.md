@@ -206,7 +206,7 @@ Modify the role assigned to newly registered users during auto-registration.
 
 * **Description:** The default role for new users created via OTP auto-registration is `'customer'`. You can change this to any valid WordPress user role.
 * **Parameters:**
-    * `$role` (string): Default role is `'customer'`.
+    * `$role` (string|array): Default role is `'customer'`.
     * `$phone` (string): The phone number used for registration.
 * **Returns:** (string) The user role.
 * **Example Usage:**
@@ -214,7 +214,7 @@ Modify the role assigned to newly registered users during auto-registration.
     ```php
     add_filter( 'verify_woo_new_user_role', 'assign_subscriber_role_to_new_users', 10, 2 );
 
-    function assign_subscriber_role_to_new_users( $role, $phone ) {
+    function assign_subscriber_role_to_new_users( $roles, $phone ) {
         // Assign the 'subscriber' role instead of 'customer'
         return 'subscriber';
     }
