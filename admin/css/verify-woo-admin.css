@@ -2,3 +2,188 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+.tabs-container {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    position: relative;
+    height: 600px;
+    margin: 2rem 2rem 2rem 1rem;
+}
+
+.tabs {
+    padding: 10px 20px 15px 20px;
+    display: flex;
+    /* Increased padding */
+}
+
+.tab-links {
+    display: flex;
+    flex-direction: column;
+    height: 550px;
+    width: 230px;
+    gap: 30px;
+}
+
+.tab-link {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 15px 30px;
+    /* Increased padding for spacing */
+    color: #ccc;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.tab-link.active,
+.tab-link:hover {
+    color: #b84de5;
+    /* Gradient purple */
+}
+
+.tab-link i {
+    margin-right: 10px;
+}
+
+.tab-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -1px;
+    left: 50%;
+    background: linear-gradient(45deg, #b84de5, #7d41ff);
+    /* Purple gradient */
+    transition: all 0.4s ease;
+}
+
+.tab-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeInUp 0.5s ease;
+    padding: 5px 10px 15px 10px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Buttons */
+.cta-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    /* More padding */
+    background: linear-gradient(45deg, #b84de5, #7d41ff);
+    /* Purple gradient */
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.4s ease;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.cta-btn:hover {
+    background: linear-gradient(45deg, #9c3bce, #6b3ee8);
+    /* Darker gradient on hover */
+}
+
+/* Form Styles */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px 15px;
+    /* Increased padding for inputs */
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: border 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #b84de5;
+    outline: none;
+}
+
+/* FAQ List */
+.faq-list {
+    padding: 0;
+    list-style: none;
+}
+
+.faq-list li {
+    margin-bottom: 10px;
+}
+
+.faq-list li strong {
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .tab-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab-link {
+        text-align: center;
+        width: 100%;
+        padding: 15px 0;
+    }
+}
+
+.plugin-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.plugin-icon {
+    max-width: 120px;
+}
+
+.tab-contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.toplevel_page_verifywoo-settings .notice,
+.bebanstore-toplevel_page_verifywoo .notice.notice-success {
+    display: none !important;
+}

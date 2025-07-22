@@ -108,7 +108,7 @@ class Verify_Woo_Admin {
 	public function add_admin_menu() {
 		add_menu_page(
 			'VerifyWoo Settings',
-			'VerifyWoo',
+			__( 'VerifyWoo', 'veirfy-woo' ),
 			'manage_options',
 			'verifywoo-settings',
 			array( $this, 'render_settings' ),
@@ -128,35 +128,18 @@ class Verify_Woo_Admin {
 	 * @return   void
 	 */
 	public function render_settings() {
-		$tabs = $this->get_tabs();
+		$tabs      = $this->get_tabs();
+		$tabs_data = array();
 
-		$current_tab = isset( $_GET['tab'] ) ? wp_unslash( sanitize_key( $_GET['tab'] ) ) : '';
-		if ( ! array_key_exists( $current_tab, $tabs ) ) {
-			$current_tab = array_key_first( $tabs );
+		foreach ( $tabs as $slug => $name ) {
+			$tabs_data[] = array(
+				'slug'         => $slug,
+				'name'         => $name,
+				'content_file' => $this->get_tab_content_file( $slug ),
+			);
 		}
 
-		echo '<div class="wrap">';
-		echo '<h1>VerifyWoo Settings</h1>';
-		echo '<nav class="nav-tab-wrapper">';
-
-		foreach ( $tabs as $tab_slug => $tab_name ) {
-			$active = $current_tab === $tab_slug ? ' nav-tab-active' : '';
-			echo '<a href="?page=verifywoo-settings&tab=' . esc_attr( $tab_slug ) . '" class="nav-tab' . esc_attr( $active ) . '">' . esc_html( $tab_name ) . '</a>';
-		}
-
-		echo '</nav>';
-
-		$content_path = PLUGIN_DIR . '/admin/partials/tabs/' . $current_tab . '/content.php';
-
-		if ( file_exists( $content_path ) ) {
-			echo '<div class="tab-content">';
-			include $content_path;
-			echo '</div>';
-		} else {
-			echo '<p>Content not found for tab: ' . esc_html( $current_tab ) . '</p>';
-		}
-
-		echo '</div>';
+		include_once PLUGIN_DIR . '/admin/partials/verify-woo-admin-display.php';
 	}
 
 	/**
@@ -181,8 +164,27 @@ class Verify_Woo_Admin {
 			$tabs[ $slug ] = $name;
 		}
 
-		return $tabs;
+		/**
+		 * Allow external plugins/themes to register more tabs.
+		 *
+		 * @param array $tabs Associative array of tab_slug => tab_title.
+		*/
+		return apply_filters( 'verify_woo_admin_settings_tabs', $tabs );
 	}
+
+	/**
+	 * Gets the content file path for a given tab slug.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @param string $slug Tab slug.
+	 * @return string|null The content file path or null if not found.
+	 */
+	private function get_tab_content_file( string $slug ): ?string {
+		$file = PLUGIN_DIR . '/admin/partials/tabs/' . $slug . '/content.php';
+		return file_exists( $file ) ? $file : null;
+	}
+
 
 	/**
 	 * Adds a custom link (e.g., Sponsor) to the plugin row meta section

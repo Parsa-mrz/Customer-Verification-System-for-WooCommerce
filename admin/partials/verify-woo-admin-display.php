@@ -11,6 +11,52 @@
  * @package    Verify_Woo
  * @subpackage Verify_Woo/admin/partials
  */
-?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+?>
+<div class="wrap">
+	<div class="tabs-container">
+		<div class="tabs">
+			<div class="tab-links">
+				<div class="plugin-info">
+					<div class="plugin-details">
+						<h2><?php esc_html_e( 'Verify Woo', 'verify-woo' ); ?></h2>
+					</div>
+					<div class="plugin-version"><?php esc_html_e( 'Version 1.0.0', 'verify-woo' ); ?></div>
+				</div>
+
+				<?php $first = true; ?>
+				<?php foreach ( $tabs_data as $tab_item ) : ?>
+					<?php
+						$active = $first ? 'active' : '';
+						$slug   = esc_attr( $tab_item['slug'] );
+						$name   = esc_html( $tab_item['name'] );
+					?>
+					<button class="tab-link <?php echo esc_attr( $active ); ?>" data-tab="<?php echo esc_attr( $slug ); ?>"><?php echo $name; ?></button>
+					<?php $first = false; ?>
+				<?php endforeach; ?>
+			</div>
+
+			<div class="tab-contents">
+				<?php $first = true; ?>
+				<?php foreach ( $tabs_data as $tab_item ) : ?>
+					<?php
+						$active = $first ? 'active' : '';
+						$slug   = esc_attr( $tab_item['slug'] );
+					?>
+					<div class="tab-content <?php echo esc_attr( $active ); ?>" id="<?php echo esc_attr( $slug ); ?>">
+						<?php
+						do_action( "verify_woo_tab_{$slug}_content", $slug );
+
+						if ( ! empty( $tab_item['content_file'] ) ) {
+							include $tab_item['content_file'];
+						}
+						?>
+					</div>
+					<?php $first = false; ?>
+				<?php endforeach; ?>
+
+				<?php submit_button(); ?>
+			</div>
+		</div>
+	</div>
+</div>

@@ -72,6 +72,21 @@ Fires immediately after a new user is registered via OTP auto-registration.
     }
     ```
 
+### `verify_woo_tab_{$slug}_content`
+Fires the content rendering action for a specific tab in the Verify Woo plugin admin interface.
+
+* **Description:**
+This action allows developers to hook into and output the content for a custom tab,
+based on the dynamic `$slug` provided. Each tab should register its content output
+via a callback hooked to this action.
+* **Parameters:**
+    * `$slug` (string): The slug of tab.
+***Example Usage:**
+```php
+  add_action( 'verify_woo_tab_my-tab-content', function( $slug ) {
+      echo '<p>My custom tab content goes here for slug: ' . esc_html( $slug ) . '</p>';
+  }, 10, 1 );
+```
 ---
 
 ## Filter Hooks
@@ -270,3 +285,25 @@ Filters the path to the custom login form template.
         // return MY_OTHER_PLUGIN_DIR . '/templates/otp-login-form.php';
     }
     ```
+
+
+### `verify_woo_admin_settings_tabs`
+Filters the list of available settings tabs in the VerifyWoo admin page.
+
+* **Description:**
+  This filter allows external plugins, themes, or custom code to inject additional
+  tabs into the VerifyWoo settings UI. Each tab must have a unique slug (used as
+  an identifier in the URL and file structure), and a human-readable label.
+ * **Parameters:**
+ * `$tabs` (array): An associative array of tab slugs and labels. Example: ['general' => 'General', 'advanced' => 'Advanced']
+* **Example Usage:**
+  ```php
+  add_filter( 'verify_woo_admin_settings_tabs', function ( $tabs ) {
+      $tabs['custom-tab'] = __( 'Custom Tab', 'your-textdomain' );
+      return $tabs;
+  } );
+  ```
+Make sure the content for the tab exists in:
+  `PLUGIN_DIR/admin/partials/tabs/custom-tab/content.php`
+
+  
