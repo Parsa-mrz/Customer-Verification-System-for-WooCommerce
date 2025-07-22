@@ -127,10 +127,15 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/includes/class-verify-woo-authentication.php';
 
-				/**
+		/**
 		 * The class responsible for defining all actions that occur in the auth redirect
 		 */
 		require_once PLUGIN_DIR . '/includes/class-verify-woo-auth-redirect.php';
+
+		/**
+		 * The class responsible for defining all enums that occur in plugin
+		 */
+		require_once PLUGIN_DIR . '/enums/verify-woo-otp-enum.php';
 
 		$this->loader = new Verify_Woo_Loader();
 	}

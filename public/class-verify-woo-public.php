@@ -99,8 +99,9 @@ class Verify_Woo_Public {
 			$this->plugin_name,
 			'verifyWooVars',
 			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'verify_woo_otp_nonce' ),
+				'ajax_url'        => admin_url( 'admin-ajax.php' ),
+				'nonce'           => wp_create_nonce( 'verify_woo_otp_nonce' ),
+				'expire_time_otp' => apply_filters( 'verify_woo_otp_expiration', OTP::EXPIRE_TIME->value ),
 			)
 		);
 	}

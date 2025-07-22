@@ -87,7 +87,8 @@ class Verify_Woo_Authentication {
 
 		$this->verify_woo_generate_otp( $user_phone );
 
-		wp_send_json_success( __( 'OTP Sent Successfully!', 'verify-woo' ) );
+		// Translators: %d is the user phone number.
+		wp_send_json_success( sprintf( __( 'OTP Sent to %d Successfully!', 'verify-woo' ), $user_phone ) );
 	}
 
 	/**
@@ -186,7 +187,7 @@ class Verify_Woo_Authentication {
 			 *
 			 * @since 1.0.0
 			 */
-			$rate_limit = apply_filters( 'verify_woo_otp_rate_limit_seconds', 120 );
+			$rate_limit = apply_filters( 'verify_woo_otp_rate_limit_seconds', OTP::EXPIRE_TIME->value );
 
 			if ( $elapsed < $rate_limit ) {
 				return array(
@@ -227,11 +228,11 @@ class Verify_Woo_Authentication {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param int $expiration Default is 5 minutes in seconds.
+		 * @param int $expiration Default is 2 minutes in seconds.
 		 *
 		 * @return int New OTP expiration time in seconds.
 		 */
-		$expiration = apply_filters( 'verify_woo_otp_expiration', 5 * MINUTE_IN_SECONDS );
+		$expiration = apply_filters( 'verify_woo_otp_expiration', OTP::EXPIRE_TIME->value );
 
 		set_transient( $key, $data, $expiration );
 
@@ -301,7 +302,7 @@ class Verify_Woo_Authentication {
 		 *
 		 * @return int The new max attempt limit.
 		 */
-		$max_attempts = apply_filters( 'verify_woo_max_otp_attempts', 3 );
+		$max_attempts = apply_filters( 'verify_woo_max_otp_attempts', OTP::MAX_ATTEMPTS->value );
 
 		if ( $data['attempts'] >= $max_attempts ) {
 			delete_transient( $key );
@@ -311,7 +312,7 @@ class Verify_Woo_Authentication {
 			);
 		}
 
-		if ( $input_code != $data['otp'] ) {
+		if ( $input_code !== $data['otp'] ) {
 			$data['attempts'] += 1;
 
 			if ( $data['attempts'] >= 3 ) {
@@ -322,7 +323,6 @@ class Verify_Woo_Authentication {
 				);
 			}
 
-			set_transient( $key, $data, 5 * MINUTE_IN_SECONDS );
 			return array(
 				'success' => false,
 				'message' => 'Incorrect OTP. Try again.',

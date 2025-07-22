@@ -82,7 +82,7 @@
 			combineOtp();
 		}
 
-		$(".signIn").click(function (event) {
+		const sendOtpHandler = function (event) {
 			event.preventDefault();
 
 			let user_phone = $('#user_phone').val().trim();
@@ -107,6 +107,7 @@
 							$('#combined_otp').val('');
 							$('#otp-input-1').focus();
 						});
+						showCounter();
 					} else {
 						showAlert('error', response.data);
 					}
@@ -117,7 +118,10 @@
 					autoHideAlert();
 				}
 			});
-		});
+		};
+
+		$(".signIn").click(sendOtpHandler);
+		$(".resend-otp-link").click(sendOtpHandler);
 
 		const verifyOtpHandler = function (event) {
 			if (event) event.preventDefault();
@@ -200,6 +204,19 @@
 			setTimeout(() => {
 				notify.fadeOut();
 			}, 4000);
+		}
+
+		function showCounter() {
+			let resendLink = $('.resend-otp-link');
+			let countdown = verifyWooVars.expire_time_otp;
+			let interval = setInterval(() => {
+				if (countdown > 0) {
+					resendLink.text(`Resend OTP in ${countdown--}s`).addClass('disabled');
+				} else {
+					clearInterval(interval);
+					resendLink.text('Resend OTP').removeClass('disabled');
+				}
+			}, 1000);
 		}
 
 	});

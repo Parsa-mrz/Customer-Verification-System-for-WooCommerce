@@ -12,7 +12,7 @@
  */
 
 ?>
-<form action="">
+<form>
 	<div class="login-wrap">
 		<div class="login-html">
 			<div class="login-form send-otp-form">
@@ -34,6 +34,13 @@
 					</div>
 					<div class="group">
 						<input type="submit" name="verify" class="button verify" value="<?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?>">
+					</div>
+					<div class="group">
+						<p class="resend-otp">
+							<?php echo esc_html__( 'Didn\'t receive the code?', 'verify-woo' ); ?>
+							<a href="#" class="resend-otp-link">
+							</a>
+						</p>
 					</div>
 			</div>
 			<div class="alert"></div>
