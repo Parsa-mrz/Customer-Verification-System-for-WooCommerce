@@ -312,7 +312,7 @@ class Verify_Woo_Authentication {
 			);
 		}
 
-		if ( $input_code !== $data['otp'] ) {
+		if ( intval( $input_code ) !== intval( $data['otp'] ) ) {
 			$data['attempts'] += 1;
 
 			if ( $data['attempts'] >= 3 ) {

@@ -116,13 +116,34 @@
     height: 50px;
     font-size: 24px;
     text-align: center;
-    border: 1px solid #ccc;
+    background-color: transparent;
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
     border-radius: 5px;
     -moz-appearance: textfield;
+}
+
+.otp-input:focus {
+    outline: none;
+    background-color: transparent;
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
 }
 
 .otp-input::-webkit-outer-spin-button,
 .otp-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.group .resend-otp {
+    color: #fff;
+}
+
+.group .resend-otp .resend-otp-link {
+    text-decoration: none;
+    padding: 6px;
+    background-color: #1161ee52;
+    color: #fff;
+    border-radius: 8px;
 }
