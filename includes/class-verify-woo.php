@@ -167,6 +167,11 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-notice.php';
 
+		/**
+		 * The class responsible for defining all field in admin settings.
+		 */
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-field-factory.php';
+
 		$this->loader = new Verify_Woo_Loader();
 	}
 

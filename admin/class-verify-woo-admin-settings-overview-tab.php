@@ -28,6 +28,14 @@
 class Verify_Woo_Admin_Settings_Overview_Tab {
 
 	/**
+	 * The name of the option group for the overview settings.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	const OPTION_GROUP = 'verify_woo_overview_settings';
+
+	/**
 	 * Register settings, sections, and fields using WordPress Settings API.
 	 *
 	 * Hooks into WordPress admin to:
@@ -41,7 +49,7 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 	public function register_settings() {
 		register_setting(
 			'verify_woo_settings_overview_group',
-			'verify_woo_overview_settings',
+			self::OPTION_GROUP,
 			array( $this, 'sanitize_settings' )
 		);
 
@@ -94,20 +102,15 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 	 * @return void
 	 */
 	public function render_field() {
-		$options = get_option( 'verify_woo_overview_settings' );
+		$options = get_option( self::OPTION_GROUP );
+		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+			$options,
+			'activation',
+			self::OPTION_GROUP,
+			__( 'Activate Login Page', 'verify-woo' ),
+			__( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' )
+		);
 		?>
-		<div class="verify-woo-setting-row">
-			<div class="header">
-				<label class="toggle-switch">
-				<input type="checkbox" name="verify_woo_overview_settings[activation]" value="1" <?php checked( $options['activation'] ?? false, true ); ?>>
-				<span class="slider"></span>
-				</label>
-				<h3><?php esc_html_e( 'Activate Login Page', 'verify-woo' ); ?></h3>
-			</div>
-
-			<div class="description">
-				<p><?php esc_html_e( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' ); ?></p>
-			</div>
 		<?php
 	}
 }
