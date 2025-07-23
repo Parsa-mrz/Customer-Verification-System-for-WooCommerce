@@ -56,7 +56,7 @@ class Verify_Woo_Admin_Settings_Overview {
 
 		add_settings_field(
 			'activation',
-			__( 'Activate Login Page', 'verify-woo' ),
+			'',
 			array( $this, 'render_overview_field' ),
 			'verify_woo_settings_page',
 			'verify_woo_main_section'
@@ -93,10 +93,18 @@ class Verify_Woo_Admin_Settings_Overview {
 	public function render_overview_field() {
 		$options = get_option( 'verify_woo_settings' );
 		?>
-			<label class="toggle-switch">
-			<input type="checkbox" name="verify_woo_settings[activation]" value="1" <?php checked( $options['activation'] ?? 0, 1 ); ?>>
-			<span class="slider"></span>
-			</label>
+		<div class="verify-woo-setting-row">
+			<div class="header">
+				<label class="toggle-switch">
+				<input type="checkbox" name="verify_woo_settings[activation]" value="1" <?php checked( $options['activation'] ?? 0, 1 ); ?>>
+				<span class="slider"></span>
+				</label>
+				<h3><?php esc_html_e( 'Activate Login Page', 'verify-woo' ); ?></h3>
+			</div>
+
+			<div class="description">
+				<p><?php esc_html_e( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' ); ?></p>
+			</div>
 		<?php
 	}
 }
