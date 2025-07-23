@@ -64,6 +64,7 @@ register_deactivation_hook( __FILE__, 'deactivate_verify_woo' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo.php';
 
+
 /**
  * Begins execution of the plugin.
  *
@@ -74,8 +75,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo.php';
  * @since    1.0.0
  */
 function run_verify_woo() {
-
-	$plugin = new Verify_Woo();
+	$plugin_basename = plugin_basename( __FILE__ );
+	$plugin          = new Verify_Woo( $plugin_basename );
 	$plugin->run();
 }
 run_verify_woo();

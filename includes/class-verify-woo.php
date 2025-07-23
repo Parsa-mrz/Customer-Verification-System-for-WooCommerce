@@ -56,6 +56,14 @@ class Verify_Woo {
 	 */
 	protected $version;
 
+	/**
+	 * The plugin basename used to attach hooks specific to this plugin.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	protected $plugin_basename;
+
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -65,14 +73,17 @@ class Verify_Woo {
 	 * the public-facing side of the site.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param string $plugin_basename The basename of the plugin.
 	 */
-	public function __construct() {
+	public function __construct( $plugin_basename ) {
 		if ( defined( 'VERIFY_WOO_VERSION' ) ) {
 			$this->version = VERIFY_WOO_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'verify-woo';
+		$this->plugin_basename = $plugin_basename;
+		$this->plugin_name     = 'verify-woo';
 		$this->define_constants();
 		$this->load_dependencies();
 		$this->set_locale();
@@ -191,6 +202,7 @@ class Verify_Woo {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
 		$this->loader->add_action( 'admin_init', $plugin_admin_settings_overview, 'register_settings' );
+		$this->loader->add_filter( 'plugin_action_links_' . $this->plugin_basename, $this, 'add_settings_link' );
 	}
 
 	/**
@@ -293,5 +305,19 @@ class Verify_Woo {
 			}
 		}
 		return $template;
+	}
+
+	/**
+	 * Adds the "Settings" link to the plugin actions in the plugins list.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $links An array of plugin action links.
+	 * @return array Modified array with "Settings" link prepended.
+	 */
+	public function add_settings_link( $links ) {
+		$settings_link = '<a href="options-general.php?page=verify_woo_settings_page">' . __( 'Settings', 'verify-woo' ) . '</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
 	}
 }
