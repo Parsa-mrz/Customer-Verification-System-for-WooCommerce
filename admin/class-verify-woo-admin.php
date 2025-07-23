@@ -110,7 +110,7 @@ class Verify_Woo_Admin {
 			'VerifyWoo Settings',
 			__( 'VerifyWoo', 'veirfy-woo' ),
 			'manage_options',
-			'verifywoo-settings',
+			'verify_woo_settings_page',
 			array( $this, 'render_settings' ),
 			'dashicons-shield',
 			47

@@ -183,7 +183,60 @@
     flex-grow: 1;
 }
 
-.toplevel_page_verifywoo-settings .notice,
-.bebanstore-toplevel_page_verifywoo .notice.notice-success {
+.toplevel_page_verify_woo_settings_page .notice,
+.toplevel_page_verify_woo_settings_page .notice.notice-success {
     display: none !important;
+}
+
+
+.modern-toggle-form {
+    font-family: sans-serif;
+    padding: 1rem;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 0.75rem;
+    user-select: none;
+}
+
+.toggle-switch input[type="checkbox"] {
+    display: none;
+}
+
+.slider {
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 13px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.toggle-switch input[type="checkbox"]:checked+.slider {
+    background-color: #4ade80;
+}
+
+.toggle-switch input[type="checkbox"]:checked+.slider::before {
+    transform: translateX(24px);
+}
+
+/* Label text */
+.label-text {
+    font-size: 0.95rem;
+    color: #333;
 }

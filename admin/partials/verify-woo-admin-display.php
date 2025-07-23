@@ -34,7 +34,6 @@
 						?>
 					</div>
 				</div>
-
 				<?php $first = true; ?>
 				<?php foreach ( $tabs_data as $tab_item ) : ?>
 					<?php
@@ -69,8 +68,6 @@
 					</div>
 					<?php $first = false; ?>
 				<?php endforeach; ?>
-
-				<?php submit_button(); ?>
 			</div>
 		</div>
 	</div>
