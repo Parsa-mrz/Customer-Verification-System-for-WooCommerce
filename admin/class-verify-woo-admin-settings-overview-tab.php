@@ -110,7 +110,5 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 			__( 'Activate Login Page', 'verify-woo' ),
 			__( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' )
 		);
-		?>
-		<?php
 	}
 }

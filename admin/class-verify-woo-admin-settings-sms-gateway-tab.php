@@ -33,6 +33,14 @@
 class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 
 	/**
+	 * The name of the option group for the sms gateway settings.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	const OPTION_GROUP = 'verify_woo_sms_gateway_settings';
+
+	/**
 	 * Registers the settings, section, and field for the SMS Gateway tab.
 	 *
 	 * This method uses WordPress's Settings API to define how the settings are
@@ -48,7 +56,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	public function register_settings() {
 		register_setting(
 			'verify_woo_settings_sms_gateway_group',
-			'verify_woo_sms_gateway_settings',
+			self::OPTION_GROUP,
 			array( $this, 'sanitize_settings' )
 		);
 
@@ -98,20 +106,13 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	 * @return void
 	 */
 	public function render_field() {
-		$options = get_option( 'verify_woo_sms_gateway_settings' );
-		?>
-		<div class="verify-woo-setting-row">
-			<div class="header">
-				<label class="toggle-switch">
-				<input type="checkbox" name="verify_woo_sms_gateway_settings[sms_activation]" value="1" <?php checked( $options['sms_activation'] ?? false, true ); ?>>
-				<span class="slider"></span>
-				</label>
-				<h3><?php esc_html_e( 'Activate SMS', 'verify-woo' ); ?></h3>
-			</div>
-
-			<div class="description">
-				<p><?php esc_html_e( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' ); ?></p>
-			</div>
-		<?php
+		$options = get_option( self::OPTION_GROUP );
+		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+			$options,
+			'sms_activation',
+			self::OPTION_GROUP,
+			__( 'Activate SMS', 'verify-woo' ),
+			__( 'Active sms gateway to send OTP to Users', 'verify-woo' )
+		);
 	}
 }
