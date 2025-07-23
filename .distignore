@@ -1,0 +1,6 @@
+Readme.md
+verify-woo-hooks.md
+.git
+.DS_Store
+.wp-env.json
+,gitignore
