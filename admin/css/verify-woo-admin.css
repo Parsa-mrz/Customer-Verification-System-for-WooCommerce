@@ -236,3 +236,27 @@
 .verify-woo-admin .tabs .tab-contents .tab-content .modern-toggle-form .form-table th {
     display: none !important;
 }
+
+.verify-woo-notice {
+    text-align: right;
+    margin-top: 10px;
+    height: 20px;
+}
+
+.verify-woo-notice .message {
+    padding: 15px 60px;
+    border-radius: 8px;
+    transition: opacity 0.8s ease-out;
+}
+
+.verify-woo-notice-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.verify-woo-notice-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}

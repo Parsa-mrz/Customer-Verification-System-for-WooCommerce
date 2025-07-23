@@ -78,6 +78,13 @@ class Verify_Woo_Admin_Settings_Overview {
 	public function sanitize_settings( $input ) {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
+
+		if ( $sanitized['activation'] ) {
+			Verify_Woo_Admin_Notice::add_success( __( 'Login Page activated.', 'verify-woo' ) );
+		} else {
+			Verify_Woo_Admin_Notice::add_error( __( 'Login Page deactivated.', 'verify-woo' ) );
+		}
+
 		return $sanitized;
 	}
 
