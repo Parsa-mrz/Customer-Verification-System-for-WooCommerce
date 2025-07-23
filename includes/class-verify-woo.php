@@ -302,7 +302,7 @@ class Verify_Woo {
 	 *
 	 * @return string Path to the custom template if it matches; otherwise, original template.
 	 */
-	public function myplugin_disable_wc_login_form_template( $template, $template_name, $template_path ) {
+	public function myplugin_disable_wc_login_form_template( $template, $template_name, $template_path ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		if ( 'myaccount/form-login.php' === $template_name ) {
 			/**
 			 * Filter the path to the custom login form template.
