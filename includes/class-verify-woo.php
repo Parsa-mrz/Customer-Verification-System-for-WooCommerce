@@ -172,6 +172,16 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-field-factory.php';
 
+		/**
+		 * The class responsible for defining all actions that occur in admin hooks settings
+		 */
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-hooks-tab.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in admin hooks table settings
+		 */
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-hooks-table.php';
+
 		$this->loader = new Verify_Woo_Loader();
 	}
 
@@ -213,6 +223,7 @@ class Verify_Woo {
 		$plugin_admin                          = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
 		$plugin_admin_settings_overview_tab    = new Verify_Woo_Admin_Settings_Overview_Tab();
 		$plugin_admin_settings_sms_gateway_tab = new Verify_Woo_Admin_Settings_Sms_Gateway_Tab();
+		$plugin_admin_settings_hooks_tab       = new Verify_Woo_Admin_Settings_Hooks_Tab();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -220,6 +231,7 @@ class Verify_Woo {
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
 		$this->loader->add_action( 'admin_init', $plugin_admin_settings_overview_tab, 'register_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin_settings_sms_gateway_tab, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin_settings_hooks_tab, 'register_settings' );
 		$this->loader->add_filter( 'plugin_action_links_' . $this->plugin_basename, $this, 'add_settings_link' );
 	}
 
