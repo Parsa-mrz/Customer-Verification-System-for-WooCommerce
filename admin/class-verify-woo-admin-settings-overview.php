@@ -77,7 +77,7 @@ class Verify_Woo_Admin_Settings_Overview {
 	 */
 	public function sanitize_settings( $input ) {
 		$sanitized               = array();
-		$sanitized['activation'] = ! empty( $input['activation'] ) ? 1 : 0;
+		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 		return $sanitized;
 	}
 
@@ -96,7 +96,7 @@ class Verify_Woo_Admin_Settings_Overview {
 		<div class="verify-woo-setting-row">
 			<div class="header">
 				<label class="toggle-switch">
-				<input type="checkbox" name="verify_woo_settings[activation]" value="1" <?php checked( $options['activation'] ?? 0, 1 ); ?>>
+				<input type="checkbox" name="verify_woo_settings[activation]" value="1" <?php checked( $options['activation'] ?? false, true ); ?>>
 				<span class="slider"></span>
 				</label>
 				<h3><?php esc_html_e( 'Activate Login Page', 'verify-woo' ); ?></h3>

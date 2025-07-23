@@ -286,7 +286,9 @@ class Verify_Woo {
 			 */
 			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
 
-			if ( file_exists( $custom_template ) ) {
+			$admin_options = get_option( 'verify_woo_settings' );
+
+			if ( file_exists( $custom_template ) && ! empty( $admin_options['activation'] ) && true === $admin_options['activation'] ) {
 				return $custom_template;
 			}
 		}
