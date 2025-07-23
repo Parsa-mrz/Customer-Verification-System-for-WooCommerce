@@ -14,8 +14,8 @@
 ?>
 <form class="modern-toggle-form" action="options.php" method="POST">
 	<?php
-		settings_fields( 'verify_woo_settings_group' );
-		do_settings_sections( 'verify_woo_settings_page' );
+		settings_fields( 'verify_woo_settings_overview_group' );
+		do_settings_sections( 'verify_woo_settings_page_overview' );
 		submit_button(
 			__( 'Save Settings', 'verify-woo' ),
 			'primary cta-btn',

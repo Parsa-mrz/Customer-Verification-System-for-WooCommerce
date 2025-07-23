@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -113,7 +112,7 @@ class Verify_Woo_Public {
 	 * The output is buffered and escaped to ensure safe rendering.
 	 *
 	 * @since 1.0.0
-	 * @return string The path to the custom authentication form template.
+	 * @return ?string The path to the custom authentication form template.
 	 */
 	public function register_authentication_form() {
 		ob_start();

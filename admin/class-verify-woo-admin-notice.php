@@ -96,7 +96,6 @@ class Verify_Woo_Admin_Notice {
 			'message' => $message,
 		);
 
-		// Expires in 5 sec.
 		set_transient( self::TRANSIENT_KEY, $notices, self::EXPIRE_TIME );
 	}
 

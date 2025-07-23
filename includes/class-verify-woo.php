@@ -155,7 +155,12 @@ class Verify_Woo {
 		/**
 		 * The class responsible for defining all actions that occur in admin overview settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-overview.php';
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-overview-tab.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in admin sms gateway settings
+		 */
+		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-sms-gateway-tab.php';
 
 		/**
 		 * The class responsible for defining all notice in admin settings.
@@ -200,13 +205,16 @@ class Verify_Woo {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin                   = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
-		$plugin_admin_settings_overview = new Verify_Woo_Admin_Settings_Overview();
+		$plugin_admin                          = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin_settings_overview_tab    = new Verify_Woo_Admin_Settings_Overview_Tab();
+		$plugin_admin_settings_sms_gateway_tab = new Verify_Woo_Admin_Settings_Sms_Gateway_Tab();
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'add_plugin_row_meta', 10, 4 );
-		$this->loader->add_action( 'admin_init', $plugin_admin_settings_overview, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin_settings_overview_tab, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin_settings_sms_gateway_tab, 'register_settings' );
 		$this->loader->add_filter( 'plugin_action_links_' . $this->plugin_basename, $this, 'add_settings_link' );
 	}
 
@@ -303,9 +311,9 @@ class Verify_Woo {
 			 */
 			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
 
-			$admin_options = get_option( 'verify_woo_settings' );
+			$admin_overview_options = get_option( 'verify_woo_overview_settings' );
 
-			if ( file_exists( $custom_template ) && ! empty( $admin_options['activation'] ) && true === $admin_options['activation'] ) {
+			if ( file_exists( $custom_template ) && ! empty( $admin_overview_options['activation'] ) && true === $admin_overview_options['activation'] ) {
 				return $custom_template;
 			}
 		}

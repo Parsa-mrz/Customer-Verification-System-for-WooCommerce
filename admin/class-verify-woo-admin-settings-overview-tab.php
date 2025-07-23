@@ -25,7 +25,7 @@
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Overview {
+class Verify_Woo_Admin_Settings_Overview_Tab {
 
 	/**
 	 * Register settings, sections, and fields using WordPress Settings API.
@@ -40,8 +40,8 @@ class Verify_Woo_Admin_Settings_Overview {
 	 */
 	public function register_settings() {
 		register_setting(
-			'verify_woo_settings_group',
-			'verify_woo_settings',
+			'verify_woo_settings_overview_group',
+			'verify_woo_overview_settings',
 			array( $this, 'sanitize_settings' )
 		);
 
@@ -51,14 +51,14 @@ class Verify_Woo_Admin_Settings_Overview {
 			function () {
 				echo '<p>' . esc_html__( 'Configure the login settings below.', 'verify-woo' ) . '</p>';
 			},
-			'verify_woo_settings_page'
+			'verify_woo_settings_page_overview'
 		);
 
 		add_settings_field(
 			'activation',
 			'',
-			array( $this, 'render_overview_field' ),
-			'verify_woo_settings_page',
+			array( $this, 'render_field' ),
+			'verify_woo_settings_page_overview',
 			'verify_woo_main_section'
 		);
 	}
@@ -79,11 +79,7 @@ class Verify_Woo_Admin_Settings_Overview {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 
-		if ( $sanitized['activation'] ) {
-			Verify_Woo_Admin_Notice::add_success( __( 'Login Page activated.', 'verify-woo' ) );
-		} else {
-			Verify_Woo_Admin_Notice::add_error( __( 'Login Page deactivated.', 'verify-woo' ) );
-		}
+		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'verify-woo' ) );
 
 		return $sanitized;
 	}
@@ -97,13 +93,13 @@ class Verify_Woo_Admin_Settings_Overview {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	public function render_overview_field() {
-		$options = get_option( 'verify_woo_settings' );
+	public function render_field() {
+		$options = get_option( 'verify_woo_overview_settings' );
 		?>
 		<div class="verify-woo-setting-row">
 			<div class="header">
 				<label class="toggle-switch">
-				<input type="checkbox" name="verify_woo_settings[activation]" value="1" <?php checked( $options['activation'] ?? false, true ); ?>>
+				<input type="checkbox" name="verify_woo_overview_settings[activation]" value="1" <?php checked( $options['activation'] ?? false, true ); ?>>
 				<span class="slider"></span>
 				</label>
 				<h3><?php esc_html_e( 'Activate Login Page', 'verify-woo' ); ?></h3>
