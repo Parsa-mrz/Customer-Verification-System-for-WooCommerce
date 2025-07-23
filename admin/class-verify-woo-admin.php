@@ -132,11 +132,11 @@ class Verify_Woo_Admin {
 		$tabs_data   = array();
 		$plugin_icon = PLUGIN_DIR . '/public/partials/verify-woo-pulblic-icon.php';
 
-		foreach ( $tabs as $slug => $name ) {
+		foreach ( $tabs as $slug => $tab_info ) {
 			$tabs_data[] = array(
 				'slug'         => $slug,
-				'name'         => $name,
-				'content_file' => $this->get_tab_content_file( $slug ),
+				'name'         => $tab_info['name'],
+				'content_file' => $this->get_tab_content_file( $tab_info['folder'] ),
 			);
 		}
 
@@ -159,17 +159,26 @@ class Verify_Woo_Admin {
 		$partials_path = PLUGIN_DIR . '/admin/partials/tabs/';
 		$folders       = glob( $partials_path . '*', GLOB_ONLYDIR );
 
+		usort(
+			$folders,
+			function ( $a, $b ) {
+				preg_match( '/^(\d+)-/', basename( $a ), $match_a );
+				preg_match( '/^(\d+)-/', basename( $b ), $match_ );
+				return intval( $match_a[1] ?? 0 ) <=> intval( $match_[1] ?? 0 );
+			}
+		);
+
 		foreach ( $folders as $folder ) {
-			$slug          = basename( $folder );
-			$name          = ucwords( str_replace( array( '-', '_' ), ' ', $slug ) );
-			$tabs[ $slug ] = $name;
+			$original_slug = basename( $folder );
+			$clean_slug    = preg_replace( '/^\d+-/', '', $original_slug );
+			$display_name  = ucwords( str_replace( array( '-', '_' ), ' ', $clean_slug ) );
+
+			$tabs[ $clean_slug ] = array(
+				'name'   => $display_name,
+				'folder' => $original_slug,
+			);
 		}
 
-		/**
-		 * Allow external plugins/themes to register more tabs.
-		 *
-		 * @param array $tabs Associative array of tab_slug => tab_title.
-		*/
 		return apply_filters( 'verify_woo_admin_settings_tabs', $tabs );
 	}
 
