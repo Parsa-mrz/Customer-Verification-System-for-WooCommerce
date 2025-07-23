@@ -38,7 +38,7 @@ class Verify_Woo_Admin_Notice {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	public const string TRANSIENT_KEY = 'verify_woo_admin_notices';
+	public const TRANSIENT_KEY = 'verify_woo_admin_notices';
 
 	/**
 	 * Expiry time in seconds for stored notices.
@@ -47,7 +47,7 @@ class Verify_Woo_Admin_Notice {
 	 * @since 1.0.0
 	 * @var int
 	 */
-	public const int EXPIRE_TIME = 3;
+	public const EXPIRE_TIME = 3;
 
 	/**
 	 * Add a success notice message to be displayed.
@@ -113,7 +113,7 @@ class Verify_Woo_Admin_Notice {
 		$notices = get_transient( self::TRANSIENT_KEY );
 		if ( ! empty( $notices ) ) {
 			foreach ( $notices as $notice ) {
-				$type_class = $notice['type'] === 'error' ? 'verify-woo-notice-error' : 'verify-woo-notice-success';
+				$type_class = 'error' === $notice['type'] ? 'verify-woo-notice-error' : 'verify-woo-notice-success';
 				echo '<span class="message ' . esc_attr( $type_class ) . '" data-timeout="' . esc_attr( self::EXPIRE_TIME ) . '">' . esc_html( $notice['message'] ) . '</span>';
 			}
 			delete_transient( self::TRANSIENT_KEY );
