@@ -128,8 +128,9 @@ class Verify_Woo_Admin {
 	 * @return   void
 	 */
 	public function render_settings() {
-		$tabs      = $this->get_tabs();
-		$tabs_data = array();
+		$tabs        = $this->get_tabs();
+		$tabs_data   = array();
+		$plugin_icon = PLUGIN_DIR . '/public/partials/verify-woo-pulblic-icon.php';
 
 		foreach ( $tabs as $slug => $name ) {
 			$tabs_data[] = array(

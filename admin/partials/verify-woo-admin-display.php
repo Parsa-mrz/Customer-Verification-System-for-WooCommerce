@@ -13,10 +13,13 @@
 
 ?>
 <div class="wrap">
-	<div class="tabs-container">
+	<div class="tabs-container verify-woo-admin">
 		<div class="tabs">
 			<div class="tab-links">
 				<div class="plugin-info">
+						<div class="verify-woo-plugin-icon">
+							<?php require_once $plugin_icon; ?>
+						</div>
 					<div class="plugin-details">
 						<h2><?php esc_html_e( 'VerifyWoo', 'verify-woo' ); ?></h2>
 					</div>

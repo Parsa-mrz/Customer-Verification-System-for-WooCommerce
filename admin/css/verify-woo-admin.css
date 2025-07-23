@@ -129,11 +129,11 @@
     z-index: 2;
 }
 
-.plugin-icon {
-    max-width: 120px;
+.verify-woo-admin .verify-woo-plugin-icon {
+    max-width: 40% !important;
 }
 
-.tab-contents {
+.verify-woo-admin .tab-contents {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -146,12 +146,12 @@
 }
 
 
-.modern-toggle-form {
+.verify-woo-admin .modern-toggle-form {
     font-family: sans-serif;
     padding: 1rem;
 }
 
-.toggle-switch {
+.verify-woo-admin .toggle-switch {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -233,6 +233,6 @@
     min-height: 48px;
 }
 
-.tabs-container .tabs .tab-contents .tab-content .modern-toggle-form .form-table th {
+.verify-woo-admin .tabs .tab-contents .tab-content .modern-toggle-form .form-table th {
     display: none !important;
 }
