@@ -49,6 +49,11 @@ class Verify_Woo_Send_OTP {
 	public function wp_ajax_send_otp() {
 		check_ajax_referer( 'verify_woo_otp_nonce', '_nonce', true );
 
+		$admin_sms_gateway_options = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
+		if ( ! $admin_sms_gateway_options['sms_activation'] ) {
+			wp_send_json_error( __( 'Login to the system is currently unavailable.', 'verify-woo' ) );
+		}
+
 		if ( ! isset( $_POST['user_phone'] ) ) {
 			wp_send_json_error( __( 'Phone number is required.', 'verify-woo' ) );
 		}
