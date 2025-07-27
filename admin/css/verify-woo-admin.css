@@ -3,262 +3,265 @@
  * included in this file.
  */
 .tabs-container {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    position: relative;
-    margin: 2rem 2rem 2rem 1rem;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+  margin: 2rem 2rem 2rem 1rem;
 }
 
 .tabs {
-    padding: 10px 20px 15px 20px;
-    display: flex;
-    /* Increased padding */
+  padding: 10px 20px 15px 20px;
+  display: flex;
+  /* Increased padding */
 }
 
 .tab-links {
-    display: flex;
-    flex-direction: column;
-    height: 550px;
-    width: 15%;
-    gap: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 550px;
+  width: 25%;
+  gap: 30px;
 }
 
 .tab-link {
-    background: none;
-    border: none;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 15px 30px;
-    /* Increased padding for spacing */
-    color: #ccc;
-    cursor: pointer;
-    position: relative;
-    transition: color 0.3s ease;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 15px 30px;
+  /* Increased padding for spacing */
+  color: #ccc;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
 .tab-link.active,
 .tab-link:hover {
-    color: #b84de5;
+  color: #b84de5;
 }
 
 .tab-link i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .tab-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: -1px;
-    left: 50%;
-    background: linear-gradient(45deg, #b84de5, #7d41ff);
-    transition: all 0.4s ease;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -1px;
+  left: 50%;
+  background: linear-gradient(45deg, #b84de5, #7d41ff);
+  transition: all 0.4s ease;
 }
 
 .tab-link.active::after {
-    width: 100%;
-    left: 0;
+  width: 100%;
+  left: 0;
 }
 
 .tab-content {
-    display: none;
-    animation: fadeInUp 0.5s ease;
-    padding: 5px 10px 15px 10px;
+  display: none;
+  animation: fadeInUp 0.5s ease;
+  padding: 5px 10px 15px 10px;
 }
 
 .tab-content.active {
-    display: block;
+  display: block;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Buttons */
 .cta-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    /* More padding */
-    background: linear-gradient(45deg, #b84de5, #7d41ff);
-    /* Purple gradient */
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background 0.4s ease;
-    font-weight: 500;
-    margin-top: 20px;
+  display: inline-block;
+  padding: 12px 25px;
+  /* More padding */
+  background: linear-gradient(45deg, #b84de5, #7d41ff);
+  /* Purple gradient */
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.4s ease;
+  font-weight: 500;
+  margin-top: 20px;
 }
 
 .cta-btn:hover {
-    background: linear-gradient(45deg, #9c3bce, #6b3ee8);
-    /* Darker gradient on hover */
+  background: linear-gradient(45deg, #9c3bce, #6b3ee8);
+  /* Darker gradient on hover */
 }
-
 
 /* Responsive Design */
 @media screen and (max-width: 600px) {
-    .tab-links {
-        flex-direction: column;
-        align-items: center;
-    }
+  .tab-links {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .tab-link {
-        text-align: center;
-        width: 100%;
-        padding: 15px 0;
-    }
+  .tab-link {
+    text-align: center;
+    width: 100%;
+    padding: 15px 0;
+  }
 }
 
 .plugin-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .verify-woo-admin .verify-woo-plugin-icon {
-    max-width: 40% !important;
+  max-width: 40% !important;
 }
 
 .verify-woo-admin .tab-contents {
-    display: flex;
-    flex-direction: column;
-    width: 85%;
-    justify-content: space-between;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .toplevel_page_verify_woo_settings_page .notice,
 .toplevel_page_verify_woo_settings_page .notice.notice-success {
-    display: none !important;
+  display: none !important;
 }
 
-
 .verify-woo-admin .modern-toggle-form {
-    font-family: sans-serif;
-    padding: 1rem;
+  font-family: sans-serif;
+  padding: 1rem;
 }
 
 .verify-woo-admin .toggle-switch {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    gap: 0.75rem;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.75rem;
+  user-select: none;
 }
 
 .toggle-switch input[type="checkbox"] {
-    display: none;
+  display: none;
 }
 
 .slider {
-    width: 50px;
-    height: 26px;
-    background-color: #ccc;
-    border-radius: 13px;
-    position: relative;
-    transition: background-color 0.3s ease;
+  width: 50px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 13px;
+  position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .slider::before {
-    content: "";
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 
-.toggle-switch input[type="checkbox"]:checked+.slider {
-    background-color: #4ade80;
+.toggle-switch input[type="checkbox"]:checked + .slider {
+  background-color: #4ade80;
 }
 
-.toggle-switch input[type="checkbox"]:checked+.slider::before {
-    transform: translateX(24px);
+.toggle-switch input[type="checkbox"]:checked + .slider::before {
+  transform: translateX(24px);
 }
 
 /* Label text */
 .label-text {
-    font-size: 0.95rem;
-    color: #333;
+  font-size: 0.95rem;
+  color: #333;
 }
 
 .verify-woo-setting-row {
-    margin-bottom: 20px;
-    background: #fff;
-    border: 1px solid #e2e4e7;
-    border-radius: 8px;
-    padding: 15px;
-    min-height: 130px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e2e4e7;
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 130px;
 }
 
 .verify-woo-setting-row .header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-    flex-direction: row-reverse;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 .verify-woo-setting-row .description {
-    margin: 0 0 15px 0;
-    color: #999;
-    font-size: 14px;
-    line-height: 1.5;
+  margin: 0 0 15px 0;
+  color: #999;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .verify-woo-setting-row .options {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #e2e4e7;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-height: 48px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e2e4e7;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 48px;
 }
 
-.verify-woo-admin .tabs .tab-contents .tab-content .modern-toggle-form .form-table th {
-    display: none !important;
+.verify-woo-admin
+  .tabs
+  .tab-contents
+  .tab-content
+  .modern-toggle-form
+  .form-table
+  th {
+  display: none !important;
 }
-
 
 .verify-woo-notice {
-    text-align: right;
-    margin-top: 10px;
-    height: 20px;
+  text-align: right;
+  margin-top: 10px;
+  height: 20px;
 }
 
 .verify-woo-notice .message {
-    padding: 15px 60px;
-    border-radius: 8px;
-    transition: opacity 0.8s ease-out;
+  padding: 15px 60px;
+  border-radius: 8px;
+  transition: opacity 0.8s ease-out;
 }
 
 .verify-woo-notice-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
 }
 
 .verify-woo-notice-error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }

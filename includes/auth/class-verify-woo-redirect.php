@@ -43,18 +43,21 @@ class Verify_Woo_Redirect {
 	 * @return void
 	 */
 	public function maybe_redirect_to_login() {
-		if ( is_checkout() && ! is_user_logged_in() ) {
-			$my_account_url = wc_get_page_permalink( 'myaccount' );
+		$admin_overview_options = get_option( Verify_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
+		if ( $admin_overview_options['checkout_redirect'] ) {
+			if ( is_checkout() && ! is_user_logged_in() ) {
+				$my_account_url = wc_get_page_permalink( 'myaccount' );
 
-			$redirect_url = add_query_arg(
-				array(
-					'verifywoo_redirect_url' => rawurlencode( wc_get_checkout_url() ),
-					'verifywoo_msg'          => 'login_checkout_required',
-				),
-				$my_account_url
-			);
-			wp_safe_redirect( $redirect_url );
-			exit;
+				$redirect_url = add_query_arg(
+					array(
+						'verifywoo_redirect_url' => rawurlencode( wc_get_checkout_url() ),
+						'verifywoo_msg'          => 'login_checkout_required',
+					),
+					$my_account_url
+				);
+				wp_safe_redirect( $redirect_url );
+				exit;
+			}
 		}
 	}
 }

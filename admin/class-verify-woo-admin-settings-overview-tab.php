@@ -84,8 +84,9 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 	 * @return array $sanitized The cleaned version of the input to store.
 	 */
 	public function sanitize_settings( $input ) {
-		$sanitized               = array();
-		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
+		$sanitized                      = array();
+		$sanitized['activation']        = ! empty( $input['activation'] ) ? true : false;
+		$sanitized['checkout_redirect'] = ! empty( $input['checkout_redirect'] ) ? true : false;
 
 		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'verify-woo' ) );
 
@@ -107,8 +108,16 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 			$options,
 			'activation',
 			self::OPTION_GROUP,
-			__( 'Activate Login Page', 'verify-woo' ),
-			__( 'This setting allows you to enable or disable the custom login page for WooCommerce. When activated, users will be redirected to the custom login page instead of the default WooCommerce login.', 'verify-woo' )
+			__( 'Enable Custom Login Page', 'verify-woo' ),
+			__( 'Use a custom login page for WooCommerce, redirecting users from the default login', 'verify-woo' )
+		);
+
+		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+			$options,
+			'checkout_redirect',
+			self::OPTION_GROUP,
+			__( 'Enable Checkout Login Redirect', 'verify-woo' ),
+			__( 'Redirect customers to the login page during checkout and back to checkout after successful login', 'verify-woo' )
 		);
 	}
 }
