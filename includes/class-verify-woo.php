@@ -195,7 +195,7 @@ class Verify_Woo {
 		/**
 		 * The class responsible for defining kavenegar sms driver
 		 */
-		require_once PLUGIN_DIR . '/includes/sms/drivers/class-verify-woo-kavenegar-driver.php';
+		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php';
 
 		$this->loader = new Verify_Woo_Loader();
 	}

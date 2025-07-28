@@ -31,7 +31,7 @@ interface Sms_Gateway_Interface {
 	 * @param string $receptor The recipient's phone number.
 	 * @param string $message The message content.
 	 * @param array  $options Provider-specific options (e.g., sender ID, delivery reports).
-	 * @return void
+	 * @return bool
 	 */
-	public function send( string $receptor, string $message, array $options = array() ): void;
+	public function send( string $receptor, string $message, array $options = array() ): bool;
 }
