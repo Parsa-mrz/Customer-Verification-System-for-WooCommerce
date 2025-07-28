@@ -54,7 +54,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 	 * @throws \RuntimeException If the driver class cannot be found or instantiated, or does not implement the required interface.
 	 * @since 1.0.0
 	 */
-	public function driver( string $driver_name ) {
+	public function driver( string $driver_name ): Sms_Gateway_Interface {
 
 		if ( ! array_key_exists( $driver_name, $this->supported_drivers ) ) {
 			error_log( sprintf( 'Verify_Woo_Sms_Factory: SMS driver "%s" is not supported.', $driver_name ) );

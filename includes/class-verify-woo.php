@@ -192,10 +192,14 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-factory-interface.php';
 
+		require_once PLUGIN_DIR . '/includes/sms/class-verify-woo-sms-factory.php';
+
 		/**
 		 * The class responsible for defining kavenegar sms driver
 		 */
 		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php';
+
+		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php';
 
 		$this->loader = new Verify_Woo_Loader();
 	}

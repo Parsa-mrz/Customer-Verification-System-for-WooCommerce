@@ -150,7 +150,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			__( 'Select the SMS gateway you want to use for sending messages.', 'verify-woo' ),
 			array(
 				'select'    => __( 'Select SMS Gateway', 'verify-woo' ),
-				'kavenegar' => __( 'KaveNegar', 'verify-woo' ),
+				'kavenegar' => __( 'Kavenegar', 'verify-woo' ),
 			)
 		);
 	}

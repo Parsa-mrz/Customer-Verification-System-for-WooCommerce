@@ -193,7 +193,40 @@ class Verify_Woo_Send_OTP {
 		do_action( 'verify_woo_send_otp_sms', $phone, $otp_code );
 
 		error_log( 'OTP for ' . $phone . ': ' . $otp_code );
+		$this->send_otp( $phone, $otp_code );
 
 		return $otp_code;
+	}
+
+	/**
+	 * Sends the generated OTP code via the configured SMS gateway.
+	 *
+	 * This method retrieves the active SMS gateway settings and dispatches
+	 * the OTP either as a direct message or using a pre-configured pattern (template).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $phone    The recipient's phone number.
+	 * @param int    $otp_code The OTP code to be sent.
+	 * @return bool True if the OTP was successfully dispatched, false otherwise.
+	 */
+	private function send_otp( $phone, $otp_code ) {
+		$admin_sms_gateway_options = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
+		$sms_gateway_factory       = new Verify_Woo_Sms_Factory();
+		$sms_gateway_instance      = $sms_gateway_factory->driver( $admin_sms_gateway_options['sms_gateway'] );
+		if ( $admin_sms_gateway_options['sms_gateway_pattern'] ) {
+			$sms_gateway_instance->send_by_pattern(
+				$phone,
+				$admin_sms_gateway_options['sms_gateway_pattern'],
+				array()
+			);
+			return true;
+		} else {
+			$sms_gateway_instance->send(
+				$phone,
+				$otp_code
+			);
+			return true;
+		}
 	}
 }

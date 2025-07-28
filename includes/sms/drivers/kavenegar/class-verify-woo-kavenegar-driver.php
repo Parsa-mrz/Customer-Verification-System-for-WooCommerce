@@ -14,8 +14,6 @@
  * @subpackage Verify_Woo/includes
  */
 
-require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-gateway-interface.php';
-require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php';
 /**
  * Kavenegar SMS Gateway Driver for Verify Woo.
  *
@@ -64,7 +62,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 * @param array $settings Optional. An associative array of Kavenegar API settings.
 	 * Expected keys:
 	 * - 'kavenegar_api_key' (string): Your Kavenegar API key.
-	 * - 'kavenegar_sender' (string): The default sender number for SMS.
+	 * - 'kavenegar_sender_number' (string): The default sender number for SMS.
 	 * - 'kavenegar_insecure' (bool, optional): Whether to use HTTP (true) or HTTPS (false).
 	 * Defaults to `false`.
 	 * If `$settings` is empty, it attempts to fetch settings from WordPress options
@@ -77,14 +75,14 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		}
 
 		$api_key  = $settings['kavenegar_api_key'] ?? '';
-		$sender   = $settings['kavenegar_sender'] ?? '';
+		$sender   = $settings['kavenegar_sender_number'] ?? '';
 		$insecure = $settings['kavenegar_insecure'] ?? false;
 
 		if ( empty( $api_key ) ) {
-			error_log( esc_html__( 'Kavenegar API Key is missing in settings.', 'your-text-domain' ) );
+			error_log( esc_html__( 'Kavenegar API Key is missing in settings.', 'verify-woo' ) );
 		}
 		if ( empty( $sender ) ) {
-			error_log( esc_html__( 'Kavenegar Sender number is missing in settings.', 'your-text-domain' ) );
+			error_log( esc_html__( 'Kavenegar Sender number is missing in settings.', 'verify-woo' ) );
 		}
 
 		$this->sender = trim( $sender );
@@ -94,7 +92,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
-					esc_html__( 'Failed to initialize Kavenegar HTTP Client: %s', 'your-text-domain' ),
+					esc_html__( 'Failed to initialize Kavenegar HTTP Client: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
 			);
@@ -103,21 +101,9 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	}
 
 	/**
-	 * Returns the human-readable name of the SMS gateway.
-	 *
-	 * This method is part of the `SmsGatewayInterface` contract.
-	 *
-	 * @return string The name of the SMS gateway, which is "Kavenegar".
-	 * @since 1.0.0
-	 */
-	public function get_name(): string {
-		return 'Kavenegar';
-	}
-
-	/**
 	 * Sends an SMS message to a specified recipient.
 	 *
-	 * This method fulfills the `send` contract of the `SmsGatewayInterface`.
+	 * This method fulfills the `send` contract of the `Sms_Gateway_Interface`.
 	 * It delegates the actual sending logic to the `KavenegarHttpClient`.
 	 *
 	 * @param string $to      The phone number of the recipient in international format (e.g., +1234567890).
@@ -132,7 +118,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 */
 	public function send( string $to, string $message, array $options = array() ): bool {
 		if ( is_null( $this->kavenegar_client ) ) {
-			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send SMS.', 'your-text-domain' ) );
+			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send SMS.', 'verify-woo' ) );
 			return false;
 		}
 
@@ -141,38 +127,18 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			$type    = $options['type'] ?? null;
 			$localid = $options['localid'] ?? null;
 
-			// KavenegarHttpClient expects single parameters for its sendSms method
-			$response = $this->kavenegar_client->sendSms( $this->sender, $to, $message, $date, $type, $localid );
+			$response = $this->kavenegar_client->send_sms( $this->sender, $to, $message, $date, $type, $localid );
 
-			// Check the response from the Kavenegar client if needed, it should be the 'entries' array
 			if ( ! is_array( $response ) || empty( $response ) ) {
-				error_log( esc_html__( 'Kavenegar send SMS: Unexpected empty response.', 'your-text-domain' ) );
+				error_log( esc_html__( 'Kavenegar send SMS: Unexpected empty response.', 'verify-woo' ) );
 				return false;
 			}
 			return true;
 
-		} catch ( ApiException $e ) {
-			error_log(
-				sprintf(
-					esc_html__( 'Kavenegar API Error (send): %1$s (Status: %2$d)', 'your-text-domain' ),
-					$e->getMessage(),
-					$e->getStatus()
-				)
-			);
-			return false;
-		} catch ( HttpException $e ) {
-			error_log(
-				sprintf(
-					esc_html__( 'Kavenegar HTTP Error (send): %1$s (Code: %2$d)', 'your-text-domain' ),
-					$e->getMessage(),
-					$e->getCode()
-				)
-			);
-			return false;
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
-					esc_html__( 'An unexpected error occurred during Kavenegar SMS sending: %s', 'your-text-domain' ),
+					esc_html__( 'An unexpected error occurred during Kavenegar SMS sending: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
 			);
@@ -181,80 +147,55 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	}
 
 	/**
-	 * Sends an SMS message using a pre-defined template pattern (Kavenegar Lookup service).
+	 * Sends an SMS message using a pre-defined pattern or template via Kavenegar's Lookup service.
 	 *
-	 * This method fulfills the `sendByPattern` contract of the `SmsGatewayInterface`.
-	 * It uses the Kavenegar Lookup service, which is suitable for sending
-	 * verification codes, OTPs, or other templated messages.
+	 * This method fulfills the `send_by_pattern` contract of the `Sms_Gateway_Interface`.
+	 * It maps the generic `pattern` and `data` parameters to Kavenegar's `verifyLookup`
+	 * method, which utilizes tokens for templated messages.
 	 *
-	 * @param string $receptor The phone number of the recipient.
-	 * @param string $template The name of the pre-registered template on your Kavenegar account.
-	 * @param string $token    The value to replace the first token (`%token%`) in the template.
-	 * @param string $token2   Optional. The value to replace the second token (`%token2%`) in the template.
-	 * Defaults to an empty string if not provided.
-	 * @param string $token3   Optional. The value to replace the third token (`%token3%`) in the template.
-	 * Defaults to an empty string if not provided.
-	 * @param string $type     Optional. The type of verification. Can be 'sms' (default) for text message,
-	 * or 'call' for a voice call.
-	 * @param string $token10  Optional. The value to replace the tenth token (`%token10%`) in the template.
-	 * Defaults to an empty string.
-	 * @param string $token20  Optional. The value to replace the twentieth token (`%token20%`) in the template.
-	 * Defaults to an empty string.
-	 * @return bool `true` if the pattern SMS was successfully sent; `false` otherwise.
+	 * @param string $receptor The recipient's phone number in a valid format (e.g., E.164).
+	 * @param string $pattern  The name of the pre-registered Kavenegar template to use.
+	 * @param array  $data     An associative array of data to populate the placeholders within the pattern/template.
+	 * Expected keys usually include 'token', 'token2', 'token3', 'token10', 'token20',
+	 * and 'type'.
+	 * @param array  $options  Optional. An associative array of additional provider-specific options.
+	 * Currently, this method assumes `type` might be passed via `$data`
+	 * but can be extended to use `$options` for other parameters.
+	 * @return bool True if the message was successfully queued for sending (or sent) via pattern, false otherwise.
 	 * @since 1.0.0
 	 */
-	public function sendByPattern( string $receptor, string $template, string $token, string $token2 = '', string $token3 = '', string $type = 'sms', string $token10 = '', string $token20 = '' ): bool {
+	public function send_by_pattern( string $receptor, string $pattern, array $data = array(), array $options = array() ): bool {
 		if ( is_null( $this->kavenegar_client ) ) {
-			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send pattern SMS.', 'your-text-domain' ) );
+			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send pattern SMS.', 'verify-woo' ) );
 			return false;
 		}
 
 		try {
-			$response = $this->kavenegar_client->verifyLookup(
+			$response = $this->kavenegar_client->verify_lookup(
 				$receptor,
-				$template,
-				$token,
-				$token2,
-				$token3,
-				$type,
-				$token10,
-				$token20
+				$pattern,
+				$data['token'],
+				$data['token2'],
+				$data['token3'],
+				$data['type'],
+				$data['token10'],
+				$data['token20']
 			);
 
 			if ( ! is_array( $response ) || empty( $response ) ) {
-				error_log( esc_html__( 'Kavenegar sendByPattern: Unexpected empty response.', 'your-text-domain' ) );
+				error_log( esc_html__( 'Kavenegar sendByPattern: Unexpected empty response.', 'verify-woo' ) );
 				return false;
 			}
 			return true;
 
-		} catch ( ApiException $e ) {
-			error_log(
-				sprintf(
-					esc_html__( 'Kavenegar API Error (sendByPattern): %1$s (Status: %2$d)', 'your-text-domain' ),
-					$e->getMessage(),
-					$e->getStatus()
-				)
-			);
-			return false;
-		} catch ( HttpException $e ) {
-			error_log(
-				sprintf(
-					esc_html__( 'Kavenegar HTTP Error (sendByPattern): %1$s (Code: %2$d)', 'your-text-domain' ),
-					$e->getMessage(),
-					$e->getCode()
-				)
-			);
-			return false;
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
-					esc_html__( 'An unexpected error occurred during Kavenegar pattern SMS sending: %s', 'your-text-domain' ),
+					esc_html__( 'An unexpected error occurred during Kavenegar pattern SMS sending: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
 			);
 			return false;
 		}
 	}
-
-	// You can implement other methods required by your SmsGatewayInterface here.
 }

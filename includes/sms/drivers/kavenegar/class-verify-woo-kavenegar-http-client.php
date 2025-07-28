@@ -41,6 +41,13 @@ class Verify_Woo_Kavenegar_Http_Client {
 	const API_PATH = '%s://api.kavenegar.com/v1/%s/%s/%s.json/';
 
 	/**
+	 * The current version of the Kavenegar HTTP Client.
+	 *
+	 * @var string
+	 */
+	const VERSION = '1.2.2';
+
+	/**
 	 * The API key used for authenticating with the Kavenegar API.
 	 *
 	 * This key is provided in the constructor and used in constructing API URLs.
@@ -65,10 +72,8 @@ class Verify_Woo_Kavenegar_Http_Client {
 	 * It also performs initial checks for the API key presence and WordPress HTTP API availability.
 	 *
 	 * @param string $api_key  The Kavenegar API key obtained from your Kavenegar account.
-	 * @param bool   $insecure Optional. If set to `true`, forces communication over HTTP instead of HTTPS.
-	 * Defaults to `false` (HTTPS is recommended).
-	 * @throws \RuntimeException If the API key is empty or WordPress HTTP API functions are not available,
-	 * leading to a fatal error via `wp_die()`.
+	 * @param bool   $insecure Optional. If `true`, forces communication over HTTP instead of HTTPS. Defaults to `false` (HTTPS is recommended).
+	 * @throws \RuntimeException If the API key is empty or WordPress HTTP API functions are not available, leading to a fatal error via `wp_die()`.
 	 * @since 1.0.0
 	 */
 	public function __construct( string $api_key, bool $insecure = false ) {
@@ -102,20 +107,19 @@ class Verify_Woo_Kavenegar_Http_Client {
 	}
 
 	/**
-	 * Executes an API request to the Kavenegar service using WordPress's HTTP API.
+	 * Executes an HTTP POST request to the specified URL with provided data.
 	 *
-	 * This is the core method for sending data to Kavenegar. It handles the `wp_remote_post` call,
-	 * processes the response, and throws specific exceptions for different types of errors.
+	 * This method uses WordPress's `wp_remote_post` function to send the request,
+	 * handles timeouts, redirections, SSL verification, and custom headers. It
+	 * processes the API response, logs errors, and returns relevant data or `false`
+	 * on failure.
 	 *
-	 * @param string $url  The complete URL of the Kavenegar API endpoint.
-	 * @param array  $data Optional. An associative array of data to be sent as the POST request body.
-	 * This data will be URL-encoded automatically by `wp_remote_post()`.
-	 * @return object|null The `entries` property from the Kavenegar API's JSON response payload on success.
-	 * Returns `null` if the `entries` property is not present in a successful response.
-	 * @throws HttpException If there's a problem with the HTTP request itself (e.g., network error,
-	 * non-200 HTTP status code, malformed JSON response).
-	 * @throws ApiException  If the Kavenegar API returns an error status within its JSON payload
-	 * (i.e., `json_response->return->status` is not 200).
+	 * @param string $url  The full URL of the Kavenegar API endpoint to which the request will be sent.
+	 * @param array  $data Optional. An associative array of data to be sent as the request body. Defaults to an empty array.
+	 * @return object|null|false Returns the 'entries' part of the JSON response object if the request is successful and the API
+	 * returns data. Returns `null` if 'entries' is not set in a successful response. Returns `false`
+	 * if a WordPress HTTP error occurs, the HTTP status code is not 200, the JSON response is invalid,
+	 * or a Kavenegar API-specific error is indicated in the response.
 	 * @since 1.0.0
 	 */
 	public function execute( string $url, array $data = array() ) {
@@ -136,10 +140,9 @@ class Verify_Woo_Kavenegar_Http_Client {
 
 		$response = wp_remote_post( $url, $args );
 
-		// Handle WordPress HTTP errors
 		if ( is_wp_error( $response ) ) {
 			error_log( 'Kavenegar HTTP Error: ' . $response->get_error_message() );
-			throw new HttpException( $response->get_error_message(), $response->get_error_code() );
+			return false;
 		}
 
 		$http_code = wp_remote_retrieve_response_code( $response );
@@ -147,18 +150,17 @@ class Verify_Woo_Kavenegar_Http_Client {
 
 		$json_response = json_decode( $body );
 
-		// Check for general HTTP errors or malformed JSON
-		if ( $http_code !== 200 || is_null( $json_response ) || ! isset( $json_response->return ) ) {
+		if ( 200 !== $http_code || is_null( $json_response ) || ! isset( $json_response->return ) ) {
 			$error_message = sprintf(
 				esc_html__( 'Kavenegar API: HTTP Status %1$d or invalid JSON response. Response: %2$s', 'verify-woo' ),
 				$http_code,
 				$body
 			);
 			error_log( $error_message );
-			throw new HttpException( $error_message, $http_code );
+			return false;
 		}
 
-		if ( (int) $json_response->return->status !== 200 ) {
+		if ( 200 !== (int) $json_response->return->status ) {
 			$api_message = $json_response->return->message ?? esc_html__( 'Unknown Kavenegar API error.', 'verify-woo' );
 			$api_status  = $json_response->return->status ?? 0;
 			error_log(
@@ -168,7 +170,7 @@ class Verify_Woo_Kavenegar_Http_Client {
 					$api_status
 				)
 			);
-			throw new ApiException( $api_message, $api_status );
+			return false;
 		}
 
 		return $json_response->entries ?? null;
@@ -187,12 +189,11 @@ class Verify_Woo_Kavenegar_Http_Client {
 	 * @param int|null     $date     Optional. A Unix timestamp indicating a future time to send the SMS (for delayed sending).
 	 * @param int|null     $type     Optional. The type of message (e.g., a constant from Kavenegar\Enums\General).
 	 * @param string|array $localid  Optional. Your internal message ID(s) corresponding to the recipients. Can be a single string or an array.
-	 * @return object|null The 'entries' part of the API response if successful, typically containing message details.
-	 * @throws ApiException If the Kavenegar API returns an error for the send operation.
-	 * @throws HttpException If there's an HTTP or network error during the send operation.
+	 * @return object|null|false The 'entries' part of the API response if successful, typically containing message details.
+	 * Returns `null` if 'entries' is not set in a successful response, or `false` on failure.
 	 * @since 1.0.0
 	 */
-	public function sendSms( $sender, $receptor, $message, $date = null, $type = null, $localid = null ) {
+	public function send_sms( $sender, $receptor, $message, $date = null, $type = null, $localid = null ) {
 		if ( is_array( $receptor ) ) {
 			$receptor = implode( ',', $receptor );
 		}
@@ -209,7 +210,7 @@ class Verify_Woo_Kavenegar_Http_Client {
 			'localid'  => $localid,
 		);
 
-		return $this->execute( $this->get_path( 'send' ), array_filter( $params ) ); // array_filter removes null values
+		return $this->execute( $this->get_path( 'send' ), array_filter( $params ) );
 	}
 
 	/**
@@ -226,12 +227,10 @@ class Verify_Woo_Kavenegar_Http_Client {
 	 * @param string $type     Optional. Specifies the type of verification (e.g., 'sms' for SMS, 'call' for voice call). Defaults to 'sms'.
 	 * @param string $token10  Optional. An additional token value for some templates (e.g., `%token10%`). Defaults to an empty string.
 	 * @param string $token20  Optional. Another additional token value for some templates (e.g., `%token20%`). Defaults to an empty string.
-	 * @return object|null The 'entries' part of the API response if successful.
-	 * @throws ApiException If the Kavenegar API returns an error for the lookup operation.
-	 * @throws HttpException If there's an HTTP or network error during the lookup operation.
+	 * @return object|null|false The 'entries' part of the API response if successful. Returns `null` if 'entries' is not set in a successful response, or `false` on failure.
 	 * @since 1.0.0
 	 */
-	public function verifyLookup( string $receptor, string $template, string $token, string $token2 = '', string $token3 = '', string $type = 'sms', string $token10 = '', string $token20 = '' ) {
+	public function verify_lookup( string $receptor, string $template, string $token, string $token2 = '', string $token3 = '', string $type = 'sms', string $token10 = '', string $token20 = '' ) {
 		$params = array(
 			'receptor' => $receptor,
 			'token'    => $token,

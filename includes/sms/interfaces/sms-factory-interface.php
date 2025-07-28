@@ -30,9 +30,9 @@ interface Sms_Factory_Interface {
 	/**
 	 * Get a driver instance.
 	 *
-	 * @param string|null $driver The driver name, or null for the default driver.
+	 * @param string $driver_name The driver name for the default driver.
 	 * @return Sms_Gateway_Interface
 	 * @throws \InvalidArgumentException
 	 */
-	public function driver( string $driver = null ): SmsGatewayInterface;
+	public function driver( string $driver_name ): Sms_Gateway_Interface;
 }
