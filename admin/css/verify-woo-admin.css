@@ -265,3 +265,76 @@
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+.verify-woo-dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+  min-width: 200px;
+}
+
+.verify-woo-dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  /* Adjust this if you no longer need space for an arrow */
+  justify-content: flex-start; /* Changed from space-between */
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.verify-woo-dropdown .dropdown-toggle:hover {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+}
+
+.verify-woo-dropdown .dropdown-toggle.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.verify-woo-dropdown .dropdown-toggle .current-value {
+  flex-grow: 1;
+}
+
+.verify-woo-dropdown .dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.verify-woo-dropdown .dropdown-options.active {
+  display: block;
+}
+
+.verify-woo-dropdown .dropdown-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #555;
+  transition: background-color 0.2s ease;
+}
+
+.verify-woo-dropdown .dropdown-option:hover,
+.verify-woo-dropdown .dropdown-option.selected {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.verify-woo-dropdown select {
+  display: none;
+}

@@ -93,6 +93,13 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	public function sanitize_settings( $input ) {
 		$sanitized                   = array();
 		$sanitized['sms_activation'] = ! empty( $input['sms_activation'] ) ? true : false;
+		$sanitized['sms_gateway']    = ! empty( $input['sms_gateway'] ) ? sanitize_text_field( $input['sms_gateway'] ) : '';
+
+		if ( 'kavenegar' === $sanitized['sms_gateway'] && $sanitized['sms_activation'] ) {
+			$sanitized['kavenegar_api_key']       = isset( $input['kavenegar_api_key'] ) ? sanitize_text_field( $input['kavenegar_api_key'] ) : '';
+			$sanitized['kavenegar_sender_number'] = isset( $input['kavenegar_sender_number'] ) ? sanitize_text_field( $input['kavenegar_sender_number'] ) : '';
+		}
+
 		return $sanitized;
 	}
 
@@ -113,6 +120,69 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			self::OPTION_GROUP,
 			__( 'Activate SMS', 'verify-woo' ),
 			__( 'Active sms gateway to send OTP to Users', 'verify-woo' )
+		);
+		Verify_Woo_Admin_Settings_Field_Factory::render_setting_row(
+			function () use ( $options ) {
+				if ( $options['sms_activation'] ) {
+					$this->render_sms_gateway_dropdown( $options );
+
+					if ( 'kavenegar' === $options['sms_gateway'] ) {
+						$this->render_kavenegar_fields( $options );
+					}
+				}
+			}
+		);
+	}
+
+	/**
+	 * Renders the SMS Gateway dropdown field.
+	 *
+	 * @since 1.0.0
+	 * @param array $options Current settings options.
+	 * @return void
+	 */
+	private function render_sms_gateway_dropdown( $options ) {
+		Verify_Woo_Admin_Settings_Field_Factory::drop_down(
+			$options,
+			'sms_gateway',
+			self::OPTION_GROUP,
+			__( 'SMS Gateway', 'verify-woo' ),
+			__( 'Select the SMS gateway you want to use for sending messages.', 'verify-woo' ),
+			array(
+				'select'    => __( 'Select SMS Gateway', 'verify-woo' ),
+				'kavenegar' => __( 'KaveNegar', 'verify-woo' ),
+			)
+		);
+	}
+
+	/**
+	 * Renders the Kavenegar specific input fields.
+	 *
+	 * @since 1.0.0
+	 * @param array $options Current settings options.
+	 * @return void
+	 */
+	private function render_kavenegar_fields( $options ) {
+		Verify_Woo_Admin_Settings_Field_Factory::input(
+			$options,
+			'kavenegar_api_key',
+			self::OPTION_GROUP,
+			__( 'KaveNegar API Key', 'verify-woo' ),
+			__( 'Enter your KaveNegar API key to enable SMS sending.', 'verify-woo' ),
+			'text',
+			__( 'Enter your KaveNegar API Key', 'verify-woo' ),
+			'50'
+		);
+
+		Verify_Woo_Admin_Settings_Field_Factory::input(
+			$options,
+			'kavenegar_sender_number',
+			self::OPTION_GROUP,
+			__( 'KaveNegar Sender Number', 'verify-woo' ),
+			__( 'Enter the sender number you registered with KaveNegar.', 'verify-woo' ),
+			'text',
+			__( 'Enter your KaveNegar Sender Number', 'verify-woo' ),
+			'50'
 		);
 	}
 }
