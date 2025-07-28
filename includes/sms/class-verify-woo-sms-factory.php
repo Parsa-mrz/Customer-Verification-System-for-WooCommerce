@@ -59,7 +59,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 		if ( ! array_key_exists( $driver_name, $this->supported_drivers ) ) {
 			error_log( sprintf( 'Verify_Woo_Sms_Factory: SMS driver "%s" is not supported.', $driver_name ) );
 			throw new \InvalidArgumentException(
-				sprintf( esc_html__( 'SMS driver [%s] is not supported.', 'your-text-domain' ), $driver_name )
+				sprintf( esc_html__( 'SMS driver [%s] is not supported.', 'verify-woo' ), $driver_name )
 			);
 		}
 
@@ -87,7 +87,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 		if ( ! $driver_instance instanceof Sms_Gateway_Interface ) {
 			error_log( sprintf( 'Verify_Woo_Sms_Factory: Created driver "%s" does not implement Sms_Gateway_Interface.', $driver_class ) );
 			throw new \RuntimeException(
-				sprintf( esc_html__( 'Driver [%s] does not implement required interface.', 'your-text-domain' ), $driver_class )
+				sprintf( esc_html__( 'Driver [%s] does not implement required interface.', 'verify-woo' ), $driver_class )
 			);
 		}
 

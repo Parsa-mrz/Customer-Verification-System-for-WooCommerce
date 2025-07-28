@@ -121,17 +121,16 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			__( 'Activate SMS', 'verify-woo' ),
 			__( 'Active sms gateway to send OTP to Users', 'verify-woo' )
 		);
-		Verify_Woo_Admin_Settings_Field_Factory::render_setting_row(
-			function () use ( $options ) {
-				if ( $options['sms_activation'] ) {
-					$this->render_sms_gateway_dropdown( $options );
-
+		if ( $options['sms_activation'] ) {
+			Verify_Woo_Admin_Settings_Field_Factory::render_setting_row(
+				function () use ( $options ) {
+						$this->render_sms_gateway_dropdown( $options );
 					if ( 'kavenegar' === $options['sms_gateway'] ) {
 						$this->render_kavenegar_fields( $options );
 					}
 				}
-			}
-		);
+			);
+		}
 	}
 
 	/**
@@ -167,7 +166,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'kavenegar_api_key',
 			self::OPTION_GROUP,
-			__( 'KaveNegar API Key', 'verify-woo' ),
+			__( 'Kavenegar API Key', 'verify-woo' ),
 			__( 'Enter your KaveNegar API key to enable SMS sending.', 'verify-woo' ),
 			'text',
 			__( 'Enter your KaveNegar API Key', 'verify-woo' ),
@@ -176,9 +175,20 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 
 		Verify_Woo_Admin_Settings_Field_Factory::input(
 			$options,
+			'sms_gateway_pattern',
+			self::OPTION_GROUP,
+			__( 'Kavenegar Pattern Code', 'verify-woo' ),
+			__( 'If using Kavenegar\'s Lookup service, enter the specific pattern code (template ID) for sending OTPs. Leave blank to send standard SMS messages.', 'verify-woo' ),
+			'text',
+			__( 'e.g., verify_code_template', 'verify-woo' ),
+			'50'
+		);
+
+		Verify_Woo_Admin_Settings_Field_Factory::input(
+			$options,
 			'kavenegar_sender_number',
 			self::OPTION_GROUP,
-			__( 'KaveNegar Sender Number', 'verify-woo' ),
+			__( 'Kavenegar Sender Number', 'verify-woo' ),
 			__( 'Enter the sender number you registered with KaveNegar.', 'verify-woo' ),
 			'text',
 			__( 'Enter your KaveNegar Sender Number', 'verify-woo' ),

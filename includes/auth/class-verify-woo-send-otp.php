@@ -176,7 +176,7 @@ class Verify_Woo_Send_OTP {
 		 * Allows hooking into the process to send the OTP using a custom SMS gateway.
 		 *
 		 * Parameters passed to callback:
-				 *
+		 *
 		 * @param string $phone    The phone number to which OTP should be sent.
 		 * @param int    $otp_code The generated OTP code.
 		 *
