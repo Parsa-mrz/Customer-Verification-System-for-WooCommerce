@@ -146,3 +146,165 @@
     color: #fff;
     border-radius: 8px;
 }
+
+
+/* === Keyframes === */
+@keyframes Loader-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes Loader-morph {
+    0% {
+        stroke-dashoffset: 190%;
+    }
+
+    50% {
+        stroke-dashoffset: 50%;
+        transform: rotate(90deg);
+    }
+
+    100% {
+        stroke-dashoffset: 190%;
+        transform: rotate(360deg);
+    }
+}
+
+/* === Base === */
+.Loader-root {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    --Loader-trackColor: #f2f4f4;
+    --Loader-color: #2b7abc;
+    --Loader-inverseColor: #2b7abc;
+    --Loader-xs-size: 1.5em;
+    --Loader-xs-border: 0.25em;
+    --Loader-sm-size: 3em;
+    --Loader-sm-border: 0.375em;
+    --Loader-md-size: 5em;
+    --Loader-md-border: 0.5em;
+    --Loader-lg-size: 7em;
+    --Loader-lg-border: 0.75em;
+}
+
+.Loader-circle {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: Loader-rotate 2.25s linear infinite;
+}
+
+.Loader-track,
+.Loader-spin {
+    fill: none;
+}
+
+.Loader-track {
+    stroke: var(--Loader-trackColor);
+}
+
+.Loader-spin {
+    stroke: var(--Loader-color);
+    stroke-linecap: round;
+}
+
+.Loader-root:not(.ie11) .Loader-spin {
+    animation: Loader-morph 1.75s ease infinite;
+}
+
+.Loader-root.ie11 .Loader-spin {
+    stroke-dashoffset: 100%;
+}
+
+.Loader-inverse .Loader-spin {
+    stroke: var(--Loader-inverseColor);
+}
+
+/* === Sizes === */
+.Loader-xs {
+    width: var(--Loader-xs-size);
+    height: var(--Loader-xs-size);
+    --Loader-width: var(--Loader-xs-border);
+}
+
+.Loader-xs .Loader-circle {
+    width: var(--Loader-xs-size);
+    height: var(--Loader-xs-size);
+}
+
+.Loader-xs .Loader-track,
+.Loader-xs .Loader-spin {
+    stroke-width: var(--Loader-width);
+}
+
+.Loader-xs .Loader-spin {
+    stroke-dasharray: 3em;
+    transform-origin: 50% 50%;
+}
+
+.Loader-sm {
+    width: var(--Loader-sm-size);
+    height: var(--Loader-sm-size);
+    --Loader-width: var(--Loader-sm-border);
+}
+
+.Loader-sm .Loader-circle {
+    width: var(--Loader-sm-size);
+    height: var(--Loader-sm-size);
+}
+
+.Loader-sm .Loader-track,
+.Loader-sm .Loader-spin {
+    stroke-width: var(--Loader-width);
+    stroke-dasharray: 6em;
+    transform-origin: 50% 50%;
+}
+
+.Loader-md {
+    width: var(--Loader-md-size);
+    height: var(--Loader-md-size);
+    --Loader-width: var(--Loader-md-border);
+}
+
+.Loader-md .Loader-circle {
+    width: var(--Loader-md-size);
+    height: var(--Loader-md-size);
+    stroke-width: var(--Loader-md-border);
+}
+
+.Loader-md .Loader-track,
+.Loader-md .Loader-spin {
+    stroke-width: var(--Loader-width);
+}
+
+.Loader-md .Loader-spin {
+    stroke-dasharray: 10.5em;
+    transform-origin: 50% 50%;
+}
+
+.Loader-lg {
+    width: var(--Loader-lg-size);
+    height: var(--Loader-lg-size);
+    --Loader-width: var(--Loader-lg-border);
+}
+
+.Loader-lg .Loader-circle {
+    width: var(--Loader-lg-size);
+    height: var(--Loader-lg-size);
+    stroke-width: var(--Loader-lg-border);
+}
+
+.Loader-lg .Loader-track,
+.Loader-lg .Loader-spin {
+    stroke-width: var(--Loader-width);
+}
+
+.Loader-lg .Loader-spin {
+    stroke-dasharray: 14em;
+    transform-origin: 50% 50%;
+}

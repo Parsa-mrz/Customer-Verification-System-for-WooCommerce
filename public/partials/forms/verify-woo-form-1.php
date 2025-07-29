@@ -20,7 +20,21 @@
 						<input id="user_phone" autocomplete="Phone" name="phone" pattern="" placeholder="<?php echo esc_html__( 'Enter Your Phone Number', 'verify-woo' ); ?>" type="text" class="input">
 					</div>
 					<div class="group">
-						<input type="submit" name="signIn" class="button signIn" value="<?php echo esc_html__( 'Sign In / Sign Up', 'verify-woo' ); ?>">
+						<button type="submit" name="signIn" class="button signIn">
+							<span class="button-text"><?php echo esc_html__( 'Sign In / Sign Up', 'verify-woo' ); ?></span>
+							<span class="sign-in-loader" style="display:none;">
+								<span>Loading...</span>
+								<span class="Loader-root Loader-sm sign-in-loader" role="presentation">
+									<svg class="Loader-circle" role="img" aria-labelledby="L2" focusable="false">
+									<title id="L2">Loading…</title>
+									<g role="presentation">
+										<circle class="Loader-track" cx="50%" cy="50%" r="0.5em"></circle>
+										<circle class="Loader-spin" cx="50%" cy="50%" r="0.5em"></circle>
+									</g>
+									</svg>
+								</span>
+							</span>
+						</button>
 					</div>
 			</div>
 			<div class="login-form verify-otp-form">
@@ -33,7 +47,21 @@
 						<input type="hidden" name="otp" id="combined_otp">
 					</div>
 					<div class="group">
-						<input type="submit" name="verify" class="button verify" value="<?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?>">
+						<button type="submit" name="verify" class="button verify">
+							<span class="button-text"><?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?></span>
+							<span class="verify-loader" style="display:none;">
+								<span>Loading...</span>
+								<span class="Loader-root Loader-sm verify-loader" role="presentation">
+									<svg class="Loader-circle" role="img" aria-labelledby="L3" focusable="false">
+									<title id="L3">Loading…</title>
+									<g role="presentation">
+										<circle class="Loader-track" cx="50%" cy="50%" r="1em"></circle>
+										<circle class="Loader-spin" cx="50%" cy="50%" r="1em"></circle>
+									</g>
+									</svg>
+								</span>
+							</span>
+						</button>
 					</div>
 					<div class="group">
 						<p class="resend-otp">

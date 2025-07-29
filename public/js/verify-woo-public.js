@@ -3,6 +3,11 @@
 
 	$(document).ready(function () {
 		const notify = $('.alert');
+		const signInButton = $(".signIn");
+		const verifyButton = $(".verify");
+		const signInLoader = $('.sign-in-loader');
+		const verifyLoader = $('.verify-loader');
+		const resendButton = $('.resend-otp-link');
 
 		const urlParams = new URLSearchParams(window.location.search);
 		const messageKey = urlParams.get('verifywoo_msg');
@@ -85,6 +90,10 @@
 		const sendOtpHandler = function (event) {
 			event.preventDefault();
 
+			signInButton.find('.button-text').hide();
+			signInButton.css('padding', 0);
+			signInLoader.show();
+
 			let user_phone = $('#user_phone').val().trim();
 			let sendOtpForm = $('.send-otp-form');
 			let verifyOtpForm = $('.verify-otp-form');
@@ -116,15 +125,22 @@
 				error: function (jqXHR, textStatus, errorThrown) {
 					showAlert('error', errorThrown);
 					autoHideAlert();
+				},
+				complete: function () {
+					signInButton.find('.button-text').show();
+					signInLoader.hide();
 				}
 			});
 		};
 
-		$(".signIn").click(sendOtpHandler);
-		$(".resend-otp-link").click(sendOtpHandler);
+		signInButton.click(sendOtpHandler);
+		resendButton.click(sendOtpHandler);
 
 		const verifyOtpHandler = function (event) {
 			if (event) event.preventDefault();
+
+			verifyButton.find('.button-text').hide();
+			verifyLoader.show();
 
 			let otp = '';
 			if ($('#combined_otp').length) {
@@ -181,6 +197,10 @@
 					console.error(errorThrown);
 					showAlert('error', errorThrown)
 					autoHideAlert();
+				},
+				complete: function () {
+					verifyButton.find('.button-text').show();
+					verifyLoader.hide();
 				}
 			});
 		};
