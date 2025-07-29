@@ -183,7 +183,6 @@ class Verify_Woo {
 		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-hooks-table.php';
 
 		/**
-<<<<<<< Updated upstream
 		 * The class responsible for defining sms gateway interface
 		 */
 		require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-gateway-interface.php';
@@ -201,11 +200,11 @@ class Verify_Woo {
 		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php';
 
 		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php';
-=======
+
+		/*
 		 * The class responsible for defining all actions that occur in admin information settings
 		 */
 		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-information-tab.php';
->>>>>>> Stashed changes
 
 		$this->loader = new Verify_Woo_Loader();
 	}

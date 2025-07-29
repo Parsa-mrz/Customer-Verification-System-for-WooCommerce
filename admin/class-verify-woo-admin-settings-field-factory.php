@@ -186,4 +186,35 @@ class Verify_Woo_Admin_Settings_Field_Factory {
 			}
 		);
 	}
+
+	/**
+	 * Renders a display field for showing the plugin's version information.
+	 *
+	 * This method outputs the plugin title, a description, and the version number.
+	 * It's typically used in an "About" or "Information" section of the settings.
+	 * It utilizes the `render_setting_row` for consistent display.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $title       The title for the version display (e.g., 'VerifyWoo').
+	 * @param string $description A descriptive text about the version.
+	 * @param string $version     The actual version string to display.
+	 *
+	 * @return void Outputs the HTML directly.
+	 */
+	public static function version( $title, $description, $version ) {
+		self::render_setting_row(
+			function () use ( $title, $description, $version ) {
+				?>
+				<div class="header">
+					<span class="verify-woo-notice-warning verify-woo-admin-version"><?php echo esc_html__( $version, 'verify-woo' ); ?></span>
+					<h3><?php echo esc_html__( $title, 'verify-woo' ); ?></h3>
+				</div>
+				<div class="description">
+					<p><?php echo esc_html( $description ); ?></p>
+				</div>
+				<?php
+			}
+		);
+	}
 }

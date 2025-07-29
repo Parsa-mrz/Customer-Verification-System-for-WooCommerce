@@ -183,11 +183,11 @@
   transition: transform 0.3s ease;
 }
 
-.toggle-switch input[type="checkbox"]:checked + .slider {
+.toggle-switch input[type="checkbox"]:checked+.slider {
   background-color: #4ade80;
 }
 
-.toggle-switch input[type="checkbox"]:checked + .slider::before {
+.toggle-switch input[type="checkbox"]:checked+.slider::before {
   transform: translateX(24px);
 }
 
@@ -232,13 +232,7 @@
   min-height: 48px;
 }
 
-.verify-woo-admin
-  .tabs
-  .tab-contents
-  .tab-content
-  .modern-toggle-form
-  .form-table
-  th {
+.verify-woo-admin .tabs .tab-contents .tab-content .modern-toggle-form .form-table th {
   display: none !important;
 }
 
@@ -261,7 +255,6 @@
 }
 
 .verify-woo-notice-error {
-<<<<<<< Updated upstream
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
@@ -278,7 +271,8 @@
   display: flex;
   align-items: center;
   /* Adjust this if you no longer need space for an arrow */
-  justify-content: flex-start; /* Changed from space-between */
+  justify-content: flex-start;
+  /* Changed from space-between */
   padding: 10px 15px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
@@ -338,21 +332,18 @@
 
 .verify-woo-dropdown select {
   display: none;
-}
-=======
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 
 .verify-woo-notice-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
 }
 
 .verify-woo-admin-version {
-    padding: 5px 30px;
-    border-radius: 8px;
+  padding: 5px 30px;
+  border-radius: 8px;
 }
->>>>>>> Stashed changes

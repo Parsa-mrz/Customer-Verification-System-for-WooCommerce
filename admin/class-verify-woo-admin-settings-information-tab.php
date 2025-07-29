@@ -1,6 +1,27 @@
 <?php
+/**
+ * Admin Settings Information Tab Class.
+ *
+ * This file defines the `Verify_Woo_Admin_Settings_Information_Tab` class, which is responsible
+ * for handling the "Information" tab on the Verify Woo plugin's administration settings page.
+ * It manages the display of plugin version and other relevant details.
+ *
+ * @package    Verify_Woo
+ * @subpackage Verify_Woo/admin
+ * @author     Parsamirzaie
+ * @link       https://parsamirzaie.com
+ * @since      1.0.0
+ */
 
-
+/**
+ * The Verify_Woo_Admin_Settings_Information_Tab class.
+ *
+ * This class is responsible for managing the information tab within the Verify Woo plugin's
+ * admin settings page. It handles the registration of settings, sanitization of options,
+ * and rendering of the information fields, primarily displaying the plugin's version.
+ *
+ * @since 1.0.0
+ */
 class Verify_Woo_Admin_Settings_Information_Tab {
 	/**
 	 * The ID of this plugin.
@@ -41,6 +62,15 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 	 */
 	const OPTION_GROUP = 'verify_woo_information_settings';
 
+	/**
+	 * Registers the settings for the information tab.
+	 *
+	 * This method hooks into WordPress's settings API to define the settings group,
+	 * section, and field for the plugin's information display.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function register_settings() {
 		register_setting(
 			'verify_woo_settings_information_group',
@@ -64,7 +94,17 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 		);
 	}
 
-
+	/**
+	 * Sanitizes the input for the information settings.
+	 *
+	 * This method is a callback for `register_setting` and is responsible for
+	 * cleaning and validating the settings data before it is saved to the database.
+	 * Currently, it handles a hypothetical 'activation' setting and adds a success notice.
+	 *
+	 * @since 1.0.0
+	 * @param  array $input The unsanitized array of settings from the form.
+	 * @return array        The sanitized array of settings.
+	 */
 	public function sanitize_settings( $input ) {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
@@ -74,18 +114,26 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 		return $sanitized;
 	}
 
-
+	/**
+	 * Renders the information field on the settings page.
+	 *
+	 * This method retrieves the saved options and uses a factory class
+	 * (Verify_Woo_Admin_Settings_Field_Factory) to display the plugin's version.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	public function render_field() {
 		$options = get_option( self::OPTION_GROUP );
 
 		Verify_Woo_Admin_Settings_Field_Factory::version(
+			__( 'VerifyWoo', 'verify-woo' ),
+			__( 'This is the current installed version of the plugin.', 'verify-woo' ),
 			sprintf(
 			/* translators: %s: plugin version */
 				esc_html__( 'Version %s', 'verify-woo' ),
 				esc_html( $this->version )
 			),
-			__( 'VerifyWoo', 'verify-woo' ),
-			__( 'This is the current installed version of the plugin.', 'verify-woo' )
 		);
 	}
 }
