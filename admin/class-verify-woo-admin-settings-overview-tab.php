@@ -63,7 +63,7 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 		);
 
 		add_settings_field(
-			'activation',
+			'overview',
 			'',
 			array( $this, 'render_field' ),
 			'verify_woo_settings_page_overview',

@@ -70,7 +70,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 		);
 
 		add_settings_field(
-			'activation',
+			'sms_gateway',
 			'',
 			array( $this, 'render_field' ),
 			'verify_woo_settings_page_sms_gateway',

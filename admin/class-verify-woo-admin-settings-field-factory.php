@@ -48,13 +48,13 @@ class Verify_Woo_Admin_Settings_Field_Factory {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array  $options       Array of current options for the given settings group.
-	 * @param string $option_key    The key within the options array to be rendered as a toggle.
-	 * @param string $option_group  The name of the settings group (used as the field name's array key).
-	 * @param string $title         The display title for the setting (shown as the label).
-	 * @param string $description   The description text shown under the toggle.
+	 * @param array  $options      The full array of current options for the settings group.
+	 * @param string $option_key   The specific key within the options array to render.
+	 * @param string $option_group The name of the settings group (used for input name).
+	 * @param string $title        The title/label to display next to the toggle.
+	 * @param string $description  Optional description to show below the toggle.
 	 *
-	 * @return void Outputs the HTML directly.
+	 * @return void Outputs the field HTML directly.
 	 */
 	public static function toggle( $options, $option_key, $option_group, $title, $description ) {
 		self::render_setting_row(
@@ -76,7 +76,6 @@ class Verify_Woo_Admin_Settings_Field_Factory {
 				</label>
 				<h3><?php echo esc_html( $title ); ?></h3>
 			</div>
-
 			<div class="description">
 				<p><?php echo esc_html( $description ); ?></p>
 			</div>
