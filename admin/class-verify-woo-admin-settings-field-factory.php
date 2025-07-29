@@ -188,33 +188,94 @@ class Verify_Woo_Admin_Settings_Field_Factory {
 	}
 
 	/**
-	 * Renders a display field for showing the plugin's version information.
+	 * Renders a simple text block with an optional subtitle and description.
 	 *
-	 * This method outputs the plugin title, a description, and the version number.
-	 * It's typically used in an "About" or "Information" section of the settings.
-	 * It utilizes the `render_setting_row` for consistent display.
+	 * This method is useful for displaying static information, headings, or
+	 * descriptive content within the settings page without requiring user input.
+	 * It wraps the content in a standard setting row for consistent styling.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $title       The title for the version display (e.g., 'VerifyWoo').
-	 * @param string $description A descriptive text about the version.
-	 * @param string $version     The actual version string to display.
-	 *
+	 * @param string $title        The main title or heading for the text block.
+	 * @param string $subtitle     Optional subtitle displayed above the title. Defaults to an empty string.
+	 * @param string $description  The content for the description area. This can contain HTML.
+	 * @param array  $custom_class Optional. An associative array of custom CSS classes to apply
+	 * to 'subtitle', 'title', and 'description' elements.
+	 * Example: `['subtitle' => 'my-subtitle-class', 'title' => 'my-title-class']`.
 	 * @return void Outputs the HTML directly.
 	 */
-	public static function version( $title, $description, $version ) {
+	public static function text( $title, $subtitle = '', $description, $custom_class = array() ) {
 		self::render_setting_row(
-			function () use ( $title, $description, $version ) {
+			function () use ( $title, $description, $subtitle, $custom_class ) {
 				?>
 				<div class="header">
-					<span class="verify-woo-notice-warning verify-woo-admin-version"><?php echo esc_html__( $version, 'verify-woo' ); ?></span>
-					<h3><?php echo esc_html__( $title, 'verify-woo' ); ?></h3>
+					<span class="<?php echo esc_attr( $custom_class['subtitle'] ); ?>"><?php echo esc_html( $subtitle ); ?></span>
+					<h3 class="<?php echo esc_attr( $custom_class['title'] ); ?>"><?php echo esc_html( $title ); ?></h3>
 				</div>
-				<div class="description">
-					<p><?php echo esc_html( $description ); ?></p>
+				<div class="description <?php echo esc_attr( $custom_class['description'] ); ?>">
+					<?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<?php
 			}
 		);
+	}
+
+	/**
+	 * Returns an HTML string for an unordered or ordered list with dynamic items and optional icons.
+	 *
+	 * Expected structure for $options array:
+	 * [
+	 * ['url' => 'https://example.com', 'label' => 'Example Link 1', 'icon' => 'dashicons-admin-links'],
+	 * ['url' => 'https://another.com', 'label' => 'Another Link', 'icon' => 'dashicons-star-filled'],
+	 * // ... more items
+	 * ]
+	 * The 'icon' key is optional. If provided, it should be a Dashicon class name.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $type    The type of list ('ul' or 'ol').
+	 * @param array  $options An array of associative arrays, each with 'url', 'label', and optional 'icon' keys for list items.
+	 * @return string The HTML string for the list.
+	 */
+	public static function list( $type = 'ul', $options = array() ) {
+		$output = '';
+		if ( is_admin() ) {
+			wp_enqueue_style( 'dashicons' );
+		}
+
+		switch ( $type ) {
+			case 'ul':
+				$output .= '<ul class="verify-woo-list">';
+				break;
+			case 'ol':
+				$output .= '<ol class="verify-woo-list">';
+				break;
+		}
+
+		if ( ! empty( $options ) && is_array( $options ) ) {
+			foreach ( $options as $item ) {
+				if ( isset( $item['url'] ) && isset( $item['label'] ) ) {
+					$output .= '<li>';
+					if ( isset( $item['icon'] ) && ! empty( $item['icon'] ) ) {
+						$output .= '<span class="dashicons ' . esc_attr( $item['icon'] ) . '"></span> ';
+					}
+					$output .= '<a href="' . esc_url( $item['url'] ) . '" target="_blank">';
+					$output .= esc_html( $item['label'] );
+					$output .= '</a>';
+					$output .= '</li>';
+				}
+			}
+		}
+
+		switch ( $type ) {
+			case 'ul':
+				$output .= '</ul>';
+				break;
+			case 'ol':
+				$output .= '</ol>';
+				break;
+		}
+
+		return $output;
 	}
 }

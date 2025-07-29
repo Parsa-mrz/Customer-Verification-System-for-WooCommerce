@@ -126,13 +126,41 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 	public function render_field() {
 		$options = get_option( self::OPTION_GROUP );
 
-		Verify_Woo_Admin_Settings_Field_Factory::version(
+		Verify_Woo_Admin_Settings_Field_Factory::text(
 			__( 'VerifyWoo', 'verify-woo' ),
-			__( 'This is the current installed version of the plugin.', 'verify-woo' ),
 			sprintf(
 			/* translators: %s: plugin version */
 				esc_html__( 'Version %s', 'verify-woo' ),
 				esc_html( $this->version )
+			),
+			__( 'This is the current installed version of the plugin.', 'verify-woo' ),
+			array(
+				'subtitle' => 'verify-woo-notice-success verify-woo-admin-version',
+			)
+		);
+
+		Verify_Woo_Admin_Settings_Field_Factory::text(
+			__( 'Developer Information', 'verify-woo' ),
+			'',
+			Verify_Woo_Admin_Settings_Field_Factory::list(
+				'ul',
+				array(
+					array(
+						'url'   => 'https://parsamirzaie.com',
+						'label' => __( 'Check My Website', 'verify-woo' ),
+						'icon'  => 'dashicons-admin-site',
+					),
+					array(
+						'url'   => 'https://github.com/Parsa-mrz',
+						'label' => __( 'GitHub Profile', 'verify_woo' ),
+						'icon'  => 'dashicons-admin-links',
+					),
+					array(
+						'url'   => 'www.linkedin.com/in/parsa-mirzaie-85249a221',
+						'label' => __( 'LinkedIn Profile', 'verify-woo' ),
+						'icon'  => 'dashicons-format-aside',
+					),
+				)
 			),
 		);
 	}
