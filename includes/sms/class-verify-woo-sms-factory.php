@@ -14,8 +14,6 @@
  * @subpackage Verify_Woo/includes
  */
 
-require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-factory-interface.php';
-
 /**
  * Verify_Woo_Sms_Factory Class.
  *

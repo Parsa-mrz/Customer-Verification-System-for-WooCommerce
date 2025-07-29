@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -38,6 +37,6 @@ class Verify_Woo_i18n {
 		// 'verify-woo',
 		// false,
 		// dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		// );
+		// );.
 	}
 }
