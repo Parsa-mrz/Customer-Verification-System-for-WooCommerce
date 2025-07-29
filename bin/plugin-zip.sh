@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PLUGIN_NAME="VerifyWoo"
+PLUGIN_NAME="verify-woo"
 
 # +---------------------------+
 # |                           |

@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       VerifyWoo
- * Plugin URI:        https://#
+ * Plugin URI:        https://parsamirzaie.com
  * Description:       This is a description of the plugin.
  * Version:           1.0.0
  * Author:            Parsa Mirzaie

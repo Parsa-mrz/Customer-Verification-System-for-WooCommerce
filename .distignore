@@ -3,4 +3,6 @@ verify-woo-hooks.md
 .git
 .DS_Store
 .wp-env.json
-,gitignore
+.gitignore
+/bin/
+.distignore
