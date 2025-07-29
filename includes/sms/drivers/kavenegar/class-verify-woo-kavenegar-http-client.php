@@ -152,6 +152,7 @@ class Verify_Woo_Kavenegar_Http_Client {
 
 		if ( 200 !== $http_code || is_null( $json_response ) || ! isset( $json_response->return ) ) {
 			$error_message = sprintf(
+				// Translators: %s is API error.
 				esc_html__( 'Kavenegar API: HTTP Status %1$d or invalid JSON response. Response: %2$s', 'verify-woo' ),
 				$http_code,
 				$body
@@ -165,6 +166,7 @@ class Verify_Woo_Kavenegar_Http_Client {
 			$api_status  = $json_response->return->status ?? 0;
 			error_log(
 				sprintf(
+					// Translators: %s is API error.
 					esc_html__( 'Kavenegar API Error: %1$s (Status: %2$d)', 'verify-woo' ),
 					$api_message,
 					$api_status

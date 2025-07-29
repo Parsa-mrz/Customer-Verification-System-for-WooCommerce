@@ -108,7 +108,7 @@ class Verify_Woo_Admin {
 	public function add_admin_menu() {
 		add_menu_page(
 			'VerifyWoo Settings',
-			__( 'VerifyWoo', 'veirfy-woo' ),
+			__( 'VerifyWoo', 'verify-woo' ),
 			'manage_options',
 			'verify_woo_settings_page',
 			array( $this, 'render_settings' ),

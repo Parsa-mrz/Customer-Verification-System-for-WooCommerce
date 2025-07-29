@@ -152,7 +152,7 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 					),
 					array(
 						'url'   => 'https://github.com/Parsa-mrz',
-						'label' => __( 'GitHub Profile', 'verify_woo' ),
+						'label' => __( 'GitHub Profile', 'verify-woo' ),
 						'icon'  => 'dashicons-admin-links',
 					),
 					array(

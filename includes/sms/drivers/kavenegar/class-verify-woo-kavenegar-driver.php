@@ -92,6 +92,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
+					// Translators: %s is API error.
 					esc_html__( 'Failed to initialize Kavenegar HTTP Client: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
@@ -138,6 +139,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
+					// Translators: %s is API error.
 					esc_html__( 'An unexpected error occurred during Kavenegar SMS sending: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
@@ -191,6 +193,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(
+					// Translators: %s is API error.
 					esc_html__( 'An unexpected error occurred during Kavenegar pattern SMS sending: %s', 'verify-woo' ),
 					$e->getMessage()
 				)
