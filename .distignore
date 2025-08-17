@@ -6,4 +6,4 @@ verify-woo-hooks.md
 .gitignore
 /bin/
 .distignore
-.vscode
+.vscode/
