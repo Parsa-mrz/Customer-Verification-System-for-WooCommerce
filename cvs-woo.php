@@ -42,7 +42,7 @@ define( 'CVS_WOO_VERSION', '1.0.0' );
  * This action is documented in includes/class-verify-woo-activator.php
  */
 function activate_verify_woo() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cvs-woo-activator.php';
 	Cvs_Woo_Activator::activate();
 }
 
@@ -51,7 +51,7 @@ function activate_verify_woo() {
  * This action is documented in includes/class-verify-woo-deactivator.php
  */
 function deactivate_verify_woo() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cvs-woo-deactivator.php';
 	Cvs_Woo_Deactivator::deactivate();
 }
 

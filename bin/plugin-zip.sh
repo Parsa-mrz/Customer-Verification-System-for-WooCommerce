@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PLUGIN_NAME="customer-verification-system-for-wooCommerce"
+PLUGIN_NAME="cvs-for-wooCommerce"
 
 # +---------------------------+
 # |                           |
