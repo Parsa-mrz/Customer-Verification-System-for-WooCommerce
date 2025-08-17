@@ -126,7 +126,7 @@ class Cvs_Public {
 		 *
 		 * @param string $custom_template_path Full path to the custom login form.
 		 */
-		$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
+		$custom_template = apply_filters( 'verify_woo_login_form_template_path', CVS_PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
 
 		if ( file_exists( $custom_template ) ) {
 			return $custom_template;

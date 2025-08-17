@@ -270,7 +270,7 @@ Filters the path to the custom login form template.
 
 * **Description:** This filter allows developers to completely override the path to the custom login form template used by Verify-Woo, enabling the use of a completely custom login form design.
 * **Parameters:**
-    * `$custom_template_path` (string): The full default path to the custom login form (`PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php'`).
+    * `$custom_template_path` (string): The full default path to the custom login form (`CVS_PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php'`).
 * **Returns:** (string) The full path to your custom login form template.
 * **Example Usage:**
 
@@ -304,6 +304,6 @@ Filters the list of available settings tabs in the VerifyWoo admin page.
   } );
   ```
 Make sure the content for the tab exists in:
-  `PLUGIN_DIR/admin/partials/tabs/custom-tab/content.php`
+  `CVS_PLUGIN_DIR/admin/partials/tabs/custom-tab/content.php`
 
   

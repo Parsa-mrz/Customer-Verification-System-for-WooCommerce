@@ -133,7 +133,7 @@ class Cvs_Woo_Admin {
 	public function render_settings() {
 		$tabs        = $this->get_tabs();
 		$tabs_data   = array();
-		$plugin_icon = PLUGIN_DIR . '/public/partials/cvs-woo-public-icon.php';
+		$plugin_icon = CVS_PLUGIN_DIR . '/public/partials/cvs-woo-public-icon.php';
 
 		foreach ( $tabs as $slug => $tab_info ) {
 			$tabs_data[] = array(
@@ -143,7 +143,7 @@ class Cvs_Woo_Admin {
 			);
 		}
 
-		include_once PLUGIN_DIR . '/admin/partials/cvs-woo-admin-display.php';
+		include_once CVS_PLUGIN_DIR . '/admin/partials/cvs-woo-admin-display.php';
 	}
 
 	/**
@@ -159,7 +159,7 @@ class Cvs_Woo_Admin {
 	 */
 	private function get_tabs(): array {
 		$tabs          = array();
-		$partials_path = PLUGIN_DIR . '/admin/partials/tabs/';
+		$partials_path = CVS_PLUGIN_DIR . '/admin/partials/tabs/';
 		$folders       = glob( $partials_path . '*', GLOB_ONLYDIR );
 
 		usort(
@@ -194,7 +194,7 @@ class Cvs_Woo_Admin {
 	 * @return string|null The content file path or null if not found.
 	 */
 	private function get_tab_content_file( string $slug ): ?string {
-		$file = PLUGIN_DIR . '/admin/partials/tabs/' . $slug . '/content.php';
+		$file = CVS_PLUGIN_DIR . '/admin/partials/tabs/' . $slug . '/content.php';
 		return file_exists( $file ) ? $file : null;
 	}
 

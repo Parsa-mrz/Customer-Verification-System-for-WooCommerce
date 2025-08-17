@@ -116,98 +116,98 @@ class Cvs_Woo {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once PLUGIN_DIR . '/includes/class-cvs-woo-loader.php';
+		require_once CVS_PLUGIN_DIR . '/includes/class-cvs-woo-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once PLUGIN_DIR . '/includes/class-cvs-woo-i18n.php';
+		require_once CVS_PLUGIN_DIR . '/includes/class-cvs-woo-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once PLUGIN_DIR . '/public/class-cvs-woo-public.php';
+		require_once CVS_PLUGIN_DIR . '/public/class-cvs-woo-public.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the auth redirect
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-redirect.php';
+		require_once CVS_PLUGIN_DIR . '/includes/auth/class-cvs-woo-redirect.php';
 
 		/**
 		 * The class responsible for defining all enums that occur in plugin
 		 */
-		require_once PLUGIN_DIR . '/enums/cvs-woo-otp-enum.php';
+		require_once CVS_PLUGIN_DIR . '/enums/cvs-woo-otp-enum.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the send otp
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-send-otp.php';
+		require_once CVS_PLUGIN_DIR . '/includes/auth/class-cvs-woo-send-otp.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the validate otp
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-validate-otp.php';
+		require_once CVS_PLUGIN_DIR . '/includes/auth/class-cvs-woo-validate-otp.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin overview settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-overview-tab.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-overview-tab.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin sms gateway settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-sms-gateway-tab.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-sms-gateway-tab.php';
 
 		/**
 		 * The class responsible for defining all notice in admin settings.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-notice.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-notice.php';
 
 		/**
 		 * The class responsible for defining all field in admin settings.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-field-factory.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-field-factory.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin hooks settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-tab.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-tab.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin hooks table settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-table.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-table.php';
 
 		/**
 		 * The class responsible for defining sms gateway interface
 		 */
-		require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-gateway-interface.php';
+		require_once CVS_PLUGIN_DIR . '/includes/sms/interfaces/sms-gateway-interface.php';
 
 		/**
 		 * The class responsible for defining sms factory interface
 		 */
-		require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-factory-interface.php';
+		require_once CVS_PLUGIN_DIR . '/includes/sms/interfaces/sms-factory-interface.php';
 
-		require_once PLUGIN_DIR . '/includes/sms/class-cvs-woo-sms-factory.php';
+		require_once CVS_PLUGIN_DIR . '/includes/sms/class-cvs-woo-sms-factory.php';
 
 		/**
 		 * The class responsible for defining kavenegar sms driver
 		 */
-		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-driver.php';
+		require_once CVS_PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-driver.php';
 
-		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-http-client.php';
+		require_once CVS_PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-http-client.php';
 
 		/*
 		 * The class responsible for defining all actions that occur in admin information settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-information-tab.php';
+		require_once CVS_PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-information-tab.php';
 
 		$this->loader = new Cvs_Woo_Loader();
 	}
@@ -218,8 +218,8 @@ class Cvs_Woo {
 	 * @since   1.0.0
 	 */
 	private function define_constants() {
-		define( 'PLUGIN_DIR', untrailingslashit( plugin_dir_path( __DIR__ ) ) );
-		define( 'PLUGIN_URL', untrailingslashit( plugin_dir_url( __DIR__ ) ) );
+		define( 'CVS_PLUGIN_DIR', untrailingslashit( plugin_dir_path( __DIR__ ) ) );
+		define( 'CVS_PLUGIN_URL', untrailingslashit( plugin_dir_url( __DIR__ ) ) );
 	}
 
 	/**
@@ -355,7 +355,7 @@ class Cvs_Woo {
 			 *
 			 * @param string $custom_template_path Full path to the custom login form.
 			 */
-			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
+			$custom_template = apply_filters( 'verify_woo_login_form_template_path', CVS_PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
 
 			$admin_overview_options = get_option( Cvs_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
 
