@@ -11,6 +11,10 @@
  * @package    Verify_Woo
  * @subpackage Verify_Woo/public/partials
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

@@ -14,6 +14,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Kavenegar API HTTP Client using WordPress's HTTP API.
  *

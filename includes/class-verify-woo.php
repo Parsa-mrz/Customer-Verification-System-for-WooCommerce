@@ -12,6 +12,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The core plugin class.
  *

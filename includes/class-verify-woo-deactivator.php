@@ -9,6 +9,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Fired during plugin deactivation.
  *

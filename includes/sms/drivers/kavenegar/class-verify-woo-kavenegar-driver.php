@@ -14,6 +14,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Kavenegar SMS Gateway Driver for Verify Woo.
  *

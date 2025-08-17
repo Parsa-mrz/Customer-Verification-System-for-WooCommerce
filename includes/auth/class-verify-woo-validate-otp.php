@@ -15,6 +15,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Handles OTP validation and user login/registration via AJAX.
  *

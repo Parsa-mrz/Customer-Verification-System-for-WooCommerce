@@ -11,6 +11,9 @@
  * @subpackage Verify_Woo/public/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <form>
 	<div class="login-wrap">

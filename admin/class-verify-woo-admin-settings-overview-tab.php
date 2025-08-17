@@ -12,6 +12,9 @@
  * @since       1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Class verify_Woo_Admin_Settings_overview
  *

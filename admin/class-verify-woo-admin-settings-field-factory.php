@@ -12,6 +12,9 @@
  * @since      1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Class Verify_Woo_Admin_Settings_Field_Factory
  *

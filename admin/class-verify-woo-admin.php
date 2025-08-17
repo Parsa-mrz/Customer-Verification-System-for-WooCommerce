@@ -9,6 +9,9 @@
  * @subpackage Verify_Woo/admin
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The admin-specific functionality of the plugin.
  *

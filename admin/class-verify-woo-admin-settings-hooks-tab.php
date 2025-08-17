@@ -13,6 +13,9 @@
  * @author    Developer
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Class Verify_Woo_Admin_Settings_Hooks_Tab
  *

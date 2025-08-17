@@ -13,6 +13,9 @@
  * @since      1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * The Verify_Woo_Admin_Settings_Information_Tab class.
  *

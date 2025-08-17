@@ -1,4 +1,4 @@
-=== VerifyWoo ===
+=== Customer Verification System for WooCommerce ===
 Contributors: parsamrz
 Donate link: https://parsamirzaie.com
 Tags: woocommerce, verification, email, trust
@@ -13,7 +13,7 @@ VerifyWoo adds a verification system for WooCommerce stores to build trust with 
 
 == Description ==
 
-Verify Woo is a WooCommerce plugin designed to add a verification system to your store. Whether you're verifying customers, vendors, or orders, this plugin helps bring trust and legitimacy to your WooCommerce experience.
+Customer Verification System for WooCommerce is a WooCommerce plugin designed to add a verification system to your store. Whether you're verifying customers, vendors, or orders, this plugin helps bring trust and legitimacy to your WooCommerce experience.
 
 Perfect for stores that want to ensure buyers are real, reduce fraud, and increase customer confidence.
 
@@ -28,7 +28,7 @@ Perfect for stores that want to ensure buyers are real, reduce fraud, and increa
 
 1. Upload the plugin files to the `/wp-content/plugins/verify-woo` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the ‘Plugins’ screen in WordPress.
-3. Use the WooCommerce > Settings > Verify Woo screen to configure the plugin.
+3. Use the WooCommerce > Settings > Customer Verification System for WooCommerce screen to configure the plugin.
 
 == Frequently Asked Questions ==
 
@@ -50,7 +50,7 @@ Yes! The plugin supports internationalization and includes a `.pot` file for tra
 == Upgrade Notice ==
 
 = 1.0.0 =
-First stable release of Verify Woo
+First stable release of Customer Verification System for WooCommerce
 
 == License ==
 

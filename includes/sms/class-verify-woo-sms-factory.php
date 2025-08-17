@@ -14,6 +14,9 @@
  * @subpackage Verify_Woo/includes
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Verify_Woo_Sms_Factory Class.
  *

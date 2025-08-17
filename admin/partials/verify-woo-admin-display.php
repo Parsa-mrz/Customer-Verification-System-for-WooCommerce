@@ -11,6 +11,9 @@
  * @subpackage Verify_Woo/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <div class="wrap">
 	<div class="tabs-container verify-woo-admin">

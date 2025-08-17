@@ -11,6 +11,9 @@
  * @subpackage Verify_Woo/admin/partials/tabs/hooks
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 <form class="modern-toggle-form" action="options.php" method="POST">
 	<?php

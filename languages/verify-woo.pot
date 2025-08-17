@@ -1,0 +1,340 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: VerifyWoo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-29 21:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.29\n"
+"X-Domain: verify-woo"
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:121
+msgid "Activate SMS"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:122
+msgid "Active sms gateway to send OTP to Users"
+msgstr ""
+
+#. %s is API error.
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:197
+#, php-format
+msgid "An unexpected error occurred during Kavenegar pattern SMS sending: %s"
+msgstr ""
+
+#. %s is API error.
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:143
+#, php-format
+msgid "An unexpected error occurred during Kavenegar SMS sending: %s"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:150
+msgid "Check My Website"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:67
+msgid "Configure the gateway settings below."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:60
+#: admin/class-verify-woo-admin-settings-hooks-tab.php:57
+msgid "Configure the login settings below."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:143
+msgid "Developer Information"
+msgstr ""
+
+#: public/partials/forms/verify-woo-form-1.php:68
+msgid "Didn't receive the code?"
+msgstr ""
+
+#. %s is driver name.
+#: includes/sms/class-verify-woo-sms-factory.php:94
+#, php-format
+msgid "Driver [%s] does not implement required interface."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:183
+msgid "e.g., verify_code_template"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:119
+msgid "Enable Checkout Login Redirect"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:111
+msgid "Enable Custom Login Page"
+msgstr ""
+
+#: public/partials/forms/verify-woo-form-1.php:42
+msgid "Enter OTP"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:192
+msgid "Enter the sender number you registered with KaveNegar."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:172
+msgid "Enter your KaveNegar API Key"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:170
+msgid "Enter your KaveNegar API key to enable SMS sending."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:194
+msgid "Enter your KaveNegar Sender Number"
+msgstr ""
+
+#: public/partials/forms/verify-woo-form-1.php:20
+msgid "Enter Your Phone Number"
+msgstr ""
+
+#. %s is API error.
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:96
+#, php-format
+msgid "Failed to initialize Kavenegar HTTP Client: %s"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:155
+msgid "GitHub Profile"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-hooks-tab.php:55
+msgid "Hook"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://parsamirzaie.com"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://parsamirzaie.com/"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:181
+msgid ""
+"If using Kavenegar's Lookup service, enter the specific pattern code "
+"(template ID) for sending OTPs. Leave blank to send standard SMS messages."
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:140
+msgid "Incorrect OTP. Maximum attempts reached."
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:146
+msgid "Incorrect OTP. Try again."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:152
+msgid "Kavenegar"
+msgstr ""
+
+#. %s is API error.
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php:170
+#, php-format
+msgid "Kavenegar API Error: %1$s (Status: %2$d)"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:169
+msgid "Kavenegar API Key"
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php:81
+msgid "Kavenegar API Key is empty."
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:82
+msgid "Kavenegar API Key is missing in settings."
+msgstr ""
+
+#. %s is API error.
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php:156
+#, php-format
+msgid ""
+"Kavenegar API: HTTP Status %1$d or invalid JSON response. Response: %2$s"
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:171
+msgid "Kavenegar client not initialized. Cannot send pattern SMS."
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:122
+msgid "Kavenegar client not initialized. Cannot send SMS."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:180
+msgid "Kavenegar Pattern Code"
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:134
+msgid "Kavenegar send SMS: Unexpected empty response."
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:188
+msgid "Kavenegar sendByPattern: Unexpected empty response."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:191
+msgid "Kavenegar Sender Number"
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php:85
+msgid "Kavenegar Sender number is missing in settings."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:160
+msgid "LinkedIn Profile"
+msgstr ""
+
+#: includes/auth/class-verify-woo-send-otp.php:54
+msgid "Login to the system is currently unavailable."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:58
+msgid "Main Settings"
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:108
+msgid "OTP expired. Please request a new one."
+msgstr ""
+
+#. %d is the user phone number.
+#: includes/auth/class-verify-woo-send-otp.php:76
+msgid "OTP Sent to %d Successfully!"
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:81
+msgid "OTP verified and user logged in."
+msgstr ""
+
+#. Author of the plugin
+msgid "Parsa Mirzaie"
+msgstr ""
+
+#: includes/auth/class-verify-woo-send-otp.php:64
+msgid "Phone number is empty."
+msgstr ""
+
+#: includes/auth/class-verify-woo-send-otp.php:58
+msgid "Phone number is required."
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:52
+msgid "Phone or OTP is missing."
+msgstr ""
+
+#. %d is the number of seconds the user must wait before retrying.
+#: includes/auth/class-verify-woo-send-otp.php:70
+msgid "Please wait %d seconds before trying again."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:83
+msgid "Plugin Information"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:120
+msgid ""
+"Redirect customers to the login page during checkout and back to checkout "
+"after successful login"
+msgstr ""
+
+#: admin/partials/tabs/2-sms-gateway/content.php:20
+#: admin/partials/tabs/1-overview/content.php:20
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:151
+msgid "Select SMS Gateway"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:149
+msgid "Select the SMS gateway you want to use for sending messages."
+msgstr ""
+
+#: includes/class-verify-woo.php:375
+msgid "Settings"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:91
+#: admin/class-verify-woo-admin-settings-hooks-tab.php:88
+#: admin/class-verify-woo-admin-settings-information-tab.php:112
+msgid "Settings Saved"
+msgstr ""
+
+#: public/partials/forms/verify-woo-form-1.php:24
+msgid "Sign In / Sign Up"
+msgstr ""
+
+#. %s is driver name.
+#: includes/sms/class-verify-woo-sms-factory.php:62
+#, php-format
+msgid "SMS driver [%s] is not supported."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:148
+msgid "SMS Gateway"
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-sms-gateway-tab.php:65
+msgid "SMS Gateway Settings"
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:63
+msgid "Something went wrong. Please try again later."
+msgstr ""
+
+#. Description of the plugin
+msgid "This is a description of the plugin."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-information-tab.php:136
+msgid "This is the current installed version of the plugin."
+msgstr ""
+
+#: includes/auth/class-verify-woo-validate-otp.php:129
+msgid "Too many attempts. Try again later."
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php:165
+msgid "Unknown Kavenegar API error."
+msgstr ""
+
+#: admin/class-verify-woo-admin-settings-overview-tab.php:112
+msgid ""
+"Use a custom login page for WooCommerce, redirecting users from the default "
+"login"
+msgstr ""
+
+#: public/partials/forms/verify-woo-form-1.php:51
+msgid "Verify OTP"
+msgstr ""
+
+#. Name of the plugin
+#: admin/class-verify-woo-admin-settings-information-tab.php:130
+#: admin/class-verify-woo-admin.php:111
+#: admin/partials/verify-woo-admin-display.php:24
+msgid "VerifyWoo"
+msgstr ""
+
+#. %s: plugin version
+#: admin/class-verify-woo-admin-settings-information-tab.php:133
+#: admin/partials/verify-woo-admin-display.php:32
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#: includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php:88
+msgid ""
+"WordPress HTTP API functions are not available. Make sure wp-"
+"includes/pluggable.php is loaded."
+msgstr ""

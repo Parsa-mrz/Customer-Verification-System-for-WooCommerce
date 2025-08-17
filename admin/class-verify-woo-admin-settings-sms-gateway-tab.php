@@ -20,6 +20,9 @@
  * @since      1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Handles the registration and rendering of the SMS Gateway settings tab in the WooCommerce admin.
  *
