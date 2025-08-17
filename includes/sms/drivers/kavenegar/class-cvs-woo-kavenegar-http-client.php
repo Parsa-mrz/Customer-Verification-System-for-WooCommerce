@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Kavenegar_Http_Client {
+class Cvs_Woo_Kavenegar_Http_Client {
 
 	/**
 	 * Kavenegar API base path format string.

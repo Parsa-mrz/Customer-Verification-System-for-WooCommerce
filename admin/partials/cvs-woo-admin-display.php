@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 					<div class="tab-content <?php echo esc_attr( $active ); ?>" id="<?php echo esc_attr( $slug ); ?>">
 						<div class="verify-woo-notice">
-							<?php Verify_Woo_Admin_Notice::render_notices(); ?>
+							<?php Cvs_Woo_Admin_Notice::render_notices(); ?>
 						</div>
 						<?php
 						do_action( "verify_woo_tab_{$slug}_content", $slug );

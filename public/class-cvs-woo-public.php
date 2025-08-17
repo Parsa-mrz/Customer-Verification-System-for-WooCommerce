@@ -19,7 +19,7 @@
  * @subpackage Verify_Woo/public
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo_Public {
+class Cvs_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -71,7 +71,7 @@ class Verify_Woo_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/verify-woo-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/cvs-woo-public.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class Verify_Woo_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/verify-woo-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/cvs-woo-public.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
 			$this->plugin_name,
 			'verifyWooVars',
@@ -126,7 +126,7 @@ class Verify_Woo_Public {
 		 *
 		 * @param string $custom_template_path Full path to the custom login form.
 		 */
-		$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
+		$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
 
 		if ( file_exists( $custom_template ) ) {
 			return $custom_template;

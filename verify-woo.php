@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'VERIFY_WOO_VERSION', '1.0.0' );
+define( 'CVS_WOO_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -43,7 +43,7 @@ define( 'VERIFY_WOO_VERSION', '1.0.0' );
  */
 function activate_verify_woo() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo-activator.php';
-	Verify_Woo_Activator::activate();
+	Cvs_Woo_Activator::activate();
 }
 
 /**
@@ -52,7 +52,7 @@ function activate_verify_woo() {
  */
 function deactivate_verify_woo() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo-deactivator.php';
-	Verify_Woo_Deactivator::deactivate();
+	Cvs_Woo_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_verify_woo' );
@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, 'deactivate_verify_woo' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-cvs-woo.php';
 
 
 /**
@@ -76,7 +76,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-verify-woo.php';
  */
 function run_verify_woo() {
 	$plugin_basename = plugin_basename( __FILE__ );
-	$plugin          = new Verify_Woo( $plugin_basename );
+	$plugin          = new Cvs_Woo( $plugin_basename );
 	$plugin->run();
 }
 run_verify_woo();

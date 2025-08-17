@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  * @package Verify_Woo
  */
-class Verify_Woo_Send_OTP {
+class Cvs_Woo_Send_OTP {
 
 	/**
 	 * AJAX callback: Sends an OTP code to the specified phone number.
@@ -52,7 +52,7 @@ class Verify_Woo_Send_OTP {
 	public function wp_ajax_send_otp() {
 		check_ajax_referer( 'verify_woo_otp_nonce', '_nonce', true );
 
-		$admin_sms_gateway_options = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
+		$admin_sms_gateway_options = get_option( Cvs_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
 		if ( ! $admin_sms_gateway_options['sms_activation'] ) {
 			wp_send_json_error( __( 'Login to the system is currently unavailable.', 'customer-verification-system-for-woocommerce' ) );
 		}
@@ -214,8 +214,8 @@ class Verify_Woo_Send_OTP {
 	 * @return bool True if the OTP was successfully dispatched, false otherwise.
 	 */
 	private function send_otp( $phone, $otp_code ) {
-		$admin_sms_gateway_options = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
-		$sms_gateway_factory       = new Verify_Woo_Sms_Factory();
+		$admin_sms_gateway_options = get_option( Cvs_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
+		$sms_gateway_factory       = new Cvs_Woo_Sms_Factory();
 		$sms_gateway_instance      = $sms_gateway_factory->driver( $admin_sms_gateway_options['sms_gateway'] );
 		if ( $admin_sms_gateway_options['sms_gateway_pattern'] ) {
 			$sms_gateway_instance->send_by_pattern(

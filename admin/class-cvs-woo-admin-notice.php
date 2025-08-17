@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Notice {
+class Cvs_Woo_Admin_Notice {
 
 	/**
 	 * Transient key used to store admin notices.

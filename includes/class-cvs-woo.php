@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Verify_Woo/includes
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo {
+class Cvs_Woo {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -80,8 +80,8 @@ class Verify_Woo {
 	 * @param string $plugin_basename The basename of the plugin.
 	 */
 	public function __construct( $plugin_basename ) {
-		if ( defined( 'VERIFY_WOO_VERSION' ) ) {
-			$this->version = VERIFY_WOO_VERSION;
+		if ( defined( 'CVS_WOO_VERSION' ) ) {
+			$this->version = CVS_WOO_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -116,74 +116,74 @@ class Verify_Woo {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once PLUGIN_DIR . '/includes/class-verify-woo-loader.php';
+		require_once PLUGIN_DIR . '/includes/class-cvs-woo-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once PLUGIN_DIR . '/includes/class-verify-woo-i18n.php';
+		require_once PLUGIN_DIR . '/includes/class-cvs-woo-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once PLUGIN_DIR . '/public/class-verify-woo-public.php';
+		require_once PLUGIN_DIR . '/public/class-cvs-woo-public.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the auth redirect
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-redirect.php';
+		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-redirect.php';
 
 		/**
 		 * The class responsible for defining all enums that occur in plugin
 		 */
-		require_once PLUGIN_DIR . '/enums/verify-woo-otp-enum.php';
+		require_once PLUGIN_DIR . '/enums/cvs-woo-otp-enum.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the send otp
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-send-otp.php';
+		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-send-otp.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the validate otp
 		 */
-		require_once PLUGIN_DIR . '/includes/auth/class-verify-woo-validate-otp.php';
+		require_once PLUGIN_DIR . '/includes/auth/class-cvs-woo-validate-otp.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin overview settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-overview-tab.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-overview-tab.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin sms gateway settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-sms-gateway-tab.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-sms-gateway-tab.php';
 
 		/**
 		 * The class responsible for defining all notice in admin settings.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-notice.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-notice.php';
 
 		/**
 		 * The class responsible for defining all field in admin settings.
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-field-factory.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-field-factory.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin hooks settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-hooks-tab.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-tab.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in admin hooks table settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-hooks-table.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-hooks-table.php';
 
 		/**
 		 * The class responsible for defining sms gateway interface
@@ -195,21 +195,21 @@ class Verify_Woo {
 		 */
 		require_once PLUGIN_DIR . '/includes/sms/interfaces/sms-factory-interface.php';
 
-		require_once PLUGIN_DIR . '/includes/sms/class-verify-woo-sms-factory.php';
+		require_once PLUGIN_DIR . '/includes/sms/class-cvs-woo-sms-factory.php';
 
 		/**
 		 * The class responsible for defining kavenegar sms driver
 		 */
-		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-driver.php';
+		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-driver.php';
 
-		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-verify-woo-kavenegar-http-client.php';
+		require_once PLUGIN_DIR . '/includes/sms/drivers/kavenegar/class-cvs-woo-kavenegar-http-client.php';
 
 		/*
 		 * The class responsible for defining all actions that occur in admin information settings
 		 */
-		require_once PLUGIN_DIR . '/admin/class-verify-woo-admin-settings-information-tab.php';
+		require_once PLUGIN_DIR . '/admin/class-cvs-woo-admin-settings-information-tab.php';
 
-		$this->loader = new Verify_Woo_Loader();
+		$this->loader = new Cvs_Woo_Loader();
 	}
 
 	/**
@@ -233,7 +233,7 @@ class Verify_Woo {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Verify_Woo_i18n();
+		$plugin_i18n = new Cvs_Woo_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
@@ -247,11 +247,11 @@ class Verify_Woo {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin                          = new Verify_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
-		$plugin_admin_settings_overview_tab    = new Verify_Woo_Admin_Settings_Overview_Tab();
-		$plugin_admin_settings_sms_gateway_tab = new Verify_Woo_Admin_Settings_Sms_Gateway_Tab();
-		$plugin_admin_settings_hooks_tab       = new Verify_Woo_Admin_Settings_Hooks_Tab();
-		$plugin_admin_settings_information_tab = new Verify_Woo_Admin_Settings_Information_Tab( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin                          = new Cvs_Woo_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin_settings_overview_tab    = new Cvs_Woo_Admin_Settings_Overview_Tab();
+		$plugin_admin_settings_sms_gateway_tab = new Cvs_Woo_Admin_Settings_Sms_Gateway_Tab();
+		$plugin_admin_settings_hooks_tab       = new Cvs_Woo_Admin_Settings_Hooks_Tab();
+		$plugin_admin_settings_information_tab = new Cvs_Woo_Admin_Settings_Information_Tab( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -273,10 +273,10 @@ class Verify_Woo {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public       = new Verify_Woo_Public( $this->get_plugin_name(), $this->get_version() );
-		$plugin_redirect     = new Verify_Woo_Redirect();
-		$plugin_send_otp     = new Verify_Woo_Send_OTP();
-		$plugin_validate_otp = new Verify_Woo_Validate_OTP();
+		$plugin_public       = new Cvs_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_redirect     = new Cvs_Woo_Redirect();
+		$plugin_send_otp     = new Cvs_Woo_Send_OTP();
+		$plugin_validate_otp = new Cvs_Woo_Validate_OTP();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -314,7 +314,7 @@ class Verify_Woo {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Verify_Woo_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Cvs_Woo_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -355,9 +355,9 @@ class Verify_Woo {
 			 *
 			 * @param string $custom_template_path Full path to the custom login form.
 			 */
-			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/verify-woo-form-1.php' );
+			$custom_template = apply_filters( 'verify_woo_login_form_template_path', PLUGIN_DIR . '/public/partials/forms/cvs-woo-public-form-1.php' );
 
-			$admin_overview_options = get_option( Verify_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
+			$admin_overview_options = get_option( Cvs_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
 
 			if ( file_exists( $custom_template ) && ! empty( $admin_overview_options['activation'] ) && true === $admin_overview_options['activation'] ) {
 				return $custom_template;

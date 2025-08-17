@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Verify_Woo/admin
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo_Admin {
+class Cvs_Woo_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -74,7 +74,7 @@ class Verify_Woo_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'css/verify-woo-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'css/cvs-woo-admin.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -96,7 +96,7 @@ class Verify_Woo_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'js/verify-woo-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( __FILE__ ) . 'js/cvs-woo-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class Verify_Woo_Admin {
 	public function render_settings() {
 		$tabs        = $this->get_tabs();
 		$tabs_data   = array();
-		$plugin_icon = PLUGIN_DIR . '/public/partials/verify-woo-pulblic-icon.php';
+		$plugin_icon = PLUGIN_DIR . '/public/partials/cvs-woo-public-icon.php';
 
 		foreach ( $tabs as $slug => $tab_info ) {
 			$tabs_data[] = array(
@@ -143,7 +143,7 @@ class Verify_Woo_Admin {
 			);
 		}
 
-		include_once PLUGIN_DIR . '/admin/partials/verify-woo-admin-display.php';
+		include_once PLUGIN_DIR . '/admin/partials/cvs-woo-admin-display.php';
 	}
 
 	/**

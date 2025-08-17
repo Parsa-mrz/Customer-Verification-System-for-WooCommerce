@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Verify_Woo/includes
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo_Loader {
+class Cvs_Woo_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

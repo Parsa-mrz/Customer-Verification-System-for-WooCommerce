@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
+class Cvs_Woo_Admin_Settings_Sms_Gateway_Tab {
 
 	/**
 	 * The name of the option group for the sms gateway settings.
@@ -117,7 +117,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	 */
 	public function render_field() {
 		$options = get_option( self::OPTION_GROUP );
-		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+		Cvs_Woo_Admin_Settings_Field_Factory::toggle(
 			$options,
 			'sms_activation',
 			self::OPTION_GROUP,
@@ -125,7 +125,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			__( 'Active sms gateway to send OTP to Users', 'customer-verification-system-for-woocommerce' )
 		);
 		if ( $options['sms_activation'] ) {
-			Verify_Woo_Admin_Settings_Field_Factory::render_setting_row(
+			Cvs_Woo_Admin_Settings_Field_Factory::render_setting_row(
 				function () use ( $options ) {
 						$this->render_sms_gateway_dropdown( $options );
 					if ( 'kavenegar' === $options['sms_gateway'] ) {
@@ -144,7 +144,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	 * @return void
 	 */
 	private function render_sms_gateway_dropdown( $options ) {
-		Verify_Woo_Admin_Settings_Field_Factory::drop_down(
+		Cvs_Woo_Admin_Settings_Field_Factory::drop_down(
 			$options,
 			'sms_gateway',
 			self::OPTION_GROUP,
@@ -165,7 +165,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 	 * @return void
 	 */
 	private function render_kavenegar_fields( $options ) {
-		Verify_Woo_Admin_Settings_Field_Factory::input(
+		Cvs_Woo_Admin_Settings_Field_Factory::input(
 			$options,
 			'kavenegar_api_key',
 			self::OPTION_GROUP,
@@ -176,7 +176,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			'50'
 		);
 
-		Verify_Woo_Admin_Settings_Field_Factory::input(
+		Cvs_Woo_Admin_Settings_Field_Factory::input(
 			$options,
 			'sms_gateway_pattern',
 			self::OPTION_GROUP,
@@ -187,7 +187,7 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			'50'
 		);
 
-		Verify_Woo_Admin_Settings_Field_Factory::input(
+		Cvs_Woo_Admin_Settings_Field_Factory::input(
 			$options,
 			'kavenegar_sender_number',
 			self::OPTION_GROUP,

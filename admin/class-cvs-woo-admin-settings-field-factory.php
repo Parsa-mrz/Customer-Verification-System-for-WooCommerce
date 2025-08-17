@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * A utility class that provides reusable methods for rendering
  * admin setting fields in a consistent and maintainable way.
  */
-class Verify_Woo_Admin_Settings_Field_Factory {
+class Cvs_Woo_Admin_Settings_Field_Factory {
 
 
 	/**

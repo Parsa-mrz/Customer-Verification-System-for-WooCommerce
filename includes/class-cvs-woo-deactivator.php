@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Verify_Woo/includes
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo_Deactivator {
+class Cvs_Woo_Deactivator {
 
 	/**
 	 * Short Description. (use period)

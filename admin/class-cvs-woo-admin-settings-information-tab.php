@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Information_Tab {
+class Cvs_Woo_Admin_Settings_Information_Tab {
 	/**
 	 * The ID of this plugin.
 	 *
@@ -112,7 +112,7 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 
-		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
+		Cvs_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
 
 		return $sanitized;
 	}
@@ -129,7 +129,7 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 	public function render_field() {
 		$options = get_option( self::OPTION_GROUP );
 
-		Verify_Woo_Admin_Settings_Field_Factory::text(
+		Cvs_Woo_Admin_Settings_Field_Factory::text(
 			__( 'VerifyWoo', 'customer-verification-system-for-woocommerce' ),
 			sprintf(
 			/* translators: %s: plugin version */
@@ -142,10 +142,10 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 			)
 		);
 
-		Verify_Woo_Admin_Settings_Field_Factory::text(
+		Cvs_Woo_Admin_Settings_Field_Factory::text(
 			__( 'Developer Information', 'customer-verification-system-for-woocommerce' ),
 			'',
-			Verify_Woo_Admin_Settings_Field_Factory::list(
+			Cvs_Woo_Admin_Settings_Field_Factory::list(
 				'ul',
 				array(
 					array(

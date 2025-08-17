@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Hooks_Tab {
+class Cvs_Woo_Admin_Settings_Hooks_Tab {
 
 	/**
 	 * The name of the option group for the hooks settings.
@@ -88,7 +88,7 @@ class Verify_Woo_Admin_Settings_Hooks_Tab {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 
-		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
+		Cvs_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
 
 		return $sanitized;
 	}
@@ -103,7 +103,7 @@ class Verify_Woo_Admin_Settings_Hooks_Tab {
 	 * @return void
 	 */
 	public function render_field() {
-		$table = new Verify_Woo_Admin_Settings_Hooks_Table();
+		$table = new Cvs_Woo_Admin_Settings_Hooks_Table();
 		$table->prepare_items();
 		$table->display();
 	}

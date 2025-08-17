@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
+class Cvs_Woo_Sms_Factory implements Sms_Factory_Interface {
 
 
 	/**
@@ -39,7 +39,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 	 * @var array<string, class-string<Sms_Gateway_Interface>>
 	 */
 	protected array $supported_drivers = array(
-		'kavenegar' => Verify_Woo_Kavenegar_Driver::class,
+		'kavenegar' => Cvs_Woo_Kavenegar_Driver::class,
 	);
 
 	/**

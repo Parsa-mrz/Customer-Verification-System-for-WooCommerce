@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  * @package Verify_Woo
  */
-class Verify_Woo_Redirect {
+class Cvs_Woo_Redirect {
 	/**
 	 * Redirects guest users from checkout to the login (My Account) page.
 	 *
@@ -46,7 +46,7 @@ class Verify_Woo_Redirect {
 	 * @return void
 	 */
 	public function maybe_redirect_to_login() {
-		$admin_overview_options = get_option( Verify_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
+		$admin_overview_options = get_option( Cvs_Woo_Admin_Settings_Overview_Tab::OPTION_GROUP );
 		if ( $admin_overview_options['checkout_redirect'] ) {
 			if ( is_checkout() && ! is_user_logged_in() ) {
 				$my_account_url = wc_get_page_permalink( 'myaccount' );

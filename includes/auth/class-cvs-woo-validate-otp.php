@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  * @package Verify_Woo
  */
-class Verify_Woo_Validate_OTP {
+class Cvs_Woo_Validate_OTP {
 	/**
 	 * AJAX callback: Validates submitted OTP and logs in the user.
 	 *

@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Verify_Woo/includes
  * @author     Parsa Mirzaie <Mirzaie_parsa@protonmail.ch>
  */
-class Verify_Woo_i18n {
+class Cvs_Woo_i18n {
 
 
 	/**

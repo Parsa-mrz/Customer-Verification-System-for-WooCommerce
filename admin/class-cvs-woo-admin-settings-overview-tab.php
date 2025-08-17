@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Overview_Tab {
+class Cvs_Woo_Admin_Settings_Overview_Tab {
 
 	/**
 	 * The name of the option group for the overview settings.
@@ -91,7 +91,7 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 		$sanitized['activation']        = ! empty( $input['activation'] ) ? true : false;
 		$sanitized['checkout_redirect'] = ! empty( $input['checkout_redirect'] ) ? true : false;
 
-		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
+		Cvs_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
 
 		return $sanitized;
 	}
@@ -107,7 +107,7 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 	 */
 	public function render_field() {
 		$options = get_option( self::OPTION_GROUP );
-		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+		Cvs_Woo_Admin_Settings_Field_Factory::toggle(
 			$options,
 			'activation',
 			self::OPTION_GROUP,
@@ -115,7 +115,7 @@ class Verify_Woo_Admin_Settings_Overview_Tab {
 			__( 'Use a custom login page for WooCommerce, redirecting users from the default login', 'customer-verification-system-for-woocommerce' )
 		);
 
-		Verify_Woo_Admin_Settings_Field_Factory::toggle(
+		Cvs_Woo_Admin_Settings_Field_Factory::toggle(
 			$options,
 			'checkout_redirect',
 			self::OPTION_GROUP,

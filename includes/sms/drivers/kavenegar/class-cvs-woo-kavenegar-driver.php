@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
+class Cvs_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 
 	/**
 	 * The Kavenegar HTTP client instance.
@@ -39,10 +39,10 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 * This client is responsible for direct communication with the Kavenegar API.
 	 * It is initialized in the constructor based on provided settings.
 	 *
-	 * @var Verify_Woo_Kavenegar_Http_Client Holds an instance of KavenegarHttpClient if successfully initialized,
+	 * @var Cvs_Woo_Kavenegar_Http_Client Holds an instance of KavenegarHttpClient if successfully initialized,
 	 * otherwise null if initialization failed.
 	 */
-	protected Verify_Woo_Kavenegar_Http_Client $kavenegar_client;
+	protected Cvs_Woo_Kavenegar_Http_Client $kavenegar_client;
 
 	/**
 	 * The default sender number used for Kavenegar SMS messages.
@@ -73,8 +73,8 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 * @since 1.0.0
 	 */
 	public function __construct( array $settings = array() ) {
-		if ( empty( $settings ) && class_exists( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::class ) ) {
-			$settings = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP, array() );
+		if ( empty( $settings ) && class_exists( Cvs_Woo_Admin_Settings_Sms_Gateway_Tab::class ) ) {
+			$settings = get_option( Cvs_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP, array() );
 		}
 
 		$api_key  = $settings['kavenegar_api_key'] ?? '';
@@ -91,7 +91,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		$this->sender = trim( $sender );
 
 		try {
-			$this->kavenegar_client = new Verify_Woo_Kavenegar_Http_Client( $api_key, (bool) $insecure );
+			$this->kavenegar_client = new Cvs_Woo_Kavenegar_Http_Client( $api_key, (bool) $insecure );
 		} catch ( \Exception $e ) {
 			error_log(
 				sprintf(

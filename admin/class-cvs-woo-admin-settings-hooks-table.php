@@ -28,7 +28,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
  *
  * @since 1.0.0
  */
-class Verify_Woo_Admin_Settings_Hooks_Table extends WP_List_Table {
+class Cvs_Woo_Admin_Settings_Hooks_Table extends WP_List_Table {
 
 	/**
 	 * Array of available hooks data.
