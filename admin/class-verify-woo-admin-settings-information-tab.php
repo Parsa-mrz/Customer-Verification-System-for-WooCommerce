@@ -83,7 +83,7 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 
 		add_settings_section(
 			'verify_woo_information_section',
-			__( 'Plugin Information', 'verify-woo' ),
+			__( 'Plugin Information', 'customer-verification-system-for-woocommerce' ),
 			'',
 			'verify_woo_settings_page_information'
 		);
@@ -112,7 +112,7 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 
-		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'verify-woo' ) );
+		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
 
 		return $sanitized;
 	}
@@ -130,37 +130,37 @@ class Verify_Woo_Admin_Settings_Information_Tab {
 		$options = get_option( self::OPTION_GROUP );
 
 		Verify_Woo_Admin_Settings_Field_Factory::text(
-			__( 'VerifyWoo', 'verify-woo' ),
+			__( 'VerifyWoo', 'customer-verification-system-for-woocommerce' ),
 			sprintf(
 			/* translators: %s: plugin version */
-				esc_html__( 'Version %s', 'verify-woo' ),
+				esc_html__( 'Version %s', 'customer-verification-system-for-woocommerce' ),
 				esc_html( $this->version )
 			),
-			__( 'This is the current installed version of the plugin.', 'verify-woo' ),
+			__( 'This is the current installed version of the plugin.', 'customer-verification-system-for-woocommerce' ),
 			array(
 				'subtitle' => 'verify-woo-notice-success verify-woo-admin-version',
 			)
 		);
 
 		Verify_Woo_Admin_Settings_Field_Factory::text(
-			__( 'Developer Information', 'verify-woo' ),
+			__( 'Developer Information', 'customer-verification-system-for-woocommerce' ),
 			'',
 			Verify_Woo_Admin_Settings_Field_Factory::list(
 				'ul',
 				array(
 					array(
 						'url'   => 'https://parsamirzaie.com',
-						'label' => __( 'Check My Website', 'verify-woo' ),
+						'label' => __( 'Check My Website', 'customer-verification-system-for-woocommerce' ),
 						'icon'  => 'dashicons-admin-site',
 					),
 					array(
 						'url'   => 'https://github.com/Parsa-mrz',
-						'label' => __( 'GitHub Profile', 'verify-woo' ),
+						'label' => __( 'GitHub Profile', 'customer-verification-system-for-woocommerce' ),
 						'icon'  => 'dashicons-admin-links',
 					),
 					array(
 						'url'   => 'www.linkedin.com/in/parsa-mirzaie-85249a221',
-						'label' => __( 'LinkedIn Profile', 'verify-woo' ),
+						'label' => __( 'LinkedIn Profile', 'customer-verification-system-for-woocommerce' ),
 						'icon'  => 'dashicons-format-aside',
 					),
 				)

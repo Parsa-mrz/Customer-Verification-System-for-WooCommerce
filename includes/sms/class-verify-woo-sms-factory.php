@@ -62,7 +62,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 			throw new \InvalidArgumentException(
 				sprintf(
 					// Translators: %s is driver name.
-					esc_html__( 'SMS driver [%s] is not supported.', 'verify-woo' ),
+					esc_html__( 'SMS driver [%s] is not supported.', 'customer-verification-system-for-woocommerce' ),
 					esc_html( $driver_name )
 				)
 			);
@@ -94,7 +94,7 @@ class Verify_Woo_Sms_Factory implements Sms_Factory_Interface {
 			throw new \RuntimeException(
 				sprintf(
 					// Translators: %s is driver name.
-					esc_html__( 'Driver [%s] does not implement required interface.', 'verify-woo' ),
+					esc_html__( 'Driver [%s] does not implement required interface.', 'customer-verification-system-for-woocommerce' ),
 					esc_html( $driver_class )
 				)
 			);

@@ -54,29 +54,29 @@ class Verify_Woo_Send_OTP {
 
 		$admin_sms_gateway_options = get_option( Verify_Woo_Admin_Settings_Sms_Gateway_Tab::OPTION_GROUP );
 		if ( ! $admin_sms_gateway_options['sms_activation'] ) {
-			wp_send_json_error( __( 'Login to the system is currently unavailable.', 'verify-woo' ) );
+			wp_send_json_error( __( 'Login to the system is currently unavailable.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		if ( ! isset( $_POST['user_phone'] ) ) {
-			wp_send_json_error( __( 'Phone number is required.', 'verify-woo' ) );
+			wp_send_json_error( __( 'Phone number is required.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		$user_phone = sanitize_text_field( wp_unslash( $_POST['user_phone'] ) );
 
 		if ( empty( $user_phone ) ) {
-			wp_send_json_error( __( 'Phone number is empty.', 'verify-woo' ) );
+			wp_send_json_error( __( 'Phone number is empty.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		$rate = $this->verify_woo_can_request_otp( $user_phone );
 		if ( ! $rate['allowed'] ) {
 			// Translators: %d is the number of seconds the user must wait before retrying.
-			wp_send_json_error( sprintf( __( 'Please wait %d seconds before trying again.', 'verify-woo' ), $rate['wait'] ) );
+			wp_send_json_error( sprintf( __( 'Please wait %d seconds before trying again.', 'customer-verification-system-for-woocommerce' ), $rate['wait'] ) );
 		}
 
 		$this->verify_woo_generate_otp( $user_phone );
 
 		// Translators: %d is the user phone number.
-		wp_send_json_success( sprintf( __( 'OTP Sent to %d Successfully!', 'verify-woo' ), $user_phone ) );
+		wp_send_json_success( sprintf( __( 'OTP Sent to %d Successfully!', 'customer-verification-system-for-woocommerce' ), $user_phone ) );
 	}
 
 	/**

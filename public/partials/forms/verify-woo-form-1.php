@@ -20,11 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="login-html">
 			<div class="login-form send-otp-form">
 					<div class="group">
-						<input id="user_phone" autocomplete="Phone" name="phone" pattern="" placeholder="<?php echo esc_html__( 'Enter Your Phone Number', 'verify-woo' ); ?>" type="text" class="input">
+						<input id="user_phone" autocomplete="Phone" name="phone" pattern="" placeholder="<?php echo esc_html__( 'Enter Your Phone Number', 'customer-verification-system-for-woocommerce' ); ?>" type="text" class="input">
 					</div>
 					<div class="group">
 						<button type="submit" name="signIn" class="button signIn">
-							<span class="button-text"><?php echo esc_html__( 'Sign In / Sign Up', 'verify-woo' ); ?></span>
+							<span class="button-text"><?php echo esc_html__( 'Sign In / Sign Up', 'customer-verification-system-for-woocommerce' ); ?></span>
 							<span class="sign-in-loader" style="display:none;">
 								<span>Loading...</span>
 								<span class="Loader-root Loader-sm sign-in-loader" role="presentation">
@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<div class="login-form verify-otp-form">
 					<div class="group otp-input-group">
-						<label for="otp-input-1" class="screen-reader-text"><?php echo esc_html__( 'Enter OTP', 'verify-woo' ); ?></label>
+						<label for="otp-input-1" class="screen-reader-text"><?php echo esc_html__( 'Enter OTP', 'customer-verification-system-for-woocommerce' ); ?></label>
 						<input id="otp-input-1" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="0">
 						<input id="otp-input-2" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="1">
 						<input id="otp-input-3" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-input" data-index="2">
@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="group">
 						<button type="submit" name="verify" class="button verify">
-							<span class="button-text"><?php echo esc_html__( 'Verify OTP', 'verify-woo' ); ?></span>
+							<span class="button-text"><?php echo esc_html__( 'Verify OTP', 'customer-verification-system-for-woocommerce' ); ?></span>
 							<span class="verify-loader" style="display:none;">
 								<span>Loading...</span>
 								<span class="Loader-root Loader-sm verify-loader" role="presentation">
@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 					<div class="group">
 						<p class="resend-otp">
-							<?php echo esc_html__( 'Didn\'t receive the code?', 'verify-woo' ); ?>
+							<?php echo esc_html__( 'Didn\'t receive the code?', 'customer-verification-system-for-woocommerce' ); ?>
 							<a href="#" class="resend-otp-link">
 							</a>
 						</p>

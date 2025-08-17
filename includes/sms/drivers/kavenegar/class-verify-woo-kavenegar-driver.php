@@ -82,10 +82,10 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 		$insecure = $settings['kavenegar_insecure'] ?? false;
 
 		if ( empty( $api_key ) ) {
-			error_log( esc_html__( 'Kavenegar API Key is missing in settings.', 'verify-woo' ) );
+			error_log( esc_html__( 'Kavenegar API Key is missing in settings.', 'customer-verification-system-for-woocommerce' ) );
 		}
 		if ( empty( $sender ) ) {
-			error_log( esc_html__( 'Kavenegar Sender number is missing in settings.', 'verify-woo' ) );
+			error_log( esc_html__( 'Kavenegar Sender number is missing in settings.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		$this->sender = trim( $sender );
@@ -96,7 +96,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			error_log(
 				sprintf(
 					// Translators: %s is API error.
-					esc_html__( 'Failed to initialize Kavenegar HTTP Client: %s', 'verify-woo' ),
+					esc_html__( 'Failed to initialize Kavenegar HTTP Client: %s', 'customer-verification-system-for-woocommerce' ),
 					$e->getMessage()
 				)
 			);
@@ -122,7 +122,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 */
 	public function send( string $to, string $message, array $options = array() ): bool {
 		if ( is_null( $this->kavenegar_client ) ) {
-			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send SMS.', 'verify-woo' ) );
+			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send SMS.', 'customer-verification-system-for-woocommerce' ) );
 			return false;
 		}
 
@@ -134,7 +134,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			$response = $this->kavenegar_client->send_sms( $this->sender, $to, $message, $date, $type, $localid );
 
 			if ( ! is_array( $response ) || empty( $response ) ) {
-				error_log( esc_html__( 'Kavenegar send SMS: Unexpected empty response.', 'verify-woo' ) );
+				error_log( esc_html__( 'Kavenegar send SMS: Unexpected empty response.', 'customer-verification-system-for-woocommerce' ) );
 				return false;
 			}
 			return true;
@@ -143,7 +143,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			error_log(
 				sprintf(
 					// Translators: %s is API error.
-					esc_html__( 'An unexpected error occurred during Kavenegar SMS sending: %s', 'verify-woo' ),
+					esc_html__( 'An unexpected error occurred during Kavenegar SMS sending: %s', 'customer-verification-system-for-woocommerce' ),
 					$e->getMessage()
 				)
 			);
@@ -171,7 +171,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 	 */
 	public function send_by_pattern( string $receptor, string $pattern, array $data = array(), array $options = array() ): bool {
 		if ( is_null( $this->kavenegar_client ) ) {
-			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send pattern SMS.', 'verify-woo' ) );
+			error_log( esc_html__( 'Kavenegar client not initialized. Cannot send pattern SMS.', 'customer-verification-system-for-woocommerce' ) );
 			return false;
 		}
 
@@ -188,7 +188,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			);
 
 			if ( ! is_array( $response ) || empty( $response ) ) {
-				error_log( esc_html__( 'Kavenegar sendByPattern: Unexpected empty response.', 'verify-woo' ) );
+				error_log( esc_html__( 'Kavenegar sendByPattern: Unexpected empty response.', 'customer-verification-system-for-woocommerce' ) );
 				return false;
 			}
 			return true;
@@ -197,7 +197,7 @@ class Verify_Woo_Kavenegar_Driver implements Sms_Gateway_Interface {
 			error_log(
 				sprintf(
 					// Translators: %s is API error.
-					esc_html__( 'An unexpected error occurred during Kavenegar pattern SMS sending: %s', 'verify-woo' ),
+					esc_html__( 'An unexpected error occurred during Kavenegar pattern SMS sending: %s', 'customer-verification-system-for-woocommerce' ),
 					$e->getMessage()
 				)
 			);

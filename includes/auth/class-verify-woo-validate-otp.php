@@ -52,7 +52,7 @@ class Verify_Woo_Validate_OTP {
 		$user_phone = isset( $_POST['user_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['user_phone'] ) ?? '' ) : '';
 
 		if ( empty( $otp ) || empty( $user_phone ) ) {
-			wp_send_json_error( __( 'Phone or OTP is missing.', 'verify-woo' ) );
+			wp_send_json_error( __( 'Phone or OTP is missing.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		$check_otp = $this->verify_woo_check_otp( $user_phone, $otp );
@@ -63,7 +63,7 @@ class Verify_Woo_Validate_OTP {
 		$login_success = $this->check_user( $user_phone );
 
 		if ( ! $login_success ) {
-			wp_send_json_error( __( 'Something went wrong. Please try again later.', 'verify-woo' ) );
+			wp_send_json_error( __( 'Something went wrong. Please try again later.', 'customer-verification-system-for-woocommerce' ) );
 		}
 
 		/**
@@ -81,7 +81,7 @@ class Verify_Woo_Validate_OTP {
 
 		wp_send_json_success(
 			array(
-				'message'  => __( 'OTP verified and user logged in.', 'verify-woo' ),
+				'message'  => __( 'OTP verified and user logged in.', 'customer-verification-system-for-woocommerce' ),
 				'redirect' => $redirect_url,
 			)
 		);
@@ -108,7 +108,7 @@ class Verify_Woo_Validate_OTP {
 		if ( ! $data ) {
 			return array(
 				'success' => false,
-				'message' => __( 'OTP expired. Please request a new one.', 'verify-woo' ),
+				'message' => __( 'OTP expired. Please request a new one.', 'customer-verification-system-for-woocommerce' ),
 			);
 		}
 
@@ -129,7 +129,7 @@ class Verify_Woo_Validate_OTP {
 			delete_transient( $key );
 			return array(
 				'success' => false,
-				'message' => __( 'Too many attempts. Try again later.', 'verify-woo' ),
+				'message' => __( 'Too many attempts. Try again later.', 'customer-verification-system-for-woocommerce' ),
 			);
 		}
 
@@ -140,13 +140,13 @@ class Verify_Woo_Validate_OTP {
 				delete_transient( $key );
 				return array(
 					'success' => false,
-					'message' => __( 'Incorrect OTP. Maximum attempts reached.', 'verify-woo' ),
+					'message' => __( 'Incorrect OTP. Maximum attempts reached.', 'customer-verification-system-for-woocommerce' ),
 				);
 			}
 
 			return array(
 				'success' => false,
-				'message' => __( 'Incorrect OTP. Try again.', 'verify-woo' ),
+				'message' => __( 'Incorrect OTP. Try again.', 'customer-verification-system-for-woocommerce' ),
 			);
 		}
 

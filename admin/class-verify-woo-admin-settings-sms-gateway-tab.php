@@ -65,9 +65,9 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 
 		add_settings_section(
 			'verify_woo_sms_gateway_section',
-			__( 'SMS Gateway Settings', 'verify-woo' ),
+			__( 'SMS Gateway Settings', 'customer-verification-system-for-woocommerce' ),
 			function () {
-				echo '<p>' . esc_html__( 'Configure the gateway settings below.', 'verify-woo' ) . '</p>';
+				echo '<p>' . esc_html__( 'Configure the gateway settings below.', 'customer-verification-system-for-woocommerce' ) . '</p>';
 			},
 			'verify_woo_settings_page_sms_gateway'
 		);
@@ -121,8 +121,8 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'sms_activation',
 			self::OPTION_GROUP,
-			__( 'Activate SMS', 'verify-woo' ),
-			__( 'Active sms gateway to send OTP to Users', 'verify-woo' )
+			__( 'Activate SMS', 'customer-verification-system-for-woocommerce' ),
+			__( 'Active sms gateway to send OTP to Users', 'customer-verification-system-for-woocommerce' )
 		);
 		if ( $options['sms_activation'] ) {
 			Verify_Woo_Admin_Settings_Field_Factory::render_setting_row(
@@ -148,11 +148,11 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'sms_gateway',
 			self::OPTION_GROUP,
-			__( 'SMS Gateway', 'verify-woo' ),
-			__( 'Select the SMS gateway you want to use for sending messages.', 'verify-woo' ),
+			__( 'SMS Gateway', 'customer-verification-system-for-woocommerce' ),
+			__( 'Select the SMS gateway you want to use for sending messages.', 'customer-verification-system-for-woocommerce' ),
 			array(
-				'select'    => __( 'Select SMS Gateway', 'verify-woo' ),
-				'kavenegar' => __( 'Kavenegar', 'verify-woo' ),
+				'select'    => __( 'Select SMS Gateway', 'customer-verification-system-for-woocommerce' ),
+				'kavenegar' => __( 'Kavenegar', 'customer-verification-system-for-woocommerce' ),
 			)
 		);
 	}
@@ -169,10 +169,10 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'kavenegar_api_key',
 			self::OPTION_GROUP,
-			__( 'Kavenegar API Key', 'verify-woo' ),
-			__( 'Enter your KaveNegar API key to enable SMS sending.', 'verify-woo' ),
+			__( 'Kavenegar API Key', 'customer-verification-system-for-woocommerce' ),
+			__( 'Enter your KaveNegar API key to enable SMS sending.', 'customer-verification-system-for-woocommerce' ),
 			'text',
-			__( 'Enter your KaveNegar API Key', 'verify-woo' ),
+			__( 'Enter your KaveNegar API Key', 'customer-verification-system-for-woocommerce' ),
 			'50'
 		);
 
@@ -180,10 +180,10 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'sms_gateway_pattern',
 			self::OPTION_GROUP,
-			__( 'Kavenegar Pattern Code', 'verify-woo' ),
-			__( 'If using Kavenegar\'s Lookup service, enter the specific pattern code (template ID) for sending OTPs. Leave blank to send standard SMS messages.', 'verify-woo' ),
+			__( 'Kavenegar Pattern Code', 'customer-verification-system-for-woocommerce' ),
+			__( 'If using Kavenegar\'s Lookup service, enter the specific pattern code (template ID) for sending OTPs. Leave blank to send standard SMS messages.', 'customer-verification-system-for-woocommerce' ),
 			'text',
-			__( 'e.g., verify_code_template', 'verify-woo' ),
+			__( 'e.g., verify_code_template', 'customer-verification-system-for-woocommerce' ),
 			'50'
 		);
 
@@ -191,10 +191,10 @@ class Verify_Woo_Admin_Settings_Sms_Gateway_Tab {
 			$options,
 			'kavenegar_sender_number',
 			self::OPTION_GROUP,
-			__( 'Kavenegar Sender Number', 'verify-woo' ),
-			__( 'Enter the sender number you registered with KaveNegar.', 'verify-woo' ),
+			__( 'Kavenegar Sender Number', 'customer-verification-system-for-woocommerce' ),
+			__( 'Enter the sender number you registered with KaveNegar.', 'customer-verification-system-for-woocommerce' ),
 			'text',
-			__( 'Enter your KaveNegar Sender Number', 'verify-woo' ),
+			__( 'Enter your KaveNegar Sender Number', 'customer-verification-system-for-woocommerce' ),
 			'50'
 		);
 	}

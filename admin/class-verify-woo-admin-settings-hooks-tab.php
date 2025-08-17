@@ -55,9 +55,9 @@ class Verify_Woo_Admin_Settings_Hooks_Tab {
 
 		add_settings_section(
 			'verify_woo_hooks_section',
-			__( 'Hook', 'verify-woo' ),
+			__( 'Hook', 'customer-verification-system-for-woocommerce' ),
 			function () {
-				echo '<p>' . esc_html__( 'Configure the login settings below.', 'verify-woo' ) . '</p>';
+				echo '<p>' . esc_html__( 'Configure the login settings below.', 'customer-verification-system-for-woocommerce' ) . '</p>';
 			},
 			'verify_woo_settings_page_hooks'
 		);
@@ -88,7 +88,7 @@ class Verify_Woo_Admin_Settings_Hooks_Tab {
 		$sanitized               = array();
 		$sanitized['activation'] = ! empty( $input['activation'] ) ? true : false;
 
-		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'verify-woo' ) );
+		Verify_Woo_Admin_Notice::add_success( __( 'Settings Saved', 'customer-verification-system-for-woocommerce' ) );
 
 		return $sanitized;
 	}

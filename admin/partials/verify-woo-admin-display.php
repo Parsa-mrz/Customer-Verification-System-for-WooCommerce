@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php require_once $plugin_icon; ?>
 						</div>
 					<div class="plugin-details">
-						<h2><?php esc_html_e( 'VerifyWoo', 'verify-woo' ); ?></h2>
+						<h2><?php esc_html_e( 'VerifyWoo', 'customer-verification-system-for-woocommerce' ); ?></h2>
 					</div>
 					<div class="plugin-version">
 						
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						esc_html(
 							printf(
 								/* translators: %s: plugin version */
-								esc_html__( 'Version %s', 'verify-woo' ),
+								esc_html__( 'Version %s', 'customer-verification-system-for-woocommerce' ),
 								esc_html( $this->version )
 							)
 						);

@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		settings_fields( 'verify_woo_settings_sms_gateway_group' );
 		do_settings_sections( 'verify_woo_settings_page_sms_gateway' );
 		submit_button(
-			__( 'Save Settings', 'verify-woo' ),
+			__( 'Save Settings', 'customer-verification-system-for-woocommerce' ),
 			'primary cta-btn',
 			'submit',
 		);
