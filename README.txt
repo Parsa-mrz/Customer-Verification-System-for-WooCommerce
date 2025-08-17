@@ -1,5 +1,5 @@
 === Customer Verification System for WooCommerce ===
-Contributors: parsamrz
+Contributors: parsa01
 Donate link: https://parsamirzaie.com
 Tags: woocommerce, verification, email, trust
 Requires at least: 6.4
@@ -9,7 +9,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-VerifyWoo adds a verification system for WooCommerce stores to build trust with customers and improve authenticity.
+Customer Verification System for WooCommerce adds a verification system for WooCommerce stores to build trust with customers and improve authenticity.
 
 == Description ==
 
