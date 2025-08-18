@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The plugin bootstrap file
  *
@@ -13,9 +12,9 @@
  * @package           Verify_Woo
  *
  * @wordpress-plugin
- * Plugin Name:       Customer Verification System for WooCommerce
+ * Plugin Name:       CheckMate – Customer Verification for WooCommerce
  * Plugin URI:        https://parsamirzaie.com
- * Description:       Customer Verification System for WooCommerce is a WooCommerce plugin designed to add a verification system to your store. Whether you're verifying customers, vendors, or orders, this plugin helps bring trust and legitimacy to your WooCommerce experience.
+ * Description:       CheckMate – Customer Verification for WooCommerce is a WooCommerce plugin designed to add a verification system to your store. Whether you're verifying customers, vendors, or orders, this plugin helps bring trust and legitimacy to your WooCommerce experience.
  * Version:           1.0.0
  * Author:            Parsa Mirzaie
  * Author URI:        https://parsamirzaie.com/

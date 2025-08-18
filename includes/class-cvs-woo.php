@@ -37,7 +37,7 @@ class Cvs_Woo {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Verify_Woo_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Cvs_Woo_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 

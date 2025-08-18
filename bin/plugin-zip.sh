@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PLUGIN_NAME="cvs-for-wooCommerce"
+PLUGIN_NAME="checkmate-customer-verification"
 
 # +---------------------------+
 # |                           |
